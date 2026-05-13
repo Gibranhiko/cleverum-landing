@@ -1,0 +1,213 @@
+---
+import type { Brand } from '~/content/site';
+import { accentVar } from '~/content/site';
+import YouTubeLite from './YouTubeLite.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+
+interface Props {
+  brand: Brand;
+  index: number;
+}
+
+const { brand, index } = Astro.props;
+const accent = accentVar[brand.accent];
+// Sticky top offset incremental → cada card asoma debajo de la siguiente
+const stickyTop = `${5 + index * 2.5}vh`;
+---
+
+<article
+  class="brand-card"
+  data-brand={brand.id}
+  style={`--accent: ${accent}; --sticky-top: ${stickyTop};`}
+>
+  <div class="brand-card-inner">
+    <header class="brand-card-head">
+      <span class="brand-card-num">{brand.number}</span>
+      <span class="brand-card-divider" aria-hidden="true"></span>
+      <span class="brand-card-name">{brand.name}</span>
+    </header>
+
+    <div class="brand-card-body">
+      <div class="brand-card-content">
+        <h2 class="brand-card-tagline font-display">
+          {brand.tagline}
+        </h2>
+        <p class="brand-card-desc">{brand.description}</p>
+
+        <ul class="brand-card-bullets" role="list">
+          {
+            brand.bullets.map((b) => (
+              <li>
+                <span class="brand-card-bullet-dot" aria-hidden="true" />
+                <span>{b}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="brand-card-cta">
+          <WhatsAppButton
+            label={`Hablemos de ${brand.name}`}
+            message={brand.ctaMessage}
+            variant="minimal"
+            size="md"
+          />
+        </div>
+      </div>
+
+      <div class="brand-card-media">
+        <YouTubeLite
+          id={brand.youtubeId}
+          title={`${brand.name} — ${brand.tagline}`}
+          placeholder={brand.videoPlaceholder}
+          accentColor={accent}
+        />
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .brand-card {
+    position: relative;
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  @media (min-width: 900px) {
+    .brand-card {
+      position: sticky;
+      top: var(--sticky-top);
+    }
+  }
+
+  .brand-card-inner {
+    position: relative;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+    background:
+      radial-gradient(
+        80% 100% at 100% 0%,
+        color-mix(in srgb, var(--accent) 12%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(180deg, color-mix(in srgb, var(--accent) 5%, transparent), transparent 40%),
+      color-mix(in srgb, var(--color-bg-elev) 92%, transparent);
+    backdrop-filter: blur(12px);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.04) inset,
+      0 40px 80px -40px color-mix(in srgb, var(--accent) 60%, transparent);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* Línea acento superior */
+  .brand-card-inner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.5;
+  }
+
+  .brand-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .brand-card-num {
+    font-family: var(--font-display);
+    font-feature-settings: 'tnum';
+    font-size: var(--fs-eyebrow);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .brand-card-divider {
+    flex: 0 0 24px;
+    height: 1px;
+    background: var(--color-border-strong);
+  }
+
+  .brand-card-name {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-text-2);
+    font-weight: 500;
+  }
+
+  .brand-card-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .brand-card-body {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: clamp(2rem, 5vw, 4rem);
+    }
+  }
+
+  .brand-card-tagline {
+    font-size: var(--fs-h2);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    color: var(--color-text-1);
+    text-wrap: balance;
+  }
+
+  .brand-card-desc {
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+    color: var(--color-text-2);
+    margin: 0 0 1.75rem;
+    max-width: 44ch;
+  }
+
+  .brand-card-bullets {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .brand-card-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    font-size: var(--fs-body);
+    color: var(--color-text-1);
+    line-height: 1.5;
+  }
+
+  .brand-card-bullet-dot {
+    flex: 0 0 8px;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.55em;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent);
+  }
+
+  .brand-card-cta {
+    display: inline-flex;
+  }
+
+  .brand-card-media {
+    width: 100%;
+  }
+</style>

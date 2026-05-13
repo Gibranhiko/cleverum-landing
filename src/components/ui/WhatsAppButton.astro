@@ -1,0 +1,146 @@
+---
+import { site } from '~/content/site';
+import { whatsappLink } from '~/lib/whatsapp';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import ArrowRight from './ArrowRight.astro';
+
+interface Props {
+  label?: string;
+  message?: string;
+  variant?: 'primary' | 'secondary' | 'minimal';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  label = site.hero.ctaLabel,
+  message,
+  variant = 'primary',
+  size = 'md',
+  class: extraClass = '',
+} = Astro.props;
+
+const href = whatsappLink(message);
+
+const sizeClasses: Record<'sm' | 'md' | 'lg', string> = {
+  sm: 'px-5 py-2.5 text-sm',
+  md: 'px-7 py-3.5 text-base',
+  lg: 'px-9 py-4 text-lg',
+};
+
+const variantClass =
+  variant === 'primary'
+    ? 'wa-btn-primary'
+    : variant === 'secondary'
+      ? 'wa-btn-secondary'
+      : 'wa-btn-minimal';
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={`${label} (abre WhatsApp en una nueva ventana)`}
+  class={`wa-btn group ${variantClass} ${sizeClasses[size]} ${extraClass}`}
+>
+  <span class="wa-btn-glow" aria-hidden="true"></span>
+  <WhatsAppIcon size={20} class="wa-btn-wa-icon" />
+  <span class="wa-btn-label">{label}</span>
+  <ArrowRight size={18} class="wa-btn-arrow" />
+</a>
+
+<style>
+  .wa-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo),
+      border-color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .wa-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .wa-btn-arrow {
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+  .wa-btn:hover .wa-btn-arrow {
+    transform: translateX(4px);
+  }
+
+  .wa-btn-wa-icon {
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  .wa-btn:hover .wa-btn-wa-icon {
+    transform: scale(1.1) rotate(-4deg);
+  }
+
+  .wa-btn-glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-brand-blue) 30%, transparent),
+      color-mix(in srgb, var(--color-brand-iris) 30%, transparent),
+      color-mix(in srgb, var(--color-accent-go) 30%, transparent)
+    );
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out-expo);
+  }
+  .wa-btn:hover .wa-btn-glow {
+    opacity: 1;
+  }
+
+  /* Primary — fondo glass con borde */
+  .wa-btn-primary {
+    background: color-mix(in srgb, var(--color-bg-elev) 85%, transparent);
+    backdrop-filter: blur(12px);
+    color: var(--color-text-1);
+    border: 1px solid var(--color-border-strong);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 16px 40px -20px color-mix(in srgb, var(--color-brand-iris) 70%, transparent);
+  }
+  .wa-btn-primary:hover {
+    border-color: color-mix(in srgb, var(--color-brand-iris) 60%, transparent);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.12) inset,
+      0 24px 60px -20px color-mix(in srgb, var(--color-brand-iris) 90%, transparent);
+  }
+
+  /* Secondary — fondo verde WhatsApp sólido */
+  .wa-btn-secondary {
+    background: var(--color-accent-go);
+    color: #04130b;
+    border: 1px solid color-mix(in srgb, var(--color-accent-go) 70%, transparent);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.15) inset,
+      0 16px 40px -20px color-mix(in srgb, var(--color-accent-go) 90%, transparent);
+  }
+  .wa-btn-secondary:hover {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.2) inset,
+      0 24px 60px -16px color-mix(in srgb, var(--color-accent-go) 100%, transparent);
+  }
+
+  /* Minimal — sin fondo, solo borde */
+  .wa-btn-minimal {
+    background: transparent;
+    color: var(--color-text-1);
+    border: 1px solid var(--color-border);
+  }
+  .wa-btn-minimal:hover {
+    border-color: var(--color-border-strong);
+    background: color-mix(in srgb, var(--color-bg-elev) 50%, transparent);
+  }
+</style>

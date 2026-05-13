@@ -1,0 +1,223 @@
+---
+import { site } from '~/content/site';
+import Eyebrow from '~/components/ui/Eyebrow.astro';
+
+const { differentiators } = site;
+const [d1, d2, d3, d4] = differentiators.items;
+const { statBig, quote } = differentiators;
+---
+
+<section id="why" class="bento-section" aria-labelledby="why-heading">
+  <header class="bento-head container-narrow">
+    <Eyebrow text="POR QUÉ NOSOTROS" />
+    <h2 id="why-heading" class="bento-title font-display">
+      {differentiators.heading}
+    </h2>
+    <p class="bento-sub">{differentiators.subheading}</p>
+  </header>
+
+  <div class="bento container-narrow">
+    <article class="bento-card cell-d1">
+      <h3 class="bento-card-title font-display">{d1.title}</h3>
+      <p class="bento-card-body">{d1.body}</p>
+      <span class="bento-card-accent accent-blue" aria-hidden="true"></span>
+    </article>
+
+    <article class="bento-card cell-d2">
+      <h3 class="bento-card-title font-display">{d2.title}</h3>
+      <p class="bento-card-body">{d2.body}</p>
+      <span class="bento-card-accent accent-iris" aria-hidden="true"></span>
+    </article>
+
+    <article class="bento-card cell-stat">
+      <div class="bento-stat-value font-display gradient-text">{statBig.value}</div>
+      <div class="bento-stat-label">{statBig.label}</div>
+    </article>
+
+    <article class="bento-card cell-d3">
+      <h3 class="bento-card-title font-display">{d3.title}</h3>
+      <p class="bento-card-body">{d3.body}</p>
+      <span class="bento-card-accent accent-grape" aria-hidden="true"></span>
+    </article>
+
+    <article class="bento-card cell-d4">
+      <h3 class="bento-card-title font-display">{d4.title}</h3>
+      <p class="bento-card-body">{d4.body}</p>
+      <span class="bento-card-accent accent-green" aria-hidden="true"></span>
+    </article>
+
+    <article class="bento-card cell-quote">
+      <svg
+        class="bento-quote-mark"
+        viewBox="0 0 24 24"
+        width="36"
+        height="36"
+        aria-hidden="true"
+        fill="currentColor"
+      >
+        <path
+          d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"
+        ></path>
+      </svg>
+      <p class="bento-quote-text font-display">{quote}</p>
+    </article>
+  </div>
+</section>
+
+<style>
+  .bento-section {
+    position: relative;
+    padding-block: clamp(5rem, 10vw, 8rem);
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .bento-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    max-width: 720px;
+  }
+
+  .bento-title {
+    font-size: var(--fs-h1);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .bento-sub {
+    font-size: var(--fs-lead);
+    color: var(--color-text-2);
+    line-height: 1.55;
+    max-width: 56ch;
+  }
+
+  .bento {
+    display: grid;
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    grid-template-columns: 1fr;
+  }
+
+  /* Layout asimétrico desktop */
+  @media (min-width: 900px) {
+    .bento {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: minmax(190px, auto) minmax(190px, auto) minmax(170px, auto);
+      grid-template-areas:
+        'd1   d1   d2'
+        'stat d3   d2'
+        'd4   d4   quote';
+    }
+    .cell-d1    { grid-area: d1; }
+    .cell-d2    { grid-area: d2; }
+    .cell-stat  { grid-area: stat; }
+    .cell-d3    { grid-area: d3; }
+    .cell-d4    { grid-area: d4; }
+    .cell-quote { grid-area: quote; }
+  }
+
+  .bento-card {
+    position: relative;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--color-bg-elev) 92%, transparent), var(--color-bg-elev));
+    padding: clamp(1.5rem, 2.5vw, 2.25rem);
+    overflow: hidden;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.75rem;
+    transition: transform 0.4s var(--ease-out-expo), border-color 0.3s ease,
+      box-shadow 0.4s var(--ease-out-expo);
+  }
+
+  .bento-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-border-strong);
+  }
+
+  .bento-card-title {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--color-text-1);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .bento-card-body {
+    font-size: var(--fs-body);
+    line-height: 1.55;
+    color: var(--color-text-2);
+    margin: 0;
+    max-width: 38ch;
+  }
+
+  /* Acento de gradiente decorativo en cada card */
+  .bento-card-accent {
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 60%;
+    height: 80%;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.55;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.4s var(--ease-out-expo);
+  }
+  .bento-card:hover .bento-card-accent {
+    opacity: 0.8;
+  }
+  .accent-blue  { background: var(--color-brand-blue); }
+  .accent-iris  { background: var(--color-brand-iris); }
+  .accent-grape { background: var(--color-brand-grape); }
+  .accent-green { background: var(--color-accent-go); }
+
+  /* Stat card */
+  .cell-stat {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .bento-stat-value {
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+  .bento-stat-label {
+    font-size: var(--fs-body);
+    color: var(--color-text-2);
+    line-height: 1.4;
+  }
+
+  /* Quote card */
+  .cell-quote {
+    background:
+      radial-gradient(
+        100% 80% at 0% 0%,
+        color-mix(in srgb, var(--color-brand-iris) 18%, transparent),
+        transparent 60%
+      ),
+      var(--color-bg-elev);
+  }
+  .bento-quote-mark {
+    color: var(--color-brand-iris);
+    opacity: 0.7;
+  }
+  .bento-quote-text {
+    font-size: var(--fs-h3);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    color: var(--color-text-1);
+    margin: 0;
+    text-wrap: balance;
+  }
+</style>

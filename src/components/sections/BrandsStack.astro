@@ -1,0 +1,60 @@
+---
+import { site } from '~/content/site';
+import BrandCard from '~/components/ui/BrandCard.astro';
+import Eyebrow from '~/components/ui/Eyebrow.astro';
+---
+
+<section id="brands" class="brands-stack" aria-labelledby="brands-heading">
+  <header class="brands-stack-head container-narrow">
+    <Eyebrow text="EL PORTAFOLIO" />
+    <h2 id="brands-heading" class="brands-stack-title font-display">
+      Tres marcas. <span class="gradient-text">Una visión.</span>
+    </h2>
+    <p class="brands-stack-sub">
+      Cada marca resuelve un frente del negocio moderno. Las usas por separado o las
+      combinas — diseñadas para trabajar juntas.
+    </p>
+  </header>
+
+  <div class="brands-stack-cards container-narrow">
+    {site.brands.map((brand, i) => <BrandCard brand={brand} index={i} />)}
+  </div>
+</section>
+
+<style>
+  .brands-stack {
+    position: relative;
+    padding-block: clamp(4rem, 8vw, 7rem);
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .brands-stack-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    max-width: 720px;
+  }
+
+  .brands-stack-title {
+    font-size: var(--fs-h1);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .brands-stack-sub {
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+    color: var(--color-text-2);
+    max-width: 56ch;
+  }
+
+  .brands-stack-cards {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+</style>

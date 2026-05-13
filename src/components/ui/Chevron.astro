@@ -1,0 +1,58 @@
+---
+interface Props {
+  label?: string;
+  href?: string;
+  class?: string;
+}
+const { label = 'Desliza para descubrir', href = '#manifesto', class: extraClass = '' } = Astro.props;
+---
+
+<a href={href} class={`chevron group ${extraClass}`} aria-label={label}>
+  <span class="chevron-label">{label}</span>
+  <span class="chevron-arrow" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 9l6 6 6-6"></path>
+    </svg>
+  </span>
+</a>
+
+<style>
+  .chevron {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--color-text-2);
+    font-size: var(--fs-small);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  .chevron:hover {
+    color: var(--color-text-1);
+  }
+  .chevron-arrow {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+    animation: chevron-bob 2.6s ease-in-out infinite;
+  }
+  .chevron:hover .chevron-arrow {
+    border-color: var(--color-border-strong);
+    transform: translateY(2px);
+  }
+
+  @keyframes chevron-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chevron-arrow { animation: none; }
+  }
+</style>

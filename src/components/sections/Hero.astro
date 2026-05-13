@@ -1,0 +1,147 @@
+---
+import { site } from '~/content/site';
+import Eyebrow from '~/components/ui/Eyebrow.astro';
+import WhatsAppButton from '~/components/ui/WhatsAppButton.astro';
+import Chevron from '~/components/ui/Chevron.astro';
+
+const { hero } = site;
+---
+
+<section id="hero" class="hero">
+  <div class="hero-inner container-narrow">
+    <div class="hero-top">
+      <Eyebrow text={hero.eyebrow} />
+    </div>
+
+    <h1 class="hero-title font-display">
+      {
+        hero.title.map((line, i) => (
+          <span class={`hero-title-line ${i === hero.accentLine ? 'is-accent' : ''}`}>
+            {i === hero.accentLine ? <span class="gradient-text">{line}</span> : line}
+          </span>
+        ))
+      }
+    </h1>
+
+    <div class="hero-bottom">
+      <p class="hero-subtitle">{hero.subtitle}</p>
+      <div class="hero-cta">
+        <WhatsAppButton size="lg" />
+      </div>
+    </div>
+  </div>
+
+  <Chevron label={hero.scrollHint} href="#manifesto" class="hero-chevron" />
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+    padding-block: clamp(5rem, 10vw, 8rem);
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* asymmetric: eyebrow slightly indented */
+    padding-inline-start: 0;
+  }
+
+  .hero-title {
+    font-size: var(--fs-hero);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    margin: 0;
+    text-wrap: balance;
+    /* Animación de entrada */
+    animation: hero-rise 1.2s var(--ease-out-expo) both;
+  }
+
+  .hero-title-line {
+    display: block;
+    color: var(--color-text-1);
+  }
+
+  /* Cada línea aparece con un pequeño stagger */
+  .hero-title-line:nth-child(1) { animation: hero-rise 1.1s var(--ease-out-expo) 0.05s both; }
+  .hero-title-line:nth-child(2) { animation: hero-rise 1.1s var(--ease-out-expo) 0.18s both; }
+  .hero-title-line:nth-child(3) { animation: hero-rise 1.1s var(--ease-out-expo) 0.32s both; }
+
+  .hero-title-line.is-accent {
+    /* mayor peso visual */
+    font-weight: 700;
+  }
+
+  .hero-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: end;
+    animation: hero-rise 1.1s var(--ease-out-expo) 0.5s both;
+  }
+
+  @media (min-width: 900px) {
+    .hero-bottom {
+      grid-template-columns: minmax(0, 1.4fr) auto;
+    }
+  }
+
+  .hero-subtitle {
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+    color: var(--color-text-2);
+    max-width: 38ch;
+    text-wrap: balance;
+  }
+
+  .hero-cta {
+    justify-self: start;
+  }
+  @media (min-width: 900px) {
+    .hero-cta {
+      justify-self: end;
+    }
+  }
+
+  .hero-chevron {
+    position: absolute;
+    bottom: clamp(1.5rem, 4vw, 3rem);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: hero-rise 1.2s var(--ease-out-expo) 0.9s both;
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title,
+    .hero-title-line,
+    .hero-bottom,
+    .hero-chevron {
+      animation: none;
+    }
+  }
+</style>

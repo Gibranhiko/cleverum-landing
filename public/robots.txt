@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cleverum.org/sitemap-index.xml

@@ -1,0 +1,187 @@
+/* ============================================================ */
+/* Fonts (self-hosted, latin subset)                              */
+/* ============================================================ */
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/geist/index.css';
+
+/* ============================================================ */
+/* Tailwind v4                                                    */
+/* ============================================================ */
+@import 'tailwindcss';
+
+/* ============================================================ */
+/* Fluid type scale (clamp utilities)                             */
+/* ============================================================ */
+@import './fluid.css';
+
+/* ============================================================ */
+/* Design tokens                                                  */
+/* ============================================================ */
+@theme {
+  /* Surfaces */
+  --color-bg-base: #08080b;
+  --color-bg-elev: #111114;
+  --color-bg-soft: #16161a;
+
+  /* Brand accents */
+  --color-brand-blue: #4f8af7; /* Devindry */
+  --color-brand-iris: #7c5cff; /* Cleverum */
+  --color-brand-grape: #a855f7;
+  --color-accent-go: #22c55e; /* Wabbi / WhatsApp */
+
+  /* Text */
+  --color-text-1: #ffffff;
+  --color-text-2: #b4b4bf;
+  --color-text-3: #8a8a96;
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Fonts */
+  --font-display: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
+
+  /* Radius */
+  --radius-card: 1.5rem;
+  --radius-pill: 9999px;
+  --radius-sm: 0.5rem;
+
+  /* Easing (motion tokens) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ============================================================ */
+/* Base layer                                                     */
+/* ============================================================ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    font-family: var(--font-body);
+    background: var(--color-bg-base);
+    color: var(--color-text-1);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-brand-iris);
+    color: var(--color-text-1);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-iris);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* ============================================================ */
+/* Component utilities                                            */
+/* ============================================================ */
+@layer components {
+  .glass-card {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-bg-elev) 90%, transparent),
+      var(--color-bg-elev)
+    );
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    backdrop-filter: blur(8px);
+  }
+
+  .gradient-text {
+    background: linear-gradient(
+      90deg,
+      var(--color-brand-blue),
+      var(--color-brand-iris),
+      var(--color-brand-grape)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gradient-text-go {
+    background: linear-gradient(90deg, var(--color-brand-iris), var(--color-accent-go));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .section-pad {
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+    padding-block: clamp(4rem, 10vw, 8rem);
+  }
+
+  .container-narrow {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+  }
+
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+}

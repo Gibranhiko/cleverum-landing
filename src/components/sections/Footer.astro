@@ -1,0 +1,123 @@
+---
+import { site } from '~/content/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner container-narrow">
+    <div class="footer-brands">
+      {
+        site.brands.map((b) => (
+          <div class="footer-brand" data-accent={b.accent}>
+            <span class="footer-brand-name font-display">{b.name}</span>
+            <span class="footer-brand-tagline">{b.tagline}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <hr class="footer-divider" />
+
+    <div class="footer-bottom">
+      <span class="footer-copy">
+        © {year} {site.meta.title.split(' — ')[0]}. {site.footer.rights}
+      </span>
+      <span class="footer-note">{site.footer.note}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding-block: clamp(3rem, 6vw, 5rem);
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+    border-top: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg-base) 70%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+
+  .footer-brands {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .footer-brands {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .footer-brand::before {
+    content: '';
+    position: absolute;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    left: 0;
+    width: 2px;
+    border-radius: 2px;
+  }
+
+  .footer-brand[data-accent='blue']::before {
+    background: var(--color-brand-blue);
+  }
+  .footer-brand[data-accent='iris']::before {
+    background: var(--color-brand-iris);
+  }
+  .footer-brand[data-accent='green']::before {
+    background: var(--color-accent-go);
+  }
+
+  .footer-brand-name {
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-text-1);
+  }
+
+  .footer-brand-tagline {
+    font-size: var(--fs-small);
+    color: var(--color-text-2);
+    line-height: 1.4;
+  }
+
+  .footer-divider {
+    border: none;
+    height: 1px;
+    background: var(--color-border);
+    margin: 0;
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: var(--fs-small);
+    color: var(--color-text-3);
+  }
+
+  @media (min-width: 600px) {
+    .footer-bottom {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+</style>

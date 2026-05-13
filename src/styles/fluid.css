@@ -1,0 +1,28 @@
+/* ============================================================ */
+/* Fluid type scale — clamp(min, preferred, max)                  */
+/* Tuned for viewports 360 → 1920                                 */
+/* ============================================================ */
+:root {
+  --fs-hero: clamp(2.75rem, 8vw + 1rem, 9.5rem);
+  --fs-display: clamp(2.25rem, 5.5vw + 0.5rem, 6rem);
+  --fs-h1: clamp(2rem, 4vw + 0.5rem, 4.5rem);
+  --fs-h2: clamp(1.625rem, 2.5vw + 0.75rem, 3rem);
+  --fs-h3: clamp(1.25rem, 1.5vw + 0.75rem, 2rem);
+  --fs-lead: clamp(1.0625rem, 0.5vw + 1rem, 1.375rem);
+  --fs-body: clamp(0.9375rem, 0.2vw + 0.9rem, 1.125rem);
+  --fs-small: clamp(0.8125rem, 0.1vw + 0.8rem, 0.9375rem);
+  --fs-eyebrow: clamp(0.75rem, 0.1vw + 0.7rem, 0.8125rem);
+}
+
+/* Tailwind v4 utilities that consume the fluid scale */
+@theme {
+  --text-hero: var(--fs-hero);
+  --text-display: var(--fs-display);
+  --text-h1: var(--fs-h1);
+  --text-h2: var(--fs-h2);
+  --text-h3: var(--fs-h3);
+  --text-lead: var(--fs-lead);
+  --text-body: var(--fs-body);
+  --text-small: var(--fs-small);
+  --text-eyebrow: var(--fs-eyebrow);
+}

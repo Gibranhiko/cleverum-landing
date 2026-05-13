@@ -1,0 +1,86 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { composeSeo, seoDefaults, type SeoProps } from '~/lib/seo';
+import { buildJsonLd } from '~/lib/jsonld';
+import ScrollProgressBar from '~/components/react/ScrollProgressBar';
+import ParticleField from '~/components/react/ParticleField';
+import GradientMeshBackground from '~/components/ui/GradientMeshBackground.astro';
+import '~/styles/global.css';
+
+interface Props extends SeoProps {}
+
+const seo = composeSeo(Astro.props);
+const jsonLd = buildJsonLd();
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary -->
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.canonical} />
+    {seo.noindex && <meta name="robots" content="noindex,nofollow" />}
+
+    <!-- Theme -->
+    <meta name="theme-color" content={seoDefaults.themeColor} />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={seoDefaults.siteName} />
+    <meta property="og:locale" content={seoDefaults.locale} />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={seo.canonical} />
+    <meta property="og:image" content={seo.image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={seo.title} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image" content={seo.image} />
+
+    <!-- Resource hints -->
+    <link rel="preconnect" href="https://www.youtube.com" crossorigin />
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
+
+    <!-- Structured data (JSON-LD) -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+  <body class="bg-bg-base text-text-1 antialiased">
+    <GradientMeshBackground />
+    <ParticleField client:media="(min-width: 768px) and (prefers-reduced-motion: no-preference)" />
+    <ScrollProgressBar client:idle />
+
+    <a
+      href="#main"
+      class="bg-brand-iris text-text-1 sr-only rounded-md px-4 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50"
+    >
+      Saltar al contenido
+    </a>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <slot name="body-end" />
+  </body>
+</html>

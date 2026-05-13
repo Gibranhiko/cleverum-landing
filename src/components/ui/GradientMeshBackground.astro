@@ -1,0 +1,49 @@
+---
+/**
+ * Fondo CSS estático (sin JS) que sirve de fallback debajo del ParticleField.
+ * Es visible mientras el Canvas WebGL no está montado (mobile, reduced-motion,
+ * hidratación inicial) y queda detrás cuando sí está montado.
+ */
+---
+
+<div class="gradient-mesh" aria-hidden="true"></div>
+
+<style>
+  .gradient-mesh {
+    position: fixed;
+    inset: 0;
+    z-index: -20;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        60% 50% at 20% 15%,
+        color-mix(in srgb, var(--color-brand-blue) 22%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 45% at 80% 25%,
+        color-mix(in srgb, var(--color-brand-iris) 25%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        55% 55% at 60% 85%,
+        color-mix(in srgb, var(--color-brand-grape) 20%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        45% 40% at 10% 80%,
+        color-mix(in srgb, var(--color-accent-go) 12%, transparent),
+        transparent 70%
+      ),
+      var(--color-bg-base);
+  }
+
+  .gradient-mesh::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+</style>

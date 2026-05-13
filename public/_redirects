@@ -1,0 +1,4 @@
+# Redirects para Cloudflare Pages
+# Doc: https://developers.cloudflare.com/pages/configuration/redirects/
+
+# (vacío por ahora — se agregan reglas cuando existan páginas adicionales o legacy URLs)
