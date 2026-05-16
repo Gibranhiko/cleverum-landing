@@ -25,26 +25,25 @@ export const site = {
   },
 
   hero: {
-    eyebrow: 'AUTOMATIZACIÓN E INNOVACIÓN',
-    title: ['Soluciones inteligentes', 'para negocios', 'que evolucionan.'],
-    accentLine: 2,
-    subtitle:
-      'Tres marcas, una visión: tecnología que conecta, automatiza y transforma tu negocio.',
+    // Frases rotativas que protagonizan el hero.
+    // Sintaxis: encierra entre asteriscos *...* las palabras que deben pintarse en gradient-text.
+    // Mantener cada frase ≤ 70 caracteres para que respire en 2–3 líneas.
+    rotatingTitles: [
+      'Automatiza tus conversaciones y deja de perder ventas en *WhatsApp*.',
+      'Lanza la *app móvil* que tu negocio necesita en semanas, no años.',
+      'Conecta tus sistemas y olvídate de *copiar datos* a mano.',
+      'Pregunta a tu *IA* y obtén el reporte que antes tardaba días.',
+      'Atiende a tus clientes *24/7* sin contratar otro agente.',
+    ],
     ctaLabel: 'Hablemos por WhatsApp',
-    scrollHint: 'Desliza para descubrir',
   },
 
-  manifesto: {
-    heading: 'Manifiesto',
-    words: [
-      { text: 'Tecnología', accent: null },
-      { text: 'que', accent: null },
-      { text: 'conecta,', accent: 'blue' },
-      { text: 'automatiza', accent: 'iris' },
-      { text: 'y', accent: null },
-      { text: 'transforma', accent: 'green' },
-      { text: 'tu', accent: null },
-      { text: 'negocio.', accent: null },
+  nav: {
+    links: [
+      { label: 'Marcas', href: '#brands' },
+      { label: 'Cómo trabajamos', href: '#how' },
+      { label: 'Resultados', href: '#why' },
+      { label: 'Contacto', href: '#contacto' },
     ],
   },
 
@@ -58,6 +57,7 @@ export const site = {
         'Páginas, e-commerce y apps que convierten. Diseño moderno, performance impecable y campañas que escalan.',
       accent: 'blue',
       youtubeId: null as string | null,
+      logoSrc: '/logos/devindry-logo.png' as string | null,
       videoPlaceholder: 'Próximamente: demo de un caso de desarrollo mobile',
       bullets: [
         'Páginas web y e-commerce optimizados',
@@ -75,6 +75,7 @@ export const site = {
         'Diagnosticamos procesos, los automatizamos con IA y conectamos tus herramientas. Menos burocracia, más resultados.',
       accent: 'iris',
       youtubeId: null as string | null,
+      logoSrc: '/logos/cleverum-logo.png' as string | null,
       videoPlaceholder: 'Próximamente: caso real de automatización con IA',
       bullets: [
         'Automatización de procesos end-to-end',
@@ -92,6 +93,7 @@ export const site = {
         'Atención 24/7, segmentación y conversiones reales. Tu canal de mayor engagement, ahora automático.',
       accent: 'green',
       youtubeId: null as string | null,
+      logoSrc: '/logos/wabbi-logo.png' as string | null,
       videoPlaceholder: 'Próximamente: demo de chatbot WhatsApp',
       bullets: [
         'Atención automática 24/7',
@@ -130,28 +132,33 @@ export const site = {
   },
 
   differentiators: {
-    heading: 'Por qué elegirnos',
-    subheading: 'Cuatro principios no negociables.',
+    heading: 'Construido para resultados',
+    subheading:
+      'No vendemos horas — entregamos sistemas que funcionan, se miden y escalan.',
     items: [
       {
         title: 'Soluciones a la medida',
-        body: 'Cada cliente, cada flujo. Nada de plantillas.',
+        body: 'Diagnosticamos antes de construir. Cada solución se diseña para tu flujo, no al revés.',
+        icon: 'target',
       },
       {
         title: 'Tecnología de vanguardia',
-        body: 'IA, automatización y WebGL — lo que hay de bueno, lo usamos.',
+        body: 'IA generativa, automatización end-to-end, WebGL. Usamos lo bueno cuando aporta — sin moda por moda.',
+        icon: 'spark',
       },
       {
-        title: '100% enfocados en resultados',
-        body: 'KPIs claros, ROI medible, deadlines reales.',
+        title: 'Enfocados en resultados',
+        body: 'KPIs claros, ROI medible y deadlines reales desde el día uno. Sin entregables vacíos.',
+        icon: 'chart',
       },
       {
         title: 'Innovación sin límites',
-        body: 'Si no existe la herramienta, la construimos.',
+        body: 'Si la herramienta que necesitas no existe todavía, la construimos contigo.',
+        icon: 'compass',
       },
     ],
-    statBig: { value: '100%', label: 'enfocados en resultados' },
-    quote: 'Tecnología que conecta, automatiza y transforma tu negocio.',
+    mediaPlaceholder:
+      'Espacio para una imagen — caso real, screenshot del producto, o foto del equipo en acción.',
   },
 
   capabilities: [
@@ -177,7 +184,6 @@ export const site = {
     subheading:
       'Cuéntame qué quieres lograr y diseñamos juntos la solución. Respuesta inmediata por WhatsApp.',
     ctaLabel: 'Hablemos por WhatsApp ahora',
-    badge: 'Respuesta inmediata',
   },
 
   footer: {

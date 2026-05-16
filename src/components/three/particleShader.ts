@@ -12,11 +12,15 @@
 export const vertexShader = /* glsl */ `
   uniform float uProgress;
   uniform float uTime;
+  uniform vec2  uMouse;       // posición del cursor en NDC (-1..1)
+  uniform float uMouseStrength; // intensidad de repulsión (0..1)
+  uniform float uAspect;      // ancho/alto del canvas
   attribute vec3 aGrid;
   attribute vec3 aConstellation;
 
   varying float vMix;
   varying float vDepth;
+  varying float vMouseGlow;
 
   // Hash determinista a partir de la posición original
   float hash(vec3 p) {
@@ -42,12 +46,26 @@ export const vertexShader = /* glsl */ `
     pos.y += cos(uTime * 0.28 + phase * 1.3) * wobble;
     pos.z += sin(uTime * 0.42 + phase * 0.7) * wobble;
 
+    // === Repulsión del cursor ============================
+    // Proyectamos el cursor (NDC) al plano z=0 en world space.
+    // Estos factores aproximan el frustum de cámara (fov=50, distance=8).
+    vec3 mouseWorld = vec3(uMouse.x * 4.2 * uAspect, uMouse.y * 3.4, 0.0);
+    vec3 toMouse = pos - mouseWorld;
+    float dist = length(toMouse.xy) + 0.0001;
+    float falloff = 1.0 - smoothstep(0.0, 1.8, dist);
+    falloff *= uMouseStrength;
+    pos.xy += normalize(toMouse.xy) * falloff * 0.55;
+    // Empuje sutil hacia adelante en z (efecto "pop" hacia la cámara)
+    pos.z += falloff * 0.25;
+    vMouseGlow = falloff;
+    // =====================================================
+
     vec4 mv = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mv;
 
-    // Point size con atenuación por profundidad
+    // Point size con atenuación por profundidad + boost cerca del cursor
     float pixelRatio = 1.5;
-    gl_PointSize = (90.0 / -mv.z) * pixelRatio * (1.0 + p * 0.35);
+    gl_PointSize = (90.0 / -mv.z) * pixelRatio * (1.0 + p * 0.35 + falloff * 0.8);
 
     vMix = p;
     vDepth = -mv.z;
@@ -58,10 +76,12 @@ export const fragmentShader = /* glsl */ `
   uniform vec3 uColorA; // cloud — azul
   uniform vec3 uColorB; // grid  — iris
   uniform vec3 uColorC; // const — verde
+  uniform vec3 uColorHot; // brillo cerca del cursor
   uniform float uOpacity;
 
   varying float vMix;
   varying float vDepth;
+  varying float vMouseGlow;
 
   void main() {
     vec2 c = gl_PointCoord - 0.5;
@@ -79,9 +99,15 @@ export const fragmentShader = /* glsl */ `
       color = mix(uColorB, uColorC, (vMix - 0.5) * 2.0);
     }
 
+    // Tinte caliente cerca del cursor
+    color = mix(color, uColorHot, vMouseGlow * 0.7);
+
     // Ligera atenuación por profundidad
     float depthFade = clamp(1.0 - vDepth * 0.04, 0.5, 1.0);
 
-    gl_FragColor = vec4(color, alpha * uOpacity * depthFade);
+    // Boost de alpha cerca del cursor
+    float a = alpha * uOpacity * depthFade * (1.0 + vMouseGlow * 0.5);
+
+    gl_FragColor = vec4(color, a);
   }
 `;

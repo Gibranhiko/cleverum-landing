@@ -1,77 +1,90 @@
 ---
 import { site } from '~/content/site';
-import Eyebrow from '~/components/ui/Eyebrow.astro';
 
 const { differentiators } = site;
-const [d1, d2, d3, d4] = differentiators.items;
-const { statBig, quote } = differentiators;
+
+const iconAccents: Record<string, string> = {
+  target: 'var(--color-brand-blue)',
+  spark: 'var(--color-brand-iris)',
+  chart: 'var(--color-accent-go)',
+  compass: 'var(--color-brand-grape)',
+};
 ---
 
-<section id="why" class="bento-section" aria-labelledby="why-heading">
-  <header class="bento-head container-narrow">
-    <Eyebrow text="POR QUÉ NOSOTROS" />
-    <h2 id="why-heading" class="bento-title font-display">
-      {differentiators.heading}
-    </h2>
-    <p class="bento-sub">{differentiators.subheading}</p>
+<section id="why" class="why" aria-labelledby="why-heading">
+  <header class="why-head container-narrow">
+    <h2 id="why-heading" class="why-title font-display">{differentiators.heading}</h2>
+    <p class="why-sub">{differentiators.subheading}</p>
   </header>
 
-  <div class="bento container-narrow">
-    <article class="bento-card cell-d1">
-      <h3 class="bento-card-title font-display">{d1.title}</h3>
-      <p class="bento-card-body">{d1.body}</p>
-      <span class="bento-card-accent accent-blue" aria-hidden="true"></span>
-    </article>
+  <div class="why-grid container-narrow">
+    <!-- Media placeholder: lado izquierdo, vertical, predominante -->
+    <div class="why-media" role="img" aria-label="Espacio para imagen de respaldo">
+      <div class="why-media-inner">
+        <span class="why-media-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="9" cy="9" r="2" />
+            <path d="M21 15l-5-5L5 21" />
+          </svg>
+        </span>
+        <p class="why-media-label">{differentiators.mediaPlaceholder}</p>
+      </div>
+    </div>
 
-    <article class="bento-card cell-d2">
-      <h3 class="bento-card-title font-display">{d2.title}</h3>
-      <p class="bento-card-body">{d2.body}</p>
-      <span class="bento-card-accent accent-iris" aria-hidden="true"></span>
-    </article>
-
-    <article class="bento-card cell-stat">
-      <div class="bento-stat-value font-display gradient-text">{statBig.value}</div>
-      <div class="bento-stat-label">{statBig.label}</div>
-    </article>
-
-    <article class="bento-card cell-d3">
-      <h3 class="bento-card-title font-display">{d3.title}</h3>
-      <p class="bento-card-body">{d3.body}</p>
-      <span class="bento-card-accent accent-grape" aria-hidden="true"></span>
-    </article>
-
-    <article class="bento-card cell-d4">
-      <h3 class="bento-card-title font-display">{d4.title}</h3>
-      <p class="bento-card-body">{d4.body}</p>
-      <span class="bento-card-accent accent-green" aria-hidden="true"></span>
-    </article>
-
-    <article class="bento-card cell-quote">
-      <svg
-        class="bento-quote-mark"
-        viewBox="0 0 24 24"
-        width="36"
-        height="36"
-        aria-hidden="true"
-        fill="currentColor"
-      >
-        <path
-          d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"
-        ></path>
-      </svg>
-      <p class="bento-quote-text font-display">{quote}</p>
-    </article>
+    <!-- 4 diferenciadores en grid 2x2 al lado derecho -->
+    <ul class="why-items" role="list">
+      {
+        differentiators.items.map((item) => (
+          <li class="why-item" style={`--accent: ${iconAccents[item.icon] ?? 'var(--color-brand-iris)'};`}>
+            <span class="why-item-icon" aria-hidden="true">
+              {item.icon === 'target' && (
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="2" />
+                </svg>
+              )}
+              {item.icon === 'spark' && (
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M5 19l4-4M15 9l4-4" />
+                </svg>
+              )}
+              {item.icon === 'chart' && (
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 3v18h18" />
+                  <path d="M7 14l4-4 3 3 6-6" />
+                </svg>
+              )}
+              {item.icon === 'compass' && (
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36z" />
+                </svg>
+              )}
+            </span>
+            <h3 class="why-item-title font-display">{item.title}</h3>
+            <p class="why-item-body">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
 <style>
-  .bento-section {
+  .why {
     position: relative;
     padding-block: clamp(5rem, 10vw, 8rem);
     padding-inline: clamp(1.25rem, 4vw, 3rem);
   }
 
-  .bento-head {
+  .why-head {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -79,145 +92,194 @@ const { statBig, quote } = differentiators;
     max-width: 720px;
   }
 
-  .bento-title {
+  .why-title {
     font-size: var(--fs-h1);
     line-height: 1;
     letter-spacing: -0.03em;
     font-weight: 600;
     margin: 0;
+    text-wrap: balance;
   }
 
-  .bento-sub {
+  .why-sub {
     font-size: var(--fs-lead);
     color: var(--color-text-2);
     line-height: 1.55;
     max-width: 56ch;
   }
 
-  .bento {
+  /* Layout principal: media a la izquierda, items 2x2 a la derecha */
+  .why-grid {
     display: grid;
-    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    gap: clamp(1rem, 2vw, 1.5rem);
     grid-template-columns: 1fr;
   }
 
-  /* Layout asimétrico desktop */
-  @media (min-width: 900px) {
-    .bento {
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: minmax(190px, auto) minmax(190px, auto) minmax(170px, auto);
-      grid-template-areas:
-        'd1   d1   d2'
-        'stat d3   d2'
-        'd4   d4   quote';
+  @media (min-width: 960px) {
+    .why-grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
     }
-    .cell-d1    { grid-area: d1; }
-    .cell-d2    { grid-area: d2; }
-    .cell-stat  { grid-area: stat; }
-    .cell-d3    { grid-area: d3; }
-    .cell-d4    { grid-area: d4; }
-    .cell-quote { grid-area: quote; }
   }
 
-  .bento-card {
+  /* ---- Media placeholder ---- */
+  .why-media {
     position: relative;
+    min-height: 320px;
     border-radius: var(--radius-card);
     border: 1px solid var(--color-border);
     background:
-      linear-gradient(180deg, color-mix(in srgb, var(--color-bg-elev) 92%, transparent), var(--color-bg-elev));
-    padding: clamp(1.5rem, 2.5vw, 2.25rem);
+      radial-gradient(
+        80% 70% at 30% 30%,
+        color-mix(in srgb, var(--color-brand-iris) 18%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        70% 60% at 80% 80%,
+        color-mix(in srgb, var(--color-brand-blue) 14%, transparent),
+        transparent 70%
+      ),
+      var(--color-bg-elev);
     overflow: hidden;
-    isolation: isolate;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  @media (min-width: 960px) {
+    .why-media {
+      min-height: 100%;
+    }
+  }
+
+  .why-media-inner {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1.25rem;
+    padding: 2rem;
+  }
+
+  /* Indicador visual de placeholder */
+  .why-media::after {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border-radius: calc(var(--radius-card) - 4px);
+    border: 1px dashed color-mix(in srgb, var(--color-brand-iris) 35%, transparent);
+    pointer-events: none;
+  }
+
+  .why-media-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--color-brand-iris) 12%, transparent);
+    color: var(--color-brand-iris);
+    border: 1px solid color-mix(in srgb, var(--color-brand-iris) 30%, transparent);
+  }
+
+  .why-media-label {
+    font-size: var(--fs-body);
+    color: var(--color-text-2);
+    line-height: 1.5;
+    max-width: 36ch;
+    margin: 0;
+  }
+
+  /* ---- Diferenciadores grid 2×2 ---- */
+  .why-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 2vw, 1.25rem);
+  }
+
+  @media (min-width: 640px) {
+    .why-items {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .why-item {
+    position: relative;
+    padding: clamp(1.5rem, 2.5vw, 2rem);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elev);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    display: flex;
+    flex-direction: column;
     gap: 0.75rem;
-    transition: transform 0.4s var(--ease-out-expo), border-color 0.3s ease,
+    transition:
+      transform 0.4s var(--ease-out-expo),
+      border-color 0.3s ease,
       box-shadow 0.4s var(--ease-out-expo);
+    overflow: hidden;
+    isolation: isolate;
   }
 
-  .bento-card:hover {
+  .why-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      60% 50% at 0% 0%,
+      color-mix(in srgb, var(--accent) 10%, transparent),
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.7;
+    transition: opacity 0.4s var(--ease-out-expo);
+  }
+
+  .why-item:hover {
     transform: translateY(-3px);
-    border-color: var(--color-border-strong);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--color-border));
+    box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--accent) 40%, transparent);
   }
 
-  .bento-card-title {
+  .why-item:hover::before {
+    opacity: 1;
+  }
+
+  .why-item-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .why-item-title {
     font-size: var(--fs-h3);
     font-weight: 600;
     letter-spacing: -0.02em;
-    line-height: 1.1;
+    line-height: 1.15;
     color: var(--color-text-1);
     margin: 0;
     text-wrap: balance;
   }
 
-  .bento-card-body {
+  .why-item-body {
     font-size: var(--fs-body);
     line-height: 1.55;
     color: var(--color-text-2);
     margin: 0;
     max-width: 38ch;
-  }
-
-  /* Acento de gradiente decorativo en cada card */
-  .bento-card-accent {
-    position: absolute;
-    top: -40%;
-    right: -20%;
-    width: 60%;
-    height: 80%;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.55;
-    z-index: -1;
-    pointer-events: none;
-    transition: opacity 0.4s var(--ease-out-expo);
-  }
-  .bento-card:hover .bento-card-accent {
-    opacity: 0.8;
-  }
-  .accent-blue  { background: var(--color-brand-blue); }
-  .accent-iris  { background: var(--color-brand-iris); }
-  .accent-grape { background: var(--color-brand-grape); }
-  .accent-green { background: var(--color-accent-go); }
-
-  /* Stat card */
-  .cell-stat {
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  .bento-stat-value {
-    font-size: clamp(3.5rem, 6vw, 5.5rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    line-height: 0.95;
-  }
-  .bento-stat-label {
-    font-size: var(--fs-body);
-    color: var(--color-text-2);
-    line-height: 1.4;
-  }
-
-  /* Quote card */
-  .cell-quote {
-    background:
-      radial-gradient(
-        100% 80% at 0% 0%,
-        color-mix(in srgb, var(--color-brand-iris) 18%, transparent),
-        transparent 60%
-      ),
-      var(--color-bg-elev);
-  }
-  .bento-quote-mark {
-    color: var(--color-brand-iris);
-    opacity: 0.7;
-  }
-  .bento-quote-text {
-    font-size: var(--fs-h3);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    font-weight: 500;
-    color: var(--color-text-1);
-    margin: 0;
-    text-wrap: balance;
   }
 </style>

@@ -1,0 +1,173 @@
+---
+import { site } from '~/content/site';
+import WhatsAppButton from './WhatsAppButton.astro';
+
+const { nav } = site;
+---
+
+<header class="nav" data-nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand" aria-label="Cleverum — Inicio">
+      <span class="nav-brand-mark" aria-hidden="true">
+        <img src="/logos/cleverum-logo.png" alt="" width="32" height="32" loading="eager" />
+      </span>
+      <span class="nav-brand-name font-display">Cleverum</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Navegación principal">
+      {nav.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="nav-cta">
+      <WhatsAppButton label="WhatsApp" variant="secondary" size="sm" />
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  // Toggle .is-scrolled cuando se hace scroll > 16px
+  (function () {
+    if (typeof window === 'undefined') return;
+    const nav = document.querySelector('[data-nav]');
+    if (!nav) return;
+    let ticking = false;
+    const apply = () => {
+      ticking = false;
+      nav.classList.toggle('is-scrolled', window.scrollY > 16);
+    };
+    apply();
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(apply);
+        }
+      },
+      { passive: true },
+    );
+  })();
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 0.5rem clamp(1rem, 3vw, 2rem);
+    transition:
+      background-color 0.4s var(--ease-out-expo),
+      border-color 0.4s var(--ease-out-expo),
+      backdrop-filter 0.4s var(--ease-out-expo);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav.is-scrolled {
+    background: color-mix(in srgb, var(--color-bg-base) 65%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-bottom-color: var(--color-border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding: 0.5rem 0;
+  }
+
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--color-text-1);
+    transition: opacity 0.2s ease;
+  }
+  .nav-brand:hover {
+    opacity: 0.85;
+  }
+
+  .nav-brand-mark {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .nav-brand-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .nav-brand-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: clamp(1.25rem, 2.5vw, 2.25rem);
+  }
+
+  @media (min-width: 860px) {
+    .nav-links {
+      display: flex;
+    }
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--fs-small);
+    color: var(--color-text-2);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    transition: color 0.2s ease;
+    position: relative;
+  }
+
+  a.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-brand-iris);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+
+  a.nav-link:hover {
+    color: var(--color-text-1);
+  }
+
+  a.nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav-cta {
+    display: inline-flex;
+  }
+
+  /* En mobile, el botón WhatsApp toma protagonismo a la derecha */
+  @media (max-width: 480px) {
+    .nav-brand-name {
+      display: none;
+    }
+  }
+</style>

@@ -1,13 +1,11 @@
 ---
 import { site } from '~/content/site';
-import Eyebrow from '~/components/ui/Eyebrow.astro';
 
 const { howWeWork } = site;
 ---
 
 <section id="how" class="how" aria-labelledby="how-heading">
   <header class="how-head container-narrow">
-    <Eyebrow text="EL PROCESO" />
     <h2 id="how-heading" class="how-title font-display">{howWeWork.heading}</h2>
     <p class="how-sub">{howWeWork.subheading}</p>
   </header>
@@ -64,6 +62,9 @@ const { howWeWork } = site;
 
   .how-track {
     position: relative;
+    /* Named view timeline compartido: la línea y los steps se animan en sincronía */
+    view-timeline-name: --steps-track;
+    view-timeline-axis: block;
   }
 
   .how-track-line {
@@ -100,8 +101,8 @@ const { howWeWork } = site;
     @media (prefers-reduced-motion: no-preference) {
       .how-track-line-fill {
         animation: line-fill linear both;
-        animation-timeline: view();
-        animation-range: entry 10% cover 60%;
+        animation-timeline: --steps-track;
+        animation-range: cover 15% cover 75%;
       }
     }
   }
@@ -136,6 +137,46 @@ const { howWeWork } = site;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  /* Reveal en cascada — sincronizado con el view-timeline del track padre.
+     Cada step entra deslizándose desde la izquierda con un stagger basado en --i.
+     Usamos la fase `cover` para que la animación abarque todo el recorrido
+     de la sección por el viewport (no solo el momento de entrada). */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .how-step {
+        opacity: 0;
+        transform: translateX(-32px) translateY(8px);
+        animation: step-reveal linear both;
+        animation-timeline: --steps-track;
+        animation-range:
+          cover calc(22% + var(--i, 0) * 10%)
+          cover calc(42% + var(--i, 0) * 10%);
+      }
+
+      .how-step-node {
+        transform: scale(0);
+        animation: node-pop linear both;
+        animation-timeline: --steps-track;
+        animation-range:
+          cover calc(26% + var(--i, 0) * 10%)
+          cover calc(36% + var(--i, 0) * 10%);
+      }
+    }
+  }
+
+  @keyframes step-reveal {
+    to {
+      opacity: 1;
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  @keyframes node-pop {
+    to {
+      transform: scale(1);
+    }
   }
 
   .how-step-node {

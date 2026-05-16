@@ -5,6 +5,7 @@ import { buildJsonLd } from '~/lib/jsonld';
 import ScrollProgressBar from '~/components/react/ScrollProgressBar';
 import ParticleField from '~/components/react/ParticleField';
 import GradientMeshBackground from '~/components/ui/GradientMeshBackground.astro';
+import Navbar from '~/components/ui/Navbar.astro';
 import '~/styles/global.css';
 
 interface Props extends SeoProps {}
@@ -69,6 +70,7 @@ const jsonLd = buildJsonLd();
     <GradientMeshBackground />
     <ParticleField client:media="(min-width: 768px) and (prefers-reduced-motion: no-preference)" />
     <ScrollProgressBar client:idle />
+    <Navbar />
 
     <a
       href="#main"

@@ -7,13 +7,14 @@
  */
 
 import sharp from 'sharp';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
+import { mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(fileURLToPath(import.meta.url), '..', '..');
 const publicDir = resolve(root, 'public');
 const scriptsDir = resolve(root, 'scripts');
+const sourcesDir = resolve(scriptsDir, 'sources');
 
 async function ensureDir(path) {
   await mkdir(dirname(path), { recursive: true });
@@ -25,6 +26,23 @@ async function svgToPng(svgPath, outPath, width, height) {
   const image = sharp(svg, { density: 384 }).resize(width, height, { fit: 'contain' });
   await image.png({ compressionLevel: 9 }).toFile(outPath);
   console.log(`  → ${outPath} (${width}×${height})`);
+}
+
+async function optimizeLogo(srcPath, outPath, size = 128) {
+  await ensureDir(outPath);
+  const beforeBytes = (await stat(srcPath)).size;
+  await sharp(srcPath)
+    .resize(size, size, {
+      fit: 'contain',
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
+    .png({ compressionLevel: 9, quality: 92, palette: true })
+    .toFile(outPath);
+  const afterBytes = (await stat(outPath)).size;
+  const ratio = ((1 - afterBytes / beforeBytes) * 100).toFixed(1);
+  console.log(
+    `  → ${basename(outPath)} (${size}×${size}, ${(afterBytes / 1024).toFixed(1)} KB · ${ratio}% más chico)`,
+  );
 }
 
 async function main() {
@@ -53,7 +71,30 @@ async function main() {
   await svgToPng(faviconSvg, resolve(publicDir, 'icon-192.png'), 192, 192);
   await svgToPng(faviconSvg, resolve(publicDir, 'icon-512.png'), 512, 512);
 
-  // 3) site.webmanifest
+  // 3) Logos de marca (Devindry / Cleverum / Wabbi)
+  // Originales viven en scripts/sources/logos/ (versionados como backup).
+  // Salida optimizada a 128×128 PNG en public/logos/ — cubre 64 (BrandCard),
+  // 48 (Footer) y 32 (Navbar) con buffer 2× para retina.
+  console.log('\nLogos de marca:');
+  const logosSrcDir = resolve(sourcesDir, 'logos');
+  const logosOutDir = resolve(publicDir, 'logos');
+  try {
+    const files = await readdir(logosSrcDir);
+    for (const file of files) {
+      if (!/\.(png|jpe?g|webp)$/i.test(file)) continue;
+      const src = resolve(logosSrcDir, file);
+      const out = resolve(logosOutDir, file.replace(/\.(jpe?g|webp)$/i, '.png'));
+      await optimizeLogo(src, out, 128);
+    }
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log('  (sin originales en scripts/sources/logos/ — skip)');
+    } else {
+      throw err;
+    }
+  }
+
+  // 4) site.webmanifest
   console.log('\nManifest:');
   const manifest = {
     name: 'Cleverum',

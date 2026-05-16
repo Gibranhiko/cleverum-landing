@@ -1,15 +1,12 @@
 ---
 import { site } from '~/content/site';
-import Eyebrow from '~/components/ui/Eyebrow.astro';
 import WhatsAppButton from '~/components/ui/WhatsAppButton.astro';
 
-const { contact, contactCta } = site;
+const { contactCta } = site;
 ---
 
 <section id="contacto" class="cta" aria-labelledby="cta-heading">
   <div class="cta-inner container-narrow">
-    <Eyebrow text="HABLEMOS" dotColor="var(--color-accent-go)" />
-
     <h2 id="cta-heading" class="cta-title font-display">
       {contactCta.heading.split('?')[0]}<span class="gradient-text-go">?</span>
     </h2>
@@ -18,43 +15,6 @@ const { contact, contactCta } = site;
 
     <div class="cta-actions">
       <WhatsAppButton label={contactCta.ctaLabel} variant="secondary" size="lg" />
-      <span class="cta-badge">
-        <span class="cta-badge-dot" aria-hidden="true"></span>
-        {contactCta.badge}
-      </span>
-    </div>
-
-    <div class="cta-card">
-      <div class="cta-card-row">
-        <span class="cta-card-label">Contacto directo</span>
-        <span class="cta-card-name font-display">{contact.name}</span>
-      </div>
-
-      <ul class="cta-card-links">
-        <li>
-          <a href={`tel:${contact.phoneTel}`} class="cta-card-link">
-            <span class="cta-card-link-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-            </span>
-            <span>{contact.phoneDisplay}</span>
-          </a>
-        </li>
-        <li>
-          <a href={`mailto:${contact.email}`} class="cta-card-link">
-            <span class="cta-card-link-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="5" width="18" height="14" rx="2"/>
-                <path d="M3 7l9 6 9-6"/>
-              </svg>
-            </span>
-            <span>{contact.email}</span>
-          </a>
-        </li>
-      </ul>
     </div>
   </div>
 </section>
@@ -105,110 +65,5 @@ const { contact, contactCta } = site;
       flex-direction: row;
       gap: 1.5rem;
     }
-  }
-
-  .cta-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: var(--fs-small);
-    color: var(--color-text-2);
-    font-weight: 500;
-  }
-
-  .cta-badge-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-accent-go);
-    box-shadow: 0 0 12px var(--color-accent-go);
-    animation: cta-pulse 1.8s ease-in-out infinite;
-  }
-
-  @keyframes cta-pulse {
-    0%, 100% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.15); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .cta-badge-dot { animation: none; opacity: 1; }
-  }
-
-  .cta-card {
-    margin-top: clamp(2rem, 4vw, 3rem);
-    width: 100%;
-    max-width: 560px;
-    border-radius: var(--radius-card);
-    border: 1px solid var(--color-border);
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--color-bg-elev) 90%, transparent), var(--color-bg-elev));
-    padding: clamp(1.5rem, 3vw, 2.25rem);
-    text-align: left;
-    backdrop-filter: blur(12px);
-  }
-
-  .cta-card-row {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .cta-card-label {
-    font-size: var(--fs-eyebrow);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-text-3);
-    font-weight: 500;
-  }
-
-  .cta-card-name {
-    font-size: var(--fs-h3);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: var(--color-text-1);
-  }
-
-  .cta-card-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .cta-card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
-    color: var(--color-text-1);
-    font-size: var(--fs-body);
-    font-variant-numeric: tabular-nums;
-    transition: color 0.3s ease;
-  }
-
-  .cta-card-link:hover {
-    color: var(--color-brand-iris);
-  }
-
-  .cta-card-link-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: 1px solid var(--color-border);
-    background: var(--color-bg-soft);
-    color: var(--color-text-2);
-  }
-
-  .cta-card-link:hover .cta-card-link-icon {
-    color: var(--color-brand-iris);
-    border-color: color-mix(in srgb, var(--color-brand-iris) 40%, transparent);
   }
 </style>

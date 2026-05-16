@@ -17,25 +17,39 @@
     background:
       radial-gradient(
         60% 50% at 20% 15%,
-        color-mix(in srgb, var(--color-brand-blue) 22%, transparent),
+        color-mix(in srgb, var(--color-brand-blue) 14%, transparent),
         transparent 70%
       ),
       radial-gradient(
         50% 45% at 80% 25%,
-        color-mix(in srgb, var(--color-brand-iris) 25%, transparent),
+        color-mix(in srgb, var(--color-brand-iris) 16%, transparent),
         transparent 70%
       ),
       radial-gradient(
         55% 55% at 60% 85%,
-        color-mix(in srgb, var(--color-brand-grape) 20%, transparent),
+        color-mix(in srgb, var(--color-brand-grape) 12%, transparent),
         transparent 70%
       ),
       radial-gradient(
         45% 40% at 10% 80%,
-        color-mix(in srgb, var(--color-accent-go) 12%, transparent),
+        color-mix(in srgb, var(--color-accent-go) 8%, transparent),
         transparent 70%
       ),
       var(--color-bg-base);
+  }
+
+  /* Velo oscuro encima para mantener legibilidad sin matar el color */
+  .gradient-mesh::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(8, 8, 11, 0.35) 0%,
+      rgba(8, 8, 11, 0.15) 50%,
+      rgba(8, 8, 11, 0.35) 100%
+    );
+    pointer-events: none;
   }
 
   .gradient-mesh::after {

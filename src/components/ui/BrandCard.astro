@@ -11,8 +11,8 @@ interface Props {
 
 const { brand, index } = Astro.props;
 const accent = accentVar[brand.accent];
-// Sticky top offset incremental → cada card asoma debajo de la siguiente
 const stickyTop = `${5 + index * 2.5}vh`;
+const initial = brand.name.charAt(0);
 ---
 
 <article
@@ -21,17 +21,25 @@ const stickyTop = `${5 + index * 2.5}vh`;
   style={`--accent: ${accent}; --sticky-top: ${stickyTop};`}
 >
   <div class="brand-card-inner">
-    <header class="brand-card-head">
-      <span class="brand-card-num">{brand.number}</span>
-      <span class="brand-card-divider" aria-hidden="true"></span>
-      <span class="brand-card-name">{brand.name}</span>
-    </header>
-
     <div class="brand-card-body">
       <div class="brand-card-content">
-        <h2 class="brand-card-tagline font-display">
-          {brand.tagline}
-        </h2>
+        <header class="brand-card-head">
+          <div class="brand-card-logo" aria-label={`Logo de ${brand.name} — placeholder`}>
+            {
+              brand.logoSrc ? (
+                <img src={brand.logoSrc} alt={`${brand.name} logo`} width="56" height="56" />
+              ) : (
+                <span class="brand-card-logo-initial font-display">{initial}</span>
+              )
+            }
+          </div>
+          <div class="brand-card-meta">
+            <span class="brand-card-num">{brand.number}</span>
+            <span class="brand-card-name">{brand.name}</span>
+          </div>
+        </header>
+
+        <h2 class="brand-card-tagline font-display">{brand.tagline}</h2>
         <p class="brand-card-desc">{brand.description}</p>
 
         <ul class="brand-card-bullets" role="list">
@@ -49,7 +57,7 @@ const stickyTop = `${5 + index * 2.5}vh`;
           <WhatsAppButton
             label={`Hablemos de ${brand.name}`}
             message={brand.ctaMessage}
-            variant="minimal"
+            variant="secondary"
             size="md"
           />
         </div>
@@ -87,21 +95,20 @@ const stickyTop = `${5 + index * 2.5}vh`;
     background:
       radial-gradient(
         80% 100% at 100% 0%,
-        color-mix(in srgb, var(--accent) 12%, transparent),
+        color-mix(in srgb, var(--accent) 14%, transparent),
         transparent 70%
       ),
-      linear-gradient(180deg, color-mix(in srgb, var(--accent) 5%, transparent), transparent 40%),
-      color-mix(in srgb, var(--color-bg-elev) 92%, transparent);
-    backdrop-filter: blur(12px);
+      var(--color-bg-elev);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
     padding: clamp(1.5rem, 4vw, 3rem);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.04) inset,
-      0 40px 80px -40px color-mix(in srgb, var(--accent) 60%, transparent);
+      0 1px 0 rgba(255, 255, 255, 0.05) inset,
+      0 40px 80px -40px color-mix(in srgb, var(--accent) 50%, transparent);
     overflow: hidden;
     isolation: isolate;
   }
 
-  /* Línea acento superior */
   .brand-card-inner::before {
     content: '';
     position: absolute;
@@ -110,37 +117,7 @@ const stickyTop = `${5 + index * 2.5}vh`;
     right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0.5;
-  }
-
-  .brand-card-head {
-    display: flex;
-    align-items: center;
-    gap: 0.875rem;
-    margin-bottom: clamp(1.25rem, 3vw, 2rem);
-  }
-
-  .brand-card-num {
-    font-family: var(--font-display);
-    font-feature-settings: 'tnum';
-    font-size: var(--fs-eyebrow);
-    font-weight: 500;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-  }
-
-  .brand-card-divider {
-    flex: 0 0 24px;
-    height: 1px;
-    background: var(--color-border-strong);
-  }
-
-  .brand-card-name {
-    font-size: var(--fs-eyebrow);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-text-2);
-    font-weight: 500;
+    opacity: 0.6;
   }
 
   .brand-card-body {
@@ -155,6 +132,80 @@ const stickyTop = `${5 + index * 2.5}vh`;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
       gap: clamp(2rem, 5vw, 4rem);
     }
+  }
+
+  .brand-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header con logo + número/nombre */
+  .brand-card-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .brand-card-logo {
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--accent) 10%, var(--color-bg-soft));
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--color-border));
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Indicador visual de placeholder: borde punteado interno */
+  .brand-card-logo:not(:has(img))::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border-radius: 11px;
+    border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+    pointer-events: none;
+  }
+
+  .brand-card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .brand-card-logo-initial {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .brand-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .brand-card-num {
+    font-family: var(--font-display);
+    font-feature-settings: 'tnum';
+    font-size: var(--fs-eyebrow);
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+  }
+
+  .brand-card-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-text-1);
+    line-height: 1;
   }
 
   .brand-card-tagline {
