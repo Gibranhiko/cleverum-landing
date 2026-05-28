@@ -7,7 +7,7 @@ export const site = {
   meta: {
     title: 'Cleverum — Sistemas de IA y automatización para PYMES',
     description:
-      'Construyo sistemas que ponen tu negocio en piloto automático. Sin agencias, sin BS. Un solo dev, todo el stack.',
+      'Construyo sistemas que ponen tu negocio en piloto automático. Trabajo solo, hago todo: desde el diseño hasta la entrega.',
     url: 'https://cleverum.org',
     locale: 'es_MX',
     author: 'Gibran Villarreal',
@@ -15,7 +15,7 @@ export const site = {
 
   brand: {
     name: 'Cleverum',
-    bajada: 'by Gibran Villarreal',
+    bajada: 'por Gibran Villarreal',
     location: 'México · LATAM',
   },
 
@@ -48,15 +48,14 @@ export const site = {
       'Atiende a tus clientes *24/7* sin contratar otro agente.',
     ],
     ctaPrimary: 'Hablemos por WhatsApp',
-    ctaSecondary: 'Agenda 20 min gratis',
   },
 
   audit: {
-    eyebrow: 'AUDIT GRATIS CON IA · 30 SEGUNDOS',
+    eyebrow: 'DIAGNÓSTICO GRATIS CON IA · 30 SEGUNDOS',
     headline: 'Diagnóstico inteligente de tu negocio.',
     pitch: [
-      'Crucé 50+ workflows que he construido, casos reales en LATAM y lo más nuevo en agentes de IA (Claude · GPT · n8n · MCP).',
-      'Te devuelvo 3 oportunidades específicas, ROI estimado y stack recomendado. Si decides ejecutar, sesión 20 min conmigo gratis + 10% off tu primer sprint.',
+      'Vengo de armar más de 50 proyectos para negocios en México y LATAM. Combino esa experiencia con las herramientas de IA más modernas para entender qué necesitas.',
+      'Te entrego 3 ideas concretas para automatizar tu negocio, con un cálculo del retorno esperado y las herramientas que recomiendo. Tú decides cómo avanzar.',
     ],
     inputPlaceholder: 'Tu URL o tu negocio en 1 línea',
     submitLabel: 'Analizar',
@@ -68,21 +67,21 @@ export const site = {
         'Pega tu URL si la tienes — analizo tu sitio en tiempo real',
         'Menciona industria + tamaño aproximado de equipo',
         'Cuéntame lo que más te quita tiempo hoy',
-        'Si usas Shopify / HubSpot / Make / n8n, dímelo',
+        'Si usas alguna herramienta como Shopify, HubSpot, Make o n8n, dímelo',
         'Sé conciso: máximo 500 caracteres. El análisis es mejor cuando es directo.',
       ],
       examples: [
-        'Ecommerce de ropa MX, atiendo 200 chats/día a mano',
-        'SaaS B2B, onboarding manual de 3 horas por cliente',
-        'Restaurante con WhatsApp manual + 4 plataformas de delivery',
-        'Despacho legal, copia datos entre 5 sistemas cada semana',
+        'Tienda en línea de ropa, atiendo 200 chats al día a mano',
+        'Software para empresas, integrar cada cliente nuevo me toma 3 horas',
+        'Restaurante que contesta WhatsApp a mano y maneja 4 apps de delivery',
+        'Despacho legal, copio datos entre 5 sistemas todas las semanas',
       ],
     },
   },
 
   cases: {
     heading: 'Cosas que he construido.',
-    subheading: 'Capturas reales — no mockups, no stock.',
+    subheading: 'Capturas reales del producto entregado, no plantillas.',
     items: [
       {
         id: 'whatsapp-panel',
@@ -119,11 +118,11 @@ export const site = {
 
   services: {
     heading: 'Tres formas de trabajar conmigo.',
-    subheading: 'Sprints productizados. Scope fijo. Sin sorpresas.',
+    subheading: 'Proyectos con precio claro y entregables definidos.',
     items: [
       {
         id: 'web',
-        title: 'Sprint Web',
+        title: 'Sitio web',
         subtitle: 'Landing o web app',
         bullets: [
           'Hasta N pantallas o secciones',
@@ -131,12 +130,12 @@ export const site = {
           'Performance & SEO incluidos',
         ],
         duration: '2-4 semanas',
-        priceFrom: '$25,000 MXN',
+        priceFrom: '$15,000 MXN',
         accent: 'blue',
       },
       {
         id: 'auto',
-        title: 'Sprint Automatización IA',
+        title: 'Automatización con IA',
         subtitle: 'Workflow + agente IA',
         bullets: [
           'Diagnóstico + diseño del flujo',
@@ -144,12 +143,12 @@ export const site = {
           'Integraciones a tus herramientas + 1 agente IA',
         ],
         duration: '2-3 semanas',
-        priceFrom: '$35,000 MXN',
+        priceFrom: '$22,000 MXN',
         accent: 'iris',
       },
       {
         id: 'chatbot',
-        title: 'Sprint Chatbot WhatsApp',
+        title: 'Chatbot de WhatsApp',
         subtitle: 'Bot + panel admin',
         bullets: [
           'Chatbot con IA conversacional',
@@ -157,26 +156,26 @@ export const site = {
           'Integraciones a CRM / ERP / e-commerce',
         ],
         duration: '3-5 semanas',
-        priceFrom: '$45,000 MXN',
+        priceFrom: '$28,000 MXN',
         accent: 'green',
       },
     ],
   },
 
   about: {
-    heading: 'Soy Gibran. Single war machine.',
+    heading: 'Soy Gibran. Yo solo, todo el stack.',
     photoSrc: null as string | null,
     paragraphs: [
       'Construyo sistemas de IA y automatización para PYMES en México y LATAM. Solo.',
-      'Sin agencia. Sin equipo offshore. Sin junior devs. Sin reuniones de descubrimiento de 8 horas.',
+      'Sin agencias intermediarias, sin equipos lejanos, sin juntas eternas para entender lo que quieres.',
       'Yo te diagnostico. Yo te construyo. Yo te entrego.',
-      'Si tu equipo está copiando datos a mano en 2026, estás quemando dinero.',
+      'Si tu equipo sigue copiando datos a mano entre sistemas, estás perdiendo tiempo y dinero todos los días.',
     ],
   },
 
   finalCta: {
     heading: '¿Listo para automatizar tu negocio?',
-    sub: 'Empieza con un audit gratis de IA o agenda 20 min conmigo.',
+    sub: 'Empieza con el diagnóstico gratis de arriba ↑ o escríbeme directo desde el botón de WhatsApp del menú.',
   },
 
   footer: {

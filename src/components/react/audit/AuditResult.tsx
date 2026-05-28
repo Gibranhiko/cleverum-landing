@@ -16,16 +16,16 @@ interface Props {
   error: string | null;
 }
 
-const SPRINT_NAME: Record<string, string> = {
-  web: 'Sprint Web',
-  auto: 'Sprint Automatización IA',
-  chatbot: 'Sprint Chatbot WhatsApp',
+const SERVICE_NAME: Record<string, string> = {
+  web: 'Sitio web',
+  auto: 'Automatización con IA',
+  chatbot: 'Chatbot de WhatsApp',
 };
 
-const SPRINT_PRICE: Record<string, string> = {
-  web: 'desde $25,000 MXN',
-  auto: 'desde $35,000 MXN',
-  chatbot: 'desde $45,000 MXN',
+const SERVICE_PRICE: Record<string, string> = {
+  web: 'desde $15,000 MXN',
+  auto: 'desde $22,000 MXN',
+  chatbot: 'desde $28,000 MXN',
 };
 
 export default function AuditResult(props: Props): React.ReactElement {
@@ -177,7 +177,7 @@ function OpportunityCard({
     >
       <header className="audit-opp-header">
         <span className="audit-opp-badge">
-          {o.categoria === 'quick-win' ? 'Quick Win' : 'Strategic Bet'}
+          {o.categoria === 'quick-win' ? 'Ganancia rápida' : 'Apuesta estratégica'}
         </span>
         <span className="audit-opp-index">{String(index + 1).padStart(2, '0')}</span>
       </header>
@@ -195,7 +195,7 @@ function OpportunityCard({
 
       <dl className="audit-opp-meta">
         <div>
-          <dt>ROI</dt>
+          <dt>Retorno</dt>
           <dd>{o.roi_estimado}</dd>
         </div>
         <div>
@@ -207,23 +207,23 @@ function OpportunityCard({
           <dd>{o.complejidad}</dd>
         </div>
         <div>
-          <dt>Sprint</dt>
+          <dt>Proyecto</dt>
           <dd>
-            {SPRINT_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}
-            <span className="audit-opp-price"> ({SPRINT_PRICE[o.sprint_recomendado] ?? '?'})</span>
+            {SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}
+            <span className="audit-opp-price"> ({SERVICE_PRICE[o.sprint_recomendado] ?? '?'})</span>
           </dd>
         </div>
       </dl>
 
-      <div className="audit-opp-ice" aria-label="ICE score">
-        <span className="audit-opp-ice-label">ICE</span>
-        <IceBar label="Impact" value={o.ice_score.impact} />
-        <IceBar label="Confidence" value={o.ice_score.confidence} />
-        <IceBar label="Ease" value={o.ice_score.ease} />
+      <div className="audit-opp-ice" aria-label="Puntaje de la oportunidad">
+        <span className="audit-opp-ice-label">Puntaje</span>
+        <IceBar label="Impacto" value={o.ice_score.impact} />
+        <IceBar label="Confianza" value={o.ice_score.confidence} />
+        <IceBar label="Facilidad" value={o.ice_score.ease} />
         <span className="audit-opp-ice-avg">∅ {o.ice_score.promedio.toFixed(1)}</span>
       </div>
 
-      <div className="audit-opp-confianza">Confianza: {o.confianza}/100</div>
+      <div className="audit-opp-confianza">Qué tan seguro estoy: {o.confianza}/100</div>
     </article>
   );
 }
@@ -256,7 +256,7 @@ function MaturityScore({
 
   return (
     <section className="audit-maturity">
-      <div className="audit-result-stage-label">Score de madurez digital</div>
+      <div className="audit-result-stage-label">Madurez digital</div>
       <div className="audit-maturity-value">
         <span className="audit-maturity-score-big">{score}</span>
         <span className="audit-maturity-score-max">/{max}</span>
@@ -369,7 +369,8 @@ function EmailGate({ auditId }: { auditId: string }): React.ReactElement {
     >
       <h3>Recibe la propuesta detallada por email</h3>
       <p>
-        Te mando el reporte completo con stack, ROI y plan de implementación. Sin spam.
+        Te mando el reporte completo con las tecnologías, el retorno esperado y un plan
+        de cómo arrancar. Sin spam.
       </p>
 
       <div className="audit-gate-row">

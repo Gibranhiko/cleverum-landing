@@ -64,7 +64,7 @@ REGLAS:
 2. Cada oportunidad referencia 1-2 patrones de la biblioteca por su id (PATRON_XX).
 3. ROI estimado debe ser cuantificable (hrs/mes ahorradas, % conversión, % cobranza, etc.).
 4. Stack recomendado: usa nombres reales del patrón referenciado.
-5. Sprint recomendado: 'web' / 'auto' / 'chatbot' (los 3 sprints de Cleverum).
+5. Proyecto recomendado: 'web' / 'auto' / 'chatbot' (los 3 proyectos productizados de Cleverum: Sitio web, Automatización con IA, Chatbot de WhatsApp).
 6. Confianza: 0-100, cuán seguro estás de que es la jugada correcta para este negocio específico.
 7. Si el input es muy vago o ambiguo, asume el caso más común para esa industria y reduce confianza.
 

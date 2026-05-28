@@ -249,6 +249,6 @@ ${p.description}
 - Duración: ${p.duration}
 - Complejidad: ${p.complexity}
 - Categoría: ${p.category}
-- Sprint: ${p.sprintRecomendado}`;
+- Proyecto: ${p.sprintRecomendado}`;
   }).join('\n\n');
 }

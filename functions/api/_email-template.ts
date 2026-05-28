@@ -12,16 +12,16 @@ const CALENDLY_URL = site.contact.calendly.includes('REPLACE_ME')
 const GIBRAN_EMAIL = site.contact.email;
 const MANIFESTO = site.footer.manifesto;
 
-const SPRINT_PRICE: Record<string, string> = {
-  web: '$25,000 MXN',
-  auto: '$35,000 MXN',
-  chatbot: '$45,000 MXN',
+const SERVICE_PRICE: Record<string, string> = {
+  web: '$15,000 MXN',
+  auto: '$22,000 MXN',
+  chatbot: '$28,000 MXN',
 };
 
-const SPRINT_NAME: Record<string, string> = {
-  web: 'Sprint Web',
-  auto: 'Sprint Automatización IA',
-  chatbot: 'Sprint Chatbot WhatsApp',
+const SERVICE_NAME: Record<string, string> = {
+  web: 'Sitio web',
+  auto: 'Automatización con IA',
+  chatbot: 'Chatbot de WhatsApp',
 };
 
 function escapeHtml(s: string): string {
@@ -39,7 +39,7 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
       (o, i) => `
       <tr><td style="padding:28px 0 4px;border-top:1px solid #1f1f24;">
         <div style="color:#7C5CFF;font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">
-          ${String(i + 1).padStart(2, '0')} · ${o.categoria === 'quick-win' ? 'Quick Win' : 'Strategic Bet'}
+          ${String(i + 1).padStart(2, '0')} · ${o.categoria === 'quick-win' ? 'Ganancia rápida' : 'Apuesta estratégica'}
         </div>
         <h3 style="margin:0 0 12px;color:#ffffff;font-size:22px;line-height:1.2;font-weight:600;letter-spacing:-0.015em;">
           ${escapeHtml(o.titulo)}
@@ -48,10 +48,10 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
           ${escapeHtml(o.porque)}
         </p>
         <table cellpadding="0" cellspacing="0" border="0" style="width:100%;font-size:14px;color:#B4B4BF;line-height:1.5;">
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">ROI:</strong> ${escapeHtml(o.roi_estimado)}</td></tr>
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Stack:</strong> ${o.stack_recomendado.map(escapeHtml).join(' · ')}</td></tr>
+          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Retorno:</strong> ${escapeHtml(o.roi_estimado)}</td></tr>
+          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Tecnologías:</strong> ${o.stack_recomendado.map(escapeHtml).join(' · ')}</td></tr>
           <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Tiempo:</strong> ${escapeHtml(o.tiempo_implementacion)} · Complejidad ${escapeHtml(o.complejidad)}</td></tr>
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Sprint:</strong> ${SPRINT_NAME[o.sprint_recomendado] ?? o.sprint_recomendado} (desde ${SPRINT_PRICE[o.sprint_recomendado] ?? '?'})</td></tr>
+          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Proyecto:</strong> ${SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado} (desde ${SERVICE_PRICE[o.sprint_recomendado] ?? '?'})</td></tr>
         </table>
       </td></tr>
     `,

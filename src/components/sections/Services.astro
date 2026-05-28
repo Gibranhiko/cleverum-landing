@@ -1,6 +1,5 @@
 ---
 import { site } from '~/content/site';
-import WhatsAppButton from '~/components/ui/WhatsAppButton.astro';
 
 const { services } = site;
 
@@ -79,13 +78,6 @@ const accentVar: Record<string, string> = {
               </div>
             </div>
 
-            <WhatsAppButton
-              label="Hablemos"
-              message={`¡Hola Gibran! Me interesa el ${s.title}.`}
-              variant="secondary"
-              size="md"
-              class="service-cta"
-            />
           </article>
         ))
       }
