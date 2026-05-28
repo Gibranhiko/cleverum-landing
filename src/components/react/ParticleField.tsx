@@ -2,26 +2,45 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { createParticleAttributes } from '~/components/three/particleGeometry';
+import { generateDigitPositions } from '~/components/three/digitGeometry';
 import { fragmentShader, vertexShader } from '~/components/three/particleShader';
 import { subscribeScrollProgress } from '~/lib/scrollProgress';
+import { subscribeAuditState, type AuditState } from '~/lib/auditState';
 
 const PARTICLE_COUNT = 6000;
-const SCRUB_SPEED = 6; // velocidad con la que uProgress persigue al scroll
-const MOUSE_LERP = 5; // velocidad con la que el cursor lerpa hacia el target
+const SCRUB_SPEED = 6;
+const MOUSE_LERP = 5;
+const AUDIT_LERP = 4;
 
-function Particles() {
+function auditStateToNumeric(s: AuditState): number {
+  switch (s) {
+    case 'processing':
+      return 1;
+    case 'revealing':
+      return 2;
+    case 'done':
+      return 3;
+    default:
+      return 0;
+  }
+}
+
+function Particles(): React.ReactElement {
   const pointsRef = useRef<THREE.Points>(null);
   const targetProgress = useRef(0);
   const currentProgress = useRef(0);
 
-  // Posición del cursor en NDC (-1..1).
-  // target = valor real del último mousemove. current = valor suavizado.
   const mouseTarget = useRef({ x: 0, y: 0 });
   const mouseCurrent = useRef({ x: 0, y: 0 });
-  // 0 cuando no hay mouse (touch / sin movimiento) → fadeOut suave
   const mouseStrengthTarget = useRef(0);
   const mouseStrengthCurrent = useRef(0);
   const lastMouseAt = useRef(0);
+
+  // Audit state refs
+  const auditStateNum = useRef(0);
+  const auditMixTarget = useRef(0);
+  const auditMixCurrent = useRef(0);
+  const digitAttrRef = useRef<THREE.BufferAttribute | null>(null);
 
   const { size } = useThree();
 
@@ -31,6 +50,12 @@ function Particles() {
     g.setAttribute('position', new THREE.BufferAttribute(attrs.cloud, 3));
     g.setAttribute('aGrid', new THREE.BufferAttribute(attrs.grid, 3));
     g.setAttribute('aConstellation', new THREE.BufferAttribute(attrs.constellation, 3));
+
+    // Initialize aDigit attribute with zeros — populated when audit completes
+    const digitArr = new Float32Array(PARTICLE_COUNT * 3);
+    const digitAttr = new THREE.BufferAttribute(digitArr, 3);
+    digitAttr.setUsage(THREE.DynamicDrawUsage);
+    g.setAttribute('aDigit', digitAttr);
     return g;
   }, []);
 
@@ -44,6 +69,8 @@ function Particles() {
         uMouse: { value: new THREE.Vector2(0, 0) },
         uMouseStrength: { value: 0 },
         uAspect: { value: 1 },
+        uAuditState: { value: 0 },
+        uAuditMix: { value: 0 },
         uColorA: { value: new THREE.Color('#4F8AF7') },
         uColorB: { value: new THREE.Color('#7C5CFF') },
         uColorC: { value: new THREE.Color('#22C55E') },
@@ -56,23 +83,40 @@ function Particles() {
     });
   }, []);
 
-  // Subscripciones globales
+  // Capture the digit attribute ref once geometry is built
+  useEffect(() => {
+    digitAttrRef.current = geometry.attributes.aDigit as THREE.BufferAttribute;
+  }, [geometry]);
+
+  // Subscriptions: scroll + mouse + audit state
   useEffect(() => {
     const unsubscribeScroll = subscribeScrollProgress((p) => {
       targetProgress.current = p;
     });
 
-    const onMouseMove = (e: MouseEvent) => {
+    const unsubscribeAudit = subscribeAuditState((state, payload) => {
+      // On 'done', generate digit positions from the maturity score
+      if (state === 'done' && payload.score !== undefined && digitAttrRef.current) {
+        const positions = generateDigitPositions(
+          payload.score.toFixed(1),
+          PARTICLE_COUNT,
+        );
+        (digitAttrRef.current.array as Float32Array).set(positions);
+        digitAttrRef.current.needsUpdate = true;
+      }
+      auditStateNum.current = auditStateToNumeric(state);
+      auditMixTarget.current = state === 'idle' ? 0 : 1;
+    });
+
+    const onMouseMove = (e: MouseEvent): void => {
       mouseTarget.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouseTarget.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
       mouseStrengthTarget.current = 1;
       lastMouseAt.current = performance.now();
     };
-
-    const onMouseLeave = () => {
+    const onMouseLeave = (): void => {
       mouseStrengthTarget.current = 0;
     };
-
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mouseleave', onMouseLeave);
 
@@ -80,52 +124,54 @@ function Particles() {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseleave', onMouseLeave);
       unsubscribeScroll();
+      unsubscribeAudit();
       geometry.dispose();
       material.dispose();
     };
   }, [geometry, material]);
 
-  // Actualiza el aspect ratio cuando cambia el viewport
   useEffect(() => {
-    material.uniforms.uAspect.value = size.width / Math.max(1, size.height);
+    material.uniforms.uAspect!.value = size.width / Math.max(1, size.height);
   }, [size.width, size.height, material]);
 
   useFrame((_, dt) => {
-    // 1) Scroll → uProgress (scrub)
     const scrollK = Math.min(1, dt * SCRUB_SPEED);
     currentProgress.current +=
       (targetProgress.current - currentProgress.current) * scrollK;
-    material.uniforms.uProgress.value = currentProgress.current;
+    material.uniforms.uProgress!.value = currentProgress.current;
 
-    // 2) Mouse → uMouse (lerp)
     const mK = Math.min(1, dt * MOUSE_LERP);
-    mouseCurrent.current.x +=
-      (mouseTarget.current.x - mouseCurrent.current.x) * mK;
-    mouseCurrent.current.y +=
-      (mouseTarget.current.y - mouseCurrent.current.y) * mK;
-    material.uniforms.uMouse.value.set(mouseCurrent.current.x, mouseCurrent.current.y);
+    mouseCurrent.current.x += (mouseTarget.current.x - mouseCurrent.current.x) * mK;
+    mouseCurrent.current.y += (mouseTarget.current.y - mouseCurrent.current.y) * mK;
+    material.uniforms.uMouse!.value.set(mouseCurrent.current.x, mouseCurrent.current.y);
 
-    // Si llevamos > 2s sin mover el mouse, atenúa la repulsión
     if (performance.now() - lastMouseAt.current > 2000) {
       mouseStrengthTarget.current = 0;
     }
     mouseStrengthCurrent.current +=
       (mouseStrengthTarget.current - mouseStrengthCurrent.current) * Math.min(1, dt * 2.5);
-    material.uniforms.uMouseStrength.value = mouseStrengthCurrent.current;
+    material.uniforms.uMouseStrength!.value = mouseStrengthCurrent.current;
 
-    // 3) Tiempo global
-    material.uniforms.uTime.value += dt;
+    // Audit transition
+    const auditK = Math.min(1, dt * AUDIT_LERP);
+    auditMixCurrent.current +=
+      (auditMixTarget.current - auditMixCurrent.current) * auditK;
+    material.uniforms.uAuditState!.value = auditStateNum.current;
+    material.uniforms.uAuditMix!.value = auditMixCurrent.current;
 
-    // 4) Rotación lenta del campo
+    material.uniforms.uTime!.value += dt;
+
     if (pointsRef.current) {
-      pointsRef.current.rotation.y += dt * 0.04;
+      // Slow down rotation during audit so the digit reads stable
+      const rotMul = 1 - 0.85 * auditMixCurrent.current;
+      pointsRef.current.rotation.y += dt * 0.04 * rotMul;
     }
   });
 
   return <points ref={pointsRef} geometry={geometry} material={material} />;
 }
 
-export default function ParticleField() {
+export default function ParticleField(): React.ReactElement {
   return (
     <div
       aria-hidden="true"

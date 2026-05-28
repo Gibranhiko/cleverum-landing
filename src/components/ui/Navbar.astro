@@ -2,20 +2,27 @@
 import { site } from '~/content/site';
 import WhatsAppButton from './WhatsAppButton.astro';
 
-const { nav } = site;
+const navLinks = [
+  { label: 'Casos', href: '#cases' },
+  { label: 'Servicios', href: '#services' },
+  { label: 'Contacto', href: '#contacto' },
+];
 ---
 
 <header class="nav" data-nav>
   <div class="nav-inner">
-    <a href="#hero" class="nav-brand" aria-label="Cleverum — Inicio">
+    <a href="#hero" class="nav-brand" aria-label={`${site.brand.name} — Inicio`}>
       <span class="nav-brand-mark" aria-hidden="true">
         <img src="/logos/cleverum-logo.png" alt="" width="32" height="32" loading="eager" />
       </span>
-      <span class="nav-brand-name font-display">Cleverum</span>
+      <span class="nav-brand-text">
+        <span class="nav-brand-name font-display">{site.brand.name}</span>
+        <span class="nav-brand-bajada">{site.brand.bajada}</span>
+      </span>
     </a>
 
     <nav class="nav-links" aria-label="Navegación principal">
-      {nav.links.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+      {navLinks.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
     </nav>
 
     <div class="nav-cta">
@@ -25,7 +32,6 @@ const { nav } = site;
 </header>
 
 <script is:inline>
-  // Toggle .is-scrolled cuando se hace scroll > 16px
   (function () {
     if (typeof window === 'undefined') return;
     const nav = document.querySelector('[data-nav]');
@@ -101,6 +107,7 @@ const { nav } = site;
     justify-content: center;
     border-radius: 8px;
     overflow: hidden;
+    flex: 0 0 32px;
   }
 
   .nav-brand-mark img {
@@ -109,10 +116,24 @@ const { nav } = site;
     object-fit: contain;
   }
 
+  .nav-brand-text {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
+    gap: 2px;
+  }
+
   .nav-brand-name {
     font-size: 1.125rem;
     font-weight: 600;
     letter-spacing: -0.02em;
+  }
+
+  .nav-brand-bajada {
+    font-size: 0.7rem;
+    color: var(--color-text-3);
+    letter-spacing: 0.01em;
+    font-weight: 400;
   }
 
   .nav-links {
@@ -164,9 +185,8 @@ const { nav } = site;
     display: inline-flex;
   }
 
-  /* En mobile, el botón WhatsApp toma protagonismo a la derecha */
   @media (max-width: 480px) {
-    .nav-brand-name {
+    .nav-brand-text {
       display: none;
     }
   }

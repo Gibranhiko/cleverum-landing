@@ -1,0 +1,60 @@
+---
+import { site } from '~/content/site';
+import CaseCard from '~/components/ui/CaseCard.astro';
+
+const { cases } = site;
+---
+
+<section id="cases" class="cases section-pad" aria-labelledby="cases-heading">
+  <div class="container-narrow">
+    <header class="cases-header">
+      <h2 id="cases-heading" class="cases-heading font-display">
+        {cases.heading}
+      </h2>
+      <p class="cases-sub">{cases.subheading}</p>
+    </header>
+
+    <div class="cases-list">
+      {cases.items.map((c) => <CaseCard case={c} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cases {
+    position: relative;
+  }
+
+  .cases-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .cases-heading {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: balance;
+    max-width: 18ch;
+  }
+
+  .cases-sub {
+    font-size: 1rem;
+    color: var(--color-text-2);
+    margin: 0;
+    max-width: 50ch;
+    line-height: 1.5;
+  }
+
+  .cases-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+</style>

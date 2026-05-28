@@ -1,0 +1,21 @@
+# Cloudflare Pages Functions — environment variables (local dev)
+# Copy to .dev.vars (gitignored) and fill with real values.
+# In production, set these in CF Dashboard > Pages > project > Settings > Environment variables.
+
+# Anthropic API key — used by the audit pipeline (Haiku for classifier + critic, Haiku with extended thinking for senior analyst).
+# Get one at https://console.anthropic.com/settings/keys
+ANTHROPIC_API_KEY=sk-ant-api-XXXXXXXXXXXXXXXXXXXXXX
+
+# Cloudflare Turnstile — anti-bot challenge on the audit form.
+# Create a site at https://dash.cloudflare.com/?to=/:account/turnstile
+# Domains: cleverum.org + localhost (for dev).
+TURNSTILE_SECRET_KEY=0x4AAAAAAA_TURNSTILE_SECRET
+TURNSTILE_SITE_KEY=0x4AAAAAAA_TURNSTILE_SITE_KEY
+
+# Resend — transactional email delivery for the audit report + Gibran notification.
+# Get one at https://resend.com/api-keys
+# Verify domain cleverum.org first.
+RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXX
+
+# Daily cap on audit runs (cost guard). Increment a KV key per day; reject when reached.
+DAILY_AUDIT_CAP=100

@@ -1,20 +1,18 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Hero from '~/components/sections/Hero.astro';
-import BrandsStack from '~/components/sections/BrandsStack.astro';
-import HowWeWork from '~/components/sections/HowWeWork.astro';
-import BentoDifferentiators from '~/components/sections/BentoDifferentiators.astro';
-import CapabilitiesMarquee from '~/components/sections/CapabilitiesMarquee.astro';
+import Cases from '~/components/sections/Cases.astro';
+import Services from '~/components/sections/Services.astro';
+import AboutGibran from '~/components/sections/AboutGibran.astro';
 import ContactCTA from '~/components/sections/ContactCTA.astro';
 import Footer from '~/components/sections/Footer.astro';
 ---
 
 <BaseLayout>
   <Hero />
-  <BrandsStack />
-  <HowWeWork />
-  <BentoDifferentiators />
-  <CapabilitiesMarquee />
+  <Cases />
+  <Services />
+  <AboutGibran />
   <ContactCTA />
-  <Footer />
+  <Footer slot="body-end" />
 </BaseLayout>

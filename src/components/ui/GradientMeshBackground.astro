@@ -1,12 +1,26 @@
 ---
 /**
- * Fondo CSS estático (sin JS) que sirve de fallback debajo del ParticleField.
- * Es visible mientras el Canvas WebGL no está montado (mobile, reduced-motion,
- * hidratación inicial) y queda detrás cuando sí está montado.
+ * Fondo CSS estático (sin JS pesado) que sirve de fallback debajo del
+ * ParticleField. Visible en mobile (donde el Canvas no carga) y mientras
+ * el WebGL hidrata.
+ *
+ * Reacciona al estado del AI Audit vía data-audit-state. Esto da pulses
+ * coordinados de tinte cuando el ParticleField no está disponible.
  */
 ---
 
-<div class="gradient-mesh" aria-hidden="true"></div>
+<div class="gradient-mesh" aria-hidden="true" data-gradient-mesh></div>
+
+<script>
+  import { subscribeAuditState } from '~/lib/auditState';
+
+  const el = document.querySelector<HTMLElement>('[data-gradient-mesh]');
+  if (el) {
+    subscribeAuditState((state) => {
+      el.dataset.auditState = state;
+    });
+  }
+</script>
 
 <style>
   .gradient-mesh {
@@ -36,6 +50,7 @@
         transparent 70%
       ),
       var(--color-bg-base);
+    transition: filter 0.6s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   /* Velo oscuro encima para mantener legibilidad sin matar el color */
@@ -59,5 +74,42 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
     opacity: 0.04;
     mix-blend-mode: overlay;
+  }
+
+  /* Audit-reactive pulses (mobile fallback when WebGL not available) */
+  .gradient-mesh[data-audit-state='processing'] {
+    animation: mesh-pulse-iris 1.4s ease-in-out infinite;
+  }
+
+  .gradient-mesh[data-audit-state='revealing'] {
+    animation: mesh-pulse-green 1.2s ease-in-out infinite;
+  }
+
+  .gradient-mesh[data-audit-state='done'] {
+    animation: mesh-flash 0.9s ease-out;
+  }
+
+  @keyframes mesh-pulse-iris {
+    0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+    50% { filter: hue-rotate(-15deg) brightness(1.15) saturate(1.2); }
+  }
+
+  @keyframes mesh-pulse-green {
+    0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+    50% { filter: hue-rotate(60deg) brightness(1.2) saturate(1.3); }
+  }
+
+  @keyframes mesh-flash {
+    0% { filter: brightness(1); }
+    30% { filter: brightness(1.4) saturate(1.4); }
+    100% { filter: brightness(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gradient-mesh,
+    .gradient-mesh[data-audit-state] {
+      animation: none !important;
+      transition: none;
+    }
   }
 </style>

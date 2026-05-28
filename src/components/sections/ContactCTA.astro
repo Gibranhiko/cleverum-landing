@@ -2,30 +2,50 @@
 import { site } from '~/content/site';
 import WhatsAppButton from '~/components/ui/WhatsAppButton.astro';
 
-const { contactCta } = site;
+const { finalCta, hero, contact } = site;
 ---
 
-<section id="contacto" class="cta" aria-labelledby="cta-heading">
+<section id="contacto" class="cta section-pad" aria-labelledby="cta-heading">
   <div class="cta-inner container-narrow">
     <h2 id="cta-heading" class="cta-title font-display">
-      {contactCta.heading.split('?')[0]}<span class="gradient-text-go">?</span>
+      {finalCta.heading.split('?')[0]}<span class="gradient-text-go">?</span>
     </h2>
 
-    <p class="cta-sub">{contactCta.subheading}</p>
+    <p class="cta-sub">{finalCta.sub}</p>
 
     <div class="cta-actions">
-      <WhatsAppButton label={contactCta.ctaLabel} variant="secondary" size="lg" />
+      <WhatsAppButton label={hero.ctaPrimary} variant="secondary" size="lg" />
+
+      <a
+        href={contact.calendly}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cta-calendly"
+        aria-label={`${hero.ctaSecondary} (abre Calendly en una nueva ventana)`}
+      >
+        <span>{hero.ctaSecondary}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          class="cta-calendly-arrow"
+        >
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </a>
     </div>
   </div>
 </section>
 
 <style>
-  .cta {
-    position: relative;
-    padding-block: clamp(6rem, 12vw, 10rem);
-    padding-inline: clamp(1.25rem, 4vw, 3rem);
-  }
-
   .cta-inner {
     display: flex;
     flex-direction: column;
@@ -35,7 +55,7 @@ const { contactCta } = site;
   }
 
   .cta-title {
-    font-size: var(--fs-display);
+    font-size: var(--fs-display, clamp(2.5rem, 8vw, 6rem));
     line-height: 0.98;
     letter-spacing: -0.035em;
     font-weight: 600;
@@ -45,7 +65,7 @@ const { contactCta } = site;
   }
 
   .cta-sub {
-    font-size: var(--fs-lead);
+    font-size: var(--fs-lead, 1.15rem);
     line-height: 1.55;
     color: var(--color-text-2);
     max-width: 52ch;
@@ -64,6 +84,55 @@ const { contactCta } = site;
     .cta-actions {
       flex-direction: row;
       gap: 1.5rem;
+    }
+  }
+
+  .cta-calendly {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1rem 2.25rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--color-text-1);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    transition:
+      border-color 0.3s ease,
+      background-color 0.3s ease,
+      transform 0.4s var(--ease-out-expo),
+      gap 0.3s ease;
+  }
+
+  .cta-calendly:hover {
+    border-color: var(--color-border-strong);
+    background: color-mix(in srgb, var(--color-bg-elev) 50%, transparent);
+    transform: translateY(-1px);
+    gap: 0.875rem;
+  }
+
+  .cta-calendly-arrow {
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .cta-calendly:hover .cta-calendly-arrow {
+    transform: translateX(3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta-calendly {
+      transition: none;
+    }
+    .cta-calendly:hover {
+      transform: none;
+      gap: 0.625rem;
+    }
+    .cta-calendly:hover .cta-calendly-arrow {
+      transform: none;
     }
   }
 </style>

@@ -1,0 +1,276 @@
+---
+import { site } from '~/content/site';
+import WhatsAppButton from '~/components/ui/WhatsAppButton.astro';
+
+const { services } = site;
+
+const accentVar: Record<string, string> = {
+  blue: 'var(--color-brand-blue)',
+  iris: 'var(--color-brand-iris)',
+  green: 'var(--color-accent-go)',
+};
+---
+
+<section id="services" class="services section-pad" aria-labelledby="services-heading">
+  <div class="container-narrow">
+    <header class="services-header">
+      <h2 id="services-heading" class="services-heading font-display">
+        {services.heading}
+      </h2>
+      <p class="services-sub">{services.subheading}</p>
+    </header>
+
+    <div class="services-grid">
+      {
+        services.items.map((s) => (
+          <article
+            class="service-card"
+            style={`--accent: ${accentVar[s.accent] ?? 'var(--color-brand-iris)'};`}
+          >
+            <header class="service-card-header">
+              <h3 class="service-title font-display">{s.title}</h3>
+              <p class="service-subtitle">{s.subtitle}</p>
+            </header>
+
+            <ul class="service-bullets">
+              {s.bullets.map((b) => (
+                <li class="service-bullet">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m5 12 5 5L20 7" />
+                  </svg>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="service-meta">
+              <div class="service-duration">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>
+                <span>{s.duration}</span>
+              </div>
+              <div class="service-price">
+                <span class="service-price-prefix">desde</span>
+                <span class="service-price-amount font-display">{s.priceFrom}</span>
+              </div>
+            </div>
+
+            <WhatsAppButton
+              label="Hablemos"
+              message={`¡Hola Gibran! Me interesa el ${s.title}.`}
+              variant="secondary"
+              size="md"
+              class="service-cta"
+            />
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .services-heading {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: balance;
+    max-width: 18ch;
+  }
+
+  .services-sub {
+    font-size: 1rem;
+    color: var(--color-text-2);
+    margin: 0;
+    max-width: 50ch;
+    line-height: 1.5;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  @media (min-width: 860px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    position: relative;
+    background: color-mix(in srgb, var(--color-bg-elev) 88%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+    transition:
+      transform 0.3s var(--ease-out-expo),
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0.9;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--color-border));
+    box-shadow: 0 14px 44px -16px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .service-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .service-title {
+    font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-text-1);
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .service-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-2);
+    margin: 0;
+  }
+
+  .service-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    flex: 1;
+  }
+
+  .service-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-text-2);
+  }
+
+  .service-bullet svg {
+    flex: 0 0 auto;
+    margin-top: 0.2em;
+    color: var(--accent);
+  }
+
+  .service-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .service-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-text-3);
+  }
+
+  .service-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .service-price-prefix {
+    font-size: 0.8rem;
+    color: var(--color-text-3);
+  }
+
+  .service-price-amount {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-text-1);
+  }
+
+  /* Scroll-driven reveal (Chrome/Edge). Only opacity to avoid conflict with hover translate. */
+  @supports (animation-timeline: view()) {
+    .service-card {
+      opacity: 0;
+      animation: service-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 25%;
+    }
+
+    @keyframes service-reveal {
+      to {
+        opacity: 1;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-card {
+      animation: none !important;
+      opacity: 1 !important;
+      transition: none;
+    }
+    .service-card:hover {
+      transform: none;
+    }
+  }
+</style>
