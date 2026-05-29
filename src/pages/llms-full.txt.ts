@@ -68,9 +68,9 @@ ${aboutParagraphs}
 
 ## AI Audit Tool
 
-${audit.headline} A free AI-powered diagnosis available at ${meta.url}/.
+${audit.heading} Available at ${meta.url}/#diagnostico.
 
-${audit.pitch.join('\n\n')}
+${audit.intro}
 
 The audit uses a multi-agent pipeline (industry classifier → senior business analyst with extended thinking → critic) trained on 50+ real workflows built by ${brand.name} across LATAM.
 

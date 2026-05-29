@@ -469,62 +469,127 @@
 }
 
 /* ============================================================
- * Email gate
+ * Email status banner (upfront-email case)
  * ========================================================== */
 
-.audit-gate {
+.audit-email-banner {
   display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  padding: 1.5rem;
-  background: color-mix(in srgb, var(--color-bg-elev) 92%, transparent);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-}
-
-.audit-gate h3 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-  letter-spacing: -0.02em;
-  font-weight: 600;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.1rem;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  line-height: 1.45;
   color: var(--color-text-1);
 }
 
-.audit-gate p {
+.audit-email-banner p {
   margin: 0;
-  font-size: 0.92rem;
+}
+
+.audit-email-banner.is-pending {
+  background: color-mix(in srgb, var(--color-brand-iris) 8%, var(--color-bg-elev));
+  border: 1px solid color-mix(in srgb, var(--color-brand-iris) 30%, var(--color-border));
+  color: var(--color-text-2);
+}
+
+.audit-email-banner.is-success {
+  background: color-mix(in srgb, var(--color-accent-go) 10%, var(--color-bg-elev));
+  border: 1px solid color-mix(in srgb, var(--color-accent-go) 35%, var(--color-border));
+  color: var(--color-text-1);
+}
+
+.audit-email-banner.is-error {
+  background: color-mix(in srgb, #ef4444 10%, var(--color-bg-elev));
+  border: 1px solid color-mix(in srgb, #ef4444 35%, var(--color-border));
+  color: #fca5a5;
+}
+
+.audit-email-banner-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: 700;
+  flex: 0 0 24px;
+  font-size: 0.85rem;
+}
+
+.audit-email-banner.is-success .audit-email-banner-icon {
+  background: var(--color-accent-go);
+  color: #04130b;
+}
+
+.audit-email-banner.is-error .audit-email-banner-icon {
+  background: #ef4444;
+  color: #fff;
+}
+
+.audit-email-banner-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid color-mix(in srgb, var(--color-brand-iris) 40%, transparent);
+  border-top-color: var(--color-brand-iris);
+  border-radius: 50%;
+  animation: audit-banner-spin 0.7s linear infinite;
+  flex: 0 0 18px;
+}
+
+@keyframes audit-banner-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+ * Mini email gate (no email upfront → single-field ask at the end)
+ * ========================================================== */
+
+.audit-mini-gate {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.25rem;
+  background: color-mix(in srgb, var(--color-bg-elev) 92%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+}
+
+.audit-mini-gate-text h3 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  letter-spacing: -0.015em;
+  font-weight: 600;
+  color: var(--color-text-1);
+  line-height: 1.2;
+}
+
+.audit-mini-gate-text p {
+  margin: 0;
+  font-size: 0.88rem;
   line-height: 1.5;
   color: var(--color-text-2);
 }
 
-.audit-gate-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+.audit-mini-gate-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 @media (min-width: 600px) {
-  .audit-gate-row {
-    grid-template-columns: 1fr 1fr;
+  .audit-mini-gate-row {
+    flex-direction: row;
   }
 }
 
-.audit-gate label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  font-size: 0.78rem;
-  color: var(--color-text-2);
-}
-
-.audit-gate label > span {
-  font-weight: 500;
-}
-
-.audit-gate input {
-  padding: 0.7rem 0.85rem;
-  background: color-mix(in srgb, var(--color-bg-base) 75%, transparent);
+.audit-mini-gate-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.75rem 0.95rem;
+  background: color-mix(in srgb, var(--color-bg-base) 78%, transparent);
   border: 1px solid var(--color-border);
   border-radius: 10px;
   color: var(--color-text-1);
@@ -534,65 +599,44 @@
   transition: border-color 0.2s ease;
 }
 
-.audit-gate input:focus-visible {
+.audit-mini-gate-row input:focus-visible {
   border-color: var(--color-brand-iris);
 }
 
-.audit-gate input::placeholder {
+.audit-mini-gate-row input::placeholder {
   color: var(--color-text-3);
 }
 
-.audit-gate-como {
-  width: 100%;
+.audit-mini-gate-row button {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-brand-iris);
+  color: var(--color-text-1);
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.audit-gate-error {
-  padding: 0.7rem 0.85rem;
+.audit-mini-gate-row button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.audit-mini-gate-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.audit-mini-gate-error {
+  padding: 0.65rem 0.85rem;
   background: color-mix(in srgb, #ef4444 12%, var(--color-bg-elev));
   border: 1px solid color-mix(in srgb, #ef4444 35%, var(--color-border));
   border-radius: 8px;
   color: #fca5a5;
-  font-size: 0.85rem;
-}
-
-.audit-gate-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.85rem 1.5rem;
-  font: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  text-decoration: none;
-  align-self: flex-start;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.audit-gate-button-primary {
-  background: var(--color-brand-iris);
-  color: var(--color-text-1);
-}
-
-.audit-gate-button-primary:hover {
-  transform: translateY(-1px);
-}
-
-.audit-gate-button-primary:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.audit-gate-success h3 {
-  color: var(--color-accent-go);
-}
-
-.audit-gate-cta {
-  margin-top: 0.5rem;
-  color: var(--color-text-1);
+  font-size: 0.82rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -600,7 +644,8 @@
   .audit-opp,
   .audit-maturity-fill,
   .audit-thinking-dot,
-  .audit-thinking-cursor {
+  .audit-thinking-cursor,
+  .audit-email-banner-spinner {
     animation: none !important;
   }
   .audit-opp {

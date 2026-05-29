@@ -24,10 +24,19 @@ import {
   parseJsonFromLlm,
   sseEvent,
 } from './_audit-utils';
+import {
+  isValidEmail,
+  isDisposableEmail,
+  persistLead,
+  sendClientReport,
+  notifyGibran,
+} from './_lead-handler';
 
 const MAX_INPUT_LENGTH = 500;
 const MIN_INPUT_LENGTH = 10;
 const MAX_EXTRA_FIELD_LENGTH = 200;
+const MAX_NAME_LENGTH = 100;
+const MAX_PHONE_LENGTH = 25;
 const AUDIT_TTL_SECONDS = 60 * 60 * 24 * 7;
 
 interface AnalystDraft {
@@ -68,6 +77,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       }
     }
   }
+
+  // --- 3.5. Validate contact fields ---------------------------------------
+  const contact = body.contact;
+  if (!contact || typeof contact !== 'object') {
+    return jsonError(400, 'contact_required', 'Necesito nombre y empresa.');
+  }
+  const cNombre = String(contact.nombre ?? '').trim();
+  const cEmpresa = String(contact.empresa ?? '').trim();
+  const cEmail = contact.email ? String(contact.email).trim().toLowerCase() : '';
+  const cTelefono = contact.telefono ? String(contact.telefono).trim() : '';
+
+  if (cNombre.length < 2) return jsonError(400, 'nombre_required', 'Necesito tu nombre.');
+  if (cNombre.length > MAX_NAME_LENGTH) return jsonError(400, 'nombre_too_long');
+  if (cEmpresa.length < 2) return jsonError(400, 'empresa_required', 'Necesito el nombre de tu empresa.');
+  if (cEmpresa.length > MAX_NAME_LENGTH) return jsonError(400, 'empresa_too_long');
+  if (cEmail && !isValidEmail(cEmail)) return jsonError(400, 'email_invalid');
+  if (cEmail && isDisposableEmail(cEmail)) {
+    return jsonError(400, 'email_disposable', 'Usa un email real para enviarte el reporte.');
+  }
+  if (cTelefono && cTelefono.length > MAX_PHONE_LENGTH) return jsonError(400, 'telefono_too_long');
 
   // --- 4. Turnstile verification ------------------------------------------
   const tsOk = await verifyTurnstile(
@@ -159,7 +188,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           expirationTtl: AUDIT_TTL_SECONDS,
         });
 
+        // Persist lead snapshot and notify Gibran for every successful audit
+        const normalizedContact = {
+          nombre: cNombre,
+          empresa: cEmpresa,
+          ...(cEmail && { email: cEmail }),
+          ...(cTelefono && { telefono: cTelefono }),
+        };
+        const lead = await persistLead(env.KV, final, normalizedContact);
+        void notifyGibran(env.RESEND_API_KEY, lead, final);
+
         send('done', { audit_id: auditId, audit: final });
+
+        // If user provided email upfront, send report and emit status
+        if (normalizedContact.email) {
+          const sent = await sendClientReport(env.RESEND_API_KEY, final, normalizedContact);
+          send('email_status', { sent, ...(sent ? {} : { reason: 'send_failed' }) });
+        } else {
+          send('email_status', { sent: false, reason: 'no_email' });
+        }
+
         controller.close();
       } catch (err) {
         const message = err instanceof Error ? err.message : 'unknown';

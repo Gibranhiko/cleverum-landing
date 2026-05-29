@@ -161,10 +161,11 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
 }
 
 export interface LeadRecord {
-  email: string;
   nombre: string;
+  empresa: string;
+  email: string | null;
+  telefono: string | null;
   audit_id: string;
-  como_me_encontraste: string | null;
   created_at: string;
 }
 
@@ -179,6 +180,14 @@ export function buildGibranNotificationHtml(
     )
     .join('');
 
+  const emailRow = lead.email
+    ? `<tr><td><strong style="color:#ffffff;">Email:</strong></td><td style="padding-left:12px;"><a href="mailto:${escapeHtml(lead.email)}" style="color:#7C5CFF;text-decoration:none;">${escapeHtml(lead.email)}</a></td></tr>`
+    : `<tr><td><strong style="color:#ffffff;">Email:</strong></td><td style="padding-left:12px;color:#8A8A96;">No proporcionado</td></tr>`;
+
+  const phoneRow = lead.telefono
+    ? `<tr><td><strong style="color:#ffffff;">Teléfono:</strong></td><td style="padding-left:12px;"><a href="tel:${escapeHtml(lead.telefono)}" style="color:#7C5CFF;text-decoration:none;">${escapeHtml(lead.telefono)}</a></td></tr>`
+    : `<tr><td><strong style="color:#ffffff;">Teléfono:</strong></td><td style="padding-left:12px;color:#8A8A96;">No proporcionado</td></tr>`;
+
   return `<!DOCTYPE html>
 <html><body style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#08080B;color:#ffffff;padding:24px;margin:0;">
 <table cellpadding="0" cellspacing="0" border="0" style="max-width:600px;margin:0 auto;background:#111114;border-radius:12px;padding:28px;border:1px solid #1f1f24;">
@@ -186,8 +195,9 @@ export function buildGibranNotificationHtml(
 <h2 style="margin:0 0 16px;color:#ffffff;font-size:20px;letter-spacing:-0.015em;">Nuevo lead audit</h2>
 <table cellpadding="0" cellspacing="0" border="0" style="font-size:14px;color:#B4B4BF;line-height:1.7;width:100%;">
 <tr><td><strong style="color:#ffffff;">Nombre:</strong></td><td style="padding-left:12px;">${escapeHtml(lead.nombre)}</td></tr>
-<tr><td><strong style="color:#ffffff;">Email:</strong></td><td style="padding-left:12px;"><a href="mailto:${escapeHtml(lead.email)}" style="color:#7C5CFF;text-decoration:none;">${escapeHtml(lead.email)}</a></td></tr>
-<tr><td><strong style="color:#ffffff;">¿Cómo me encontró?:</strong></td><td style="padding-left:12px;">${escapeHtml(lead.como_me_encontraste ?? '—')}</td></tr>
+<tr><td><strong style="color:#ffffff;">Empresa:</strong></td><td style="padding-left:12px;">${escapeHtml(lead.empresa)}</td></tr>
+${emailRow}
+${phoneRow}
 <tr><td><strong style="color:#ffffff;">Audit ID:</strong></td><td style="padding-left:12px;font-family:monospace;font-size:12px;color:#8A8A96;">${lead.audit_id}</td></tr>
 <tr><td style="padding-top:12px;"><strong style="color:#ffffff;">Negocio:</strong></td><td style="padding:12px 0 0 12px;">${escapeHtml(audit.negocio_detectado)}</td></tr>
 <tr><td><strong style="color:#ffffff;">Industria:</strong></td><td style="padding-left:12px;">${escapeHtml(audit.industria)} · score ${audit.score_madurez}/10</td></tr>
@@ -197,7 +207,7 @@ export function buildGibranNotificationHtml(
 ${oppList}
 </ol>
 <p style="margin:24px 0 0;color:#8A8A96;font-size:12px;line-height:1.5;">
-Reply directo a este email rebota a Gibran. Para arrancar conversación, escríbele al lead a su email arriba.
+Reply directo a este email rebota al lead${lead.email ? '' : ' (si tiene email)'}. Para arrancar conversación, escríbele directo.
 </p>
 </td></tr></table>
 </body></html>`;

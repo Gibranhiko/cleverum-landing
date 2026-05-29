@@ -6,7 +6,7 @@ function isReal(url: string): boolean {
 }
 
 export const GET: APIRoute = () => {
-  const { contact, brand, services, socials, meta } = site;
+  const { contact, brand, services, socials, meta, audit } = site;
 
   const socialLines = [
     { name: 'LinkedIn', url: socials.linkedin },
@@ -38,7 +38,7 @@ ${serviceLines.join('\n')}
 
 ## AI Audit Tool
 
-Free AI-powered business audit at ${meta.url}/. Submit your URL or business description and receive:
+${audit.heading} ${audit.intro} Available at ${meta.url}/#diagnostico. Submit your URL or business description and receive:
 
 - Industry classification with a maturity score
 - 3 specific automation opportunities

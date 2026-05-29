@@ -47,36 +47,51 @@ export const site = {
       'Pregunta a tu *IA* y obtén el reporte que antes tardaba días.',
       'Atiende a tus clientes *24/7* sin contratar otro agente.',
     ],
+    subline:
+      'Gratis diagnóstico con IA en 30 segundos. Tres ideas concretas para automatizar tu negocio.',
+    ctaLabel: 'Diagnostica mi negocio',
+    microNote: '30 segundos · gratis · sin compromiso',
     ctaPrimary: 'Hablemos por WhatsApp',
   },
 
   audit: {
-    eyebrow: 'DIAGNÓSTICO GRATIS CON IA · 30 SEGUNDOS',
-    headline: 'Diagnóstico inteligente de tu negocio.',
-    pitch: [
-      'Vengo de armar más de 50 proyectos para negocios en México y LATAM. Combino esa experiencia con las herramientas de IA más modernas para entender qué necesitas.',
-      'Te entrego 3 ideas concretas para automatizar tu negocio, con un cálculo del retorno esperado y las herramientas que recomiendo. Tú decides cómo avanzar.',
-    ],
-    inputPlaceholder: 'Tu URL o tu negocio en 1 línea',
-    submitLabel: 'Analizar',
+    eyebrow: 'DIAGNÓSTICO GRATIS · 30 SEGUNDOS',
+    heading: 'Diagnóstico inteligente de tu negocio.',
+    intro:
+      'Te regalo 3 ideas concretas en 30 segundos. Mientras más me cuentes, mejor es el análisis.',
+
+    groups: {
+      business: 'Cuéntame de tu negocio',
+      context: 'Contexto extra (opcional · mejora mucho el análisis)',
+      contact: 'Para enviarte el reporte',
+    },
+
+    fields: {
+      inputPlaceholder: 'Tu URL o describe tu negocio en 1-2 líneas',
+      industria: 'Industria',
+      equipo: 'Tamaño de equipo',
+      stack: 'Herramientas actuales',
+      pain: 'Tu mayor dolor hoy',
+      nombre: 'Nombre',
+      empresa: 'Empresa',
+      email: 'Email',
+      telefono: 'Teléfono',
+    },
+
+    submitLabel: 'Analizar mi negocio',
+    microNote:
+      'Sin email te muestro el resultado aquí mismo, pero no puedo enviarte el reporte detallado.',
+
     maxInputLength: 500,
     minInputLength: 10,
-    tip: {
-      title: 'Cómo darle mejor contexto al auditor',
-      hints: [
-        'Pega tu URL si la tienes — analizo tu sitio en tiempo real',
-        'Menciona industria + tamaño aproximado de equipo',
-        'Cuéntame lo que más te quita tiempo hoy',
-        'Si usas alguna herramienta como Shopify, HubSpot, Make o n8n, dímelo',
-        'Sé conciso: máximo 500 caracteres. El análisis es mejor cuando es directo.',
-      ],
-      examples: [
-        'Tienda en línea de ropa, atiendo 200 chats al día a mano',
-        'Software para empresas, integrar cada cliente nuevo me toma 3 horas',
-        'Restaurante que contesta WhatsApp a mano y maneja 4 apps de delivery',
-        'Despacho legal, copio datos entre 5 sistemas todas las semanas',
-      ],
-    },
+    maxFieldLength: 200,
+
+    examples: [
+      'Tienda en línea de ropa, atiendo 200 chats al día a mano',
+      'Software para empresas, integrar cada cliente nuevo me toma 3 horas',
+      'Restaurante que contesta WhatsApp a mano y maneja 4 apps de delivery',
+      'Despacho legal, copio datos entre 5 sistemas todas las semanas',
+    ],
   },
 
   cases: {

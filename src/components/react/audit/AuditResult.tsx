@@ -7,6 +7,8 @@ import type {
 } from '~/lib/audit/types';
 import { setAuditState } from '~/lib/auditState';
 
+type EmailStatus = 'pending' | 'sent' | 'failed' | 'no_email';
+
 interface Props {
   industry: IndustryClassification | null;
   thinkingText: string;
@@ -14,6 +16,9 @@ interface Props {
   finalAudit: AuditResultType | null;
   stage: string;
   error: string | null;
+  emailProvidedUpfront: boolean;
+  emailUsed: string;
+  emailStatus: EmailStatus;
 }
 
 const SERVICE_NAME: Record<string, string> = {
@@ -29,7 +34,17 @@ const SERVICE_PRICE: Record<string, string> = {
 };
 
 export default function AuditResult(props: Props): React.ReactElement {
-  const { industry, thinkingText, draftOpportunities, finalAudit, stage, error } = props;
+  const {
+    industry,
+    thinkingText,
+    draftOpportunities,
+    finalAudit,
+    stage,
+    error,
+    emailProvidedUpfront,
+    emailUsed,
+    emailStatus,
+  } = props;
 
   // Dispatch audit state based on stream progress
   const dispatchedRevealing = useRef(false);
@@ -118,7 +133,51 @@ export default function AuditResult(props: Props): React.ReactElement {
         </div>
       )}
 
-      {finalAudit && <EmailGate auditId={finalAudit.audit_id} />}
+      {finalAudit && emailProvidedUpfront && (
+        <EmailStatusBanner emailStatus={emailStatus} emailUsed={emailUsed} />
+      )}
+
+      {finalAudit && !emailProvidedUpfront && (
+        <MiniEmailGate auditId={finalAudit.audit_id} />
+      )}
+    </div>
+  );
+}
+
+function EmailStatusBanner({
+  emailStatus,
+  emailUsed,
+}: {
+  emailStatus: EmailStatus;
+  emailUsed: string;
+}): React.ReactElement {
+  if (emailStatus === 'sent') {
+    return (
+      <div className="audit-email-banner is-success" role="status">
+        <span className="audit-email-banner-icon" aria-hidden="true">✓</span>
+        <p>
+          Reporte enviado a <strong>{emailUsed}</strong>. Revisa también spam.
+        </p>
+      </div>
+    );
+  }
+  if (emailStatus === 'failed') {
+    return (
+      <div className="audit-email-banner is-error" role="alert">
+        <span className="audit-email-banner-icon" aria-hidden="true">!</span>
+        <p>
+          Hubo un problema al enviarte el reporte a <strong>{emailUsed}</strong>.
+          Tu diagnóstico quedó guardado, escríbeme por WhatsApp y te lo paso a mano.
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div className="audit-email-banner is-pending" role="status">
+      <span className="audit-email-banner-spinner" aria-hidden="true" />
+      <p>
+        Enviando el reporte detallado a <strong>{emailUsed}</strong>…
+      </p>
     </div>
   );
 }
@@ -299,13 +358,13 @@ function MaturityScore({
   );
 }
 
-function EmailGate({ auditId }: { auditId: string }): React.ReactElement {
+function MiniEmailGate({ auditId }: { auditId: string }): React.ReactElement {
   const [email, setEmail] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [como, setComo] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
 
   const sendLead = async (): Promise<void> => {
     setError(null);
@@ -316,10 +375,8 @@ function EmailGate({ auditId }: { auditId: string }): React.ReactElement {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email,
-          nombre,
+          email: email.trim(),
           audit_id: auditId,
-          comoMeEncontraste: como || undefined,
         }),
       });
       if (!r.ok) {
@@ -340,88 +397,52 @@ function EmailGate({ auditId }: { auditId: string }): React.ReactElement {
 
   if (sent) {
     return (
-      <div className="audit-gate audit-gate-success" role="status">
-        <h3>¡Listo, {nombre}!</h3>
+      <div className="audit-email-banner is-success" role="status">
+        <span className="audit-email-banner-icon" aria-hidden="true">✓</span>
         <p>
-          Te llegó el reporte detallado a <strong>{email}</strong>. Revisa también spam.
+          Reporte enviado a <strong>{email.trim()}</strong>. Revisa también spam.
         </p>
-        <p className="audit-gate-cta">
-          ¿Quieres aterrizar la oportunidad #1 conmigo? Agenda 20 min gratis:
-        </p>
-        <a
-          href="https://cleverum.org/#contacto"
-          className="audit-gate-button audit-gate-button-primary"
-        >
-          Ver opciones de contacto
-        </a>
       </div>
     );
   }
 
   return (
     <form
-      className="audit-gate"
+      className="audit-mini-gate"
       onSubmit={(e) => {
         e.preventDefault();
         void sendLead();
       }}
-      aria-label="Recibir reporte detallado"
+      aria-label="Recibir reporte detallado por email"
     >
-      <h3>Recibe la propuesta detallada por email</h3>
-      <p>
-        Te mando el reporte completo con las tecnologías, el retorno esperado y un plan
-        de cómo arrancar. Sin spam.
-      </p>
-
-      <div className="audit-gate-row">
-        <label>
-          <span>Email</span>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="tu@empresa.com"
-            required
-            maxLength={200}
-            autoComplete="email"
-          />
-        </label>
-        <label>
-          <span>Nombre</span>
-          <input
-            type="text"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            placeholder="Tu nombre"
-            required
-            minLength={2}
-            maxLength={100}
-            autoComplete="given-name"
-          />
-        </label>
+      <div className="audit-mini-gate-text">
+        <h3>¿Quieres el reporte detallado por email?</h3>
+        <p>
+          Lo mando con tecnologías, retorno esperado y un plan de cómo arrancar.
+          Sin spam.
+        </p>
       </div>
 
-      <label className="audit-gate-como">
-        <span>¿Cómo me encontraste? (opcional)</span>
+      <div className="audit-mini-gate-row">
         <input
-          type="text"
-          value={como}
-          onChange={(e) => setComo(e.target.value)}
-          placeholder="LinkedIn, recomendación, Google..."
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="tu@empresa.com"
+          required
           maxLength={200}
-          autoComplete="off"
+          autoComplete="email"
+          aria-label="Email"
         />
-      </label>
+        <button
+          type="submit"
+          disabled={sending || !isValid}
+        >
+          {sending ? 'Enviando…' : 'Enviar reporte'}
+        </button>
+      </div>
 
-      {error && <div className="audit-gate-error">{error}</div>}
-
-      <button
-        type="submit"
-        disabled={sending || !email || nombre.length < 2}
-        className="audit-gate-button audit-gate-button-primary"
-      >
-        {sending ? 'Enviando…' : 'Recibir propuesta detallada'}
-      </button>
+      {error && <div className="audit-mini-gate-error">{error}</div>}
     </form>
   );
 }

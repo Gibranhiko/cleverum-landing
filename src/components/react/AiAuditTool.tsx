@@ -1,49 +1,43 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './AiAuditTool.css';
-import { site } from '~/content/site';
 import { setAuditState } from '~/lib/auditState';
 import { useTurnstile } from './audit/useTurnstile';
 import { streamAudit, AuditHttpError } from './audit/streamAudit';
 import type {
+  AuditContact,
   AuditExtra,
   AuditResult as AuditResultType,
   IndustryClassification,
   Opportunity,
 } from '~/lib/audit/types';
 import AuditResult from './audit/AuditResult';
+import Wizard from './audit/wizard/Wizard';
+import type { WizardValues } from './audit/wizard/useFormWizard';
 
 const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
 
 interface PendingSubmit {
   input: string;
   extra: AuditExtra | undefined;
+  contact: AuditContact;
 }
 
+type EmailStatus = 'pending' | 'sent' | 'failed' | 'no_email';
+
 export default function AiAuditTool(): React.ReactElement {
-  const { audit } = site;
-
-  // --- form state -----------------------------------------------------
-  const [input, setInput] = useState('');
-  const [extraOpen, setExtraOpen] = useState(false);
-  const [industria, setIndustria] = useState('');
-  const [equipo, setEquipo] = useState('');
-  const [stack, setStack] = useState('');
-  const [pain, setPain] = useState('');
-
-  // --- pipeline state -------------------------------------------------
   const [running, setRunning] = useState(false);
   const [stage, setStage] = useState<string>('idle');
   const [industry, setIndustry] = useState<IndustryClassification | null>(null);
   const [thinkingText, setThinkingText] = useState('');
   const [draftOpps, setDraftOpps] = useState<Opportunity[] | null>(null);
   const [finalAudit, setFinalAudit] = useState<AuditResultType | null>(null);
+  const [emailStatus, setEmailStatus] = useState<EmailStatus>('pending');
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState<PendingSubmit | null>(null);
+  const [submitted, setSubmitted] = useState<WizardValues | null>(null);
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
-  // --- turnstile ------------------------------------------------------
   const { containerRef: tsContainerRef, execute: tsExecute, reset: tsReset, error: tsError } =
     useTurnstile(SITE_KEY, (token) => {
       if (pending) {
@@ -52,60 +46,37 @@ export default function AiAuditTool(): React.ReactElement {
       }
     });
 
-  // --- derived --------------------------------------------------------
-  const len = input.length;
-  const counterClass =
-    len < audit.minInputLength
-      ? 'is-low'
-      : len < 400
-        ? ''
-        : len < 480
-          ? 'is-warn'
-          : 'is-error';
-  const counterColor = len >= audit.maxInputLength ? 'is-error' : counterClass;
-  const canSubmit =
-    !running &&
-    len >= audit.minInputLength &&
-    len <= audit.maxInputLength &&
-    Boolean(SITE_KEY);
-
-  const errorMessage = useMemo(() => {
-    if (!error) return null;
-    if (tsError === 'missing_site_key' || !SITE_KEY) {
-      return 'Anti-bot no configurado todavía. Avísale a Gibran que falta TURNSTILE_SITE_KEY.';
-    }
-    return error;
-  }, [error, tsError]);
-
-  // --- handlers -------------------------------------------------------
-  const submitAudit = (): void => {
-    if (!canSubmit) return;
-    setError(null);
-
-    const trimmed = input.trim();
-    if (trimmed.length < audit.minInputLength) {
-      setError(`Mínimo ${audit.minInputLength} caracteres.`);
-      return;
-    }
-    if (trimmed.length > audit.maxInputLength) {
-      setError(`Máximo ${audit.maxInputLength} caracteres.`);
+  const handleWizardSubmit = (values: WizardValues): void => {
+    if (!SITE_KEY) {
+      setError(
+        'Anti-bot no configurado. Avísale a Gibran que falta TURNSTILE_SITE_KEY.',
+      );
       return;
     }
 
     const extra: AuditExtra | undefined =
-      industria || equipo || stack || pain
+      values.industria || values.equipo || values.stack || values.pain
         ? {
-            ...(industria && { industria }),
-            ...(equipo && { equipo }),
-            ...(stack && { stack }),
-            ...(pain && { pain }),
+            ...(values.industria.trim() && { industria: values.industria.trim() }),
+            ...(values.equipo.trim() && { equipo: values.equipo.trim() }),
+            ...(values.stack.trim() && { stack: values.stack.trim() }),
+            ...(values.pain.trim() && { pain: values.pain.trim() }),
           }
         : undefined;
 
+    const contact: AuditContact = {
+      nombre: values.nombre.trim(),
+      empresa: values.empresa.trim(),
+      ...(values.email.trim() && { email: values.email.trim() }),
+      ...(values.telefono.trim() && { telefono: values.telefono.trim() }),
+    };
+
+    setSubmitted(values);
+    setError(null);
     setRunning(true);
     setStage('verifying');
     setAuditState('processing');
-    setPending({ input: trimmed, extra });
+    setPending({ input: values.input.trim(), extra, contact });
     tsExecute();
   };
 
@@ -115,7 +86,12 @@ export default function AiAuditTool(): React.ReactElement {
   ): Promise<void> => {
     try {
       await streamAudit(
-        { input: sub.input, extra: sub.extra, turnstileToken },
+        {
+          input: sub.input,
+          extra: sub.extra,
+          contact: sub.contact,
+          turnstileToken,
+        },
         {
           onStatus: (s) => setStage(s.stage),
           onIndustry: (data) => setIndustry(data),
@@ -125,6 +101,11 @@ export default function AiAuditTool(): React.ReactElement {
             setFinalAudit(d.audit);
             setRunning(false);
             setStage('done');
+          },
+          onEmailStatus: (data) => {
+            if (data.sent) setEmailStatus('sent');
+            else if (data.reason === 'no_email') setEmailStatus('no_email');
+            else setEmailStatus('failed');
           },
           onError: (err) => {
             setError(err.message);
@@ -149,167 +130,79 @@ export default function AiAuditTool(): React.ReactElement {
     }
   };
 
-  // Scroll result into view when it first appears
   useEffect(() => {
     if ((industry || finalAudit) && resultRef.current) {
       resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }, [industry !== null, finalAudit !== null]);
 
-  const pickExample = (ex: string): void => {
-    setInput(ex);
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  };
+  const auditStarted = running || industry !== null || finalAudit !== null;
+  const showWizard = !auditStarted && !error;
+  const showResult = auditStarted || error !== null;
 
-  const showResult = running || stage === 'done' || industry !== null || error !== null;
+  const emailProvidedUpfront = Boolean(submitted?.email.trim());
+  const emailUsed = submitted?.email.trim() ?? '';
+
+  const formErrorMessage = useMemo(() => {
+    if (!error) return null;
+    if (tsError === 'missing_site_key' || !SITE_KEY) {
+      return 'Anti-bot no configurado. Avísale a Gibran que falta TURNSTILE_SITE_KEY.';
+    }
+    return error;
+  }, [error, tsError]);
+
+  const stageLabel = useMemo(() => {
+    switch (stage) {
+      case 'classifying':
+        return 'Cleverum AI · clasificando';
+      case 'analyzing':
+        return 'Cleverum AI · pensando';
+      case 'critiquing':
+        return 'Cleverum AI · refinando';
+      case 'saving':
+        return 'Guardando';
+      case 'done':
+        return 'Análisis completo';
+      case 'error':
+        return 'Error';
+      default:
+        return 'Verificando';
+    }
+  }, [stage]);
 
   return (
-    <div className="audit-card" aria-label="AI Audit Tool">
-      <div className="audit-eyebrow">
-        <span className="audit-eyebrow-dot" aria-hidden="true" />
-        {audit.eyebrow}
-      </div>
+    <div className="audit-card" aria-label="Diagnóstico inteligente">
+      {showWizard && (
+        <Wizard onSubmit={handleWizardSubmit} disabled={running} />
+      )}
 
-      <h2 className="audit-headline font-display">{audit.headline}</h2>
-
-      <div className="audit-pitch">
-        {audit.pitch.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
-      </div>
-
-      <form
-        className="audit-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          submitAudit();
-        }}
-      >
-        <div className="audit-input-wrap">
-          <textarea
-            ref={textareaRef}
-            className="audit-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={audit.inputPlaceholder}
-            maxLength={audit.maxInputLength}
-            minLength={audit.minInputLength}
-            aria-label="Tu negocio en 1 línea o URL"
-            rows={3}
-            disabled={running}
-          />
-          <span className={`audit-counter ${counterColor}`} aria-live="polite">
-            {len} / {audit.maxInputLength}
-          </span>
-        </div>
-
-        <button
-          type="submit"
-          className="audit-submit"
-          disabled={!canSubmit}
-        >
-          {running ? (
-            <>
-              <span className="audit-submit-spinner" aria-hidden="true" />
-              {stage === 'classifying'
-                ? 'Clasificando…'
-                : stage === 'analyzing'
-                  ? 'Analizando…'
-                  : stage === 'critiquing'
-                    ? 'Refinando…'
-                    : stage === 'saving'
-                      ? 'Guardando…'
-                      : 'Verificando…'}
-            </>
-          ) : (
-            audit.submitLabel
-          )}
-        </button>
-      </form>
-
-      <details
-        className="audit-tip"
-        open={extraOpen}
-        onToggle={(e) => setExtraOpen((e.target as HTMLDetailsElement).open)}
-      >
-        <summary>{audit.tip.title}</summary>
-        <ul>
-          {audit.tip.hints.map((h, i) => (
-            <li key={i}>{h}</li>
-          ))}
-        </ul>
-        <div className="audit-examples" role="group" aria-label="Ejemplos rápidos">
-          {audit.tip.examples.map((ex, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => pickExample(ex)}
-              disabled={running}
-            >
-              {ex}
-            </button>
-          ))}
-        </div>
-
-        <div className="audit-extra">
-          <div className="audit-extra-title">Datos extra (opcional · mejora la precisión)</div>
-          <div className="audit-extra-grid">
-            <label>
-              <span>Industria</span>
-              <input
-                type="text"
-                value={industria}
-                onChange={(e) => setIndustria(e.target.value)}
-                maxLength={200}
-                placeholder="ej. Ecommerce de moda"
-                disabled={running}
-              />
-            </label>
-            <label>
-              <span>Equipo</span>
-              <input
-                type="text"
-                value={equipo}
-                onChange={(e) => setEquipo(e.target.value)}
-                maxLength={200}
-                placeholder="ej. 8 personas, 2 técnicas"
-                disabled={running}
-              />
-            </label>
-            <label>
-              <span>Stack actual</span>
-              <input
-                type="text"
-                value={stack}
-                onChange={(e) => setStack(e.target.value)}
-                maxLength={200}
-                placeholder="ej. Shopify + Mailchimp + Google Sheets"
-                disabled={running}
-              />
-            </label>
-            <label>
-              <span>Tu mayor dolor hoy</span>
-              <input
-                type="text"
-                value={pain}
-                onChange={(e) => setPain(e.target.value)}
-                maxLength={200}
-                placeholder="ej. Atiendo 100 chats al día a mano"
-                disabled={running}
-              />
-            </label>
+      {!showWizard && submitted && (
+        <div className="audit-summary" role="status">
+          <div className="audit-summary-stage">
+            <span className="audit-summary-dot" aria-hidden="true" />
+            <span>{stageLabel}</span>
+          </div>
+          <div className="audit-summary-text">
+            <strong>
+              {submitted.nombre}
+              {submitted.empresa ? ` · ${submitted.empresa}` : ''}
+            </strong>
+            {submitted.input && (
+              <span className="audit-summary-business">
+                {submitted.input.length > 90
+                  ? `${submitted.input.slice(0, 90)}…`
+                  : submitted.input}
+              </span>
+            )}
           </div>
         </div>
-      </details>
+      )}
 
-      {/* Turnstile (invisible) */}
       <div ref={tsContainerRef} className="audit-turnstile" aria-hidden="true" />
 
-      {errorMessage && !showResult && (
+      {formErrorMessage && !auditStarted && (
         <div className="audit-form-error" role="alert">
-          {errorMessage}
+          {formErrorMessage}
         </div>
       )}
 
@@ -321,7 +214,10 @@ export default function AiAuditTool(): React.ReactElement {
             draftOpportunities={draftOpps}
             finalAudit={finalAudit}
             stage={stage}
-            error={errorMessage}
+            error={formErrorMessage}
+            emailProvidedUpfront={emailProvidedUpfront}
+            emailUsed={emailUsed}
+            emailStatus={emailStatus}
           />
         </div>
       )}

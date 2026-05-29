@@ -59,6 +59,7 @@ export type SseEventName =
   | 'opportunities_draft'
   | 'maturity'
   | 'done'
+  | 'email_status'
   | 'error';
 
 export interface SseStatusPayload {
@@ -86,15 +87,26 @@ export interface AuditExtra {
   pain?: string;
 }
 
+export interface AuditContact {
+  nombre: string;
+  empresa: string;
+  email?: string;
+  telefono?: string;
+}
+
 export interface AuditRequestBody {
   input: string;
   extra?: AuditExtra;
+  contact: AuditContact;
   turnstileToken: string;
 }
 
 export interface LeadRequestBody {
   email: string;
-  nombre: string;
   audit_id: string;
-  comoMeEncontraste?: string;
+}
+
+export interface SseEmailStatusPayload {
+  sent: boolean;
+  reason?: 'no_email' | 'send_failed';
 }

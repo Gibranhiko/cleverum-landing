@@ -66,8 +66,8 @@ export const GET: APIRoute = () => {
 
     ai_audit: {
       endpoint: `${meta.url}/api/audit`,
-      description: audit.headline,
-      pitch: audit.pitch,
+      description: audit.heading,
+      intro: audit.intro,
       input: {
         min_length: audit.minInputLength,
         max_length: audit.maxInputLength,

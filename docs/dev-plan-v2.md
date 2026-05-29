@@ -215,7 +215,7 @@ export const site = {
 
   audit: {
     eyebrow: 'AUDIT GRATIS CON IA · 30 SEGUNDOS',
-    headline: 'Diagnóstico inteligente de tu negocio.',
+    headline: 'Haz gratis un Diagnóstico inteligente de tu negocio.',
     pitch: [
       'Crucé 50+ workflows que he construido, casos reales en LATAM y lo más nuevo en agentes de IA (Claude · GPT · n8n · MCP).',
       'Te devuelvo 3 oportunidades específicas, ROI estimado y stack recomendado. Si decides ejecutar, sesión 20 min conmigo gratis + 10% off tu primer sprint.',

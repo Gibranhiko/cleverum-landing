@@ -1,8 +1,10 @@
 import type {
+  AuditContact,
   AuditExtra,
   AuditResult,
   IndustryClassification,
   SseDonePayload,
+  SseEmailStatusPayload,
   SseErrorPayload,
   SseStatusPayload,
   SseThinkingPayload,
@@ -20,12 +22,14 @@ export interface SseHandlers {
   onThinking?: (data: SseThinkingPayload) => void;
   onOpportunitiesDraft?: (data: AnalystDraft) => void;
   onDone?: (data: SseDonePayload) => void;
+  onEmailStatus?: (data: SseEmailStatusPayload) => void;
   onError?: (data: SseErrorPayload) => void;
 }
 
 export interface AuditRequest {
   input: string;
   extra?: AuditExtra;
+  contact: AuditContact;
   turnstileToken: string;
   signal?: AbortSignal;
 }
@@ -51,6 +55,7 @@ export async function streamAudit(
     body: JSON.stringify({
       input: req.input,
       extra: req.extra,
+      contact: req.contact,
       turnstileToken: req.turnstileToken,
     }),
     signal: req.signal,
@@ -130,6 +135,9 @@ function parseSseBlock(block: string, handlers: SseHandlers): void {
       break;
     case 'done':
       handlers.onDone?.(data as SseDonePayload);
+      break;
+    case 'email_status':
+      handlers.onEmailStatus?.(data as SseEmailStatusPayload);
       break;
     case 'error':
       handlers.onError?.(data as SseErrorPayload);
