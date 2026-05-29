@@ -160,12 +160,6 @@ function Particles(): React.ReactElement {
     material.uniforms.uAuditMix!.value = auditMixCurrent.current;
 
     material.uniforms.uTime!.value += dt;
-
-    if (pointsRef.current) {
-      // Slow down rotation during audit so the digit reads stable
-      const rotMul = 1 - 0.85 * auditMixCurrent.current;
-      pointsRef.current.rotation.y += dt * 0.04 * rotMul;
-    }
   });
 
   return <points ref={pointsRef} geometry={geometry} material={material} />;
