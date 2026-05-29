@@ -56,9 +56,9 @@ export const site = {
 
   audit: {
     eyebrow: 'DIAGNÓSTICO GRATIS · 30 SEGUNDOS',
-    heading: 'Diagnóstico inteligente de tu negocio.',
+    heading: 'Diagnóstico de tu negocio.',
     intro:
-      'Te regalo 3 ideas concretas en 30 segundos. Mientras más me cuentes, mejor es el análisis.',
+      'Te regalo 3 ideas ganadoras en 30 segundos, cuéntame.',
 
     groups: {
       business: 'Cuéntame de tu negocio',
@@ -96,7 +96,7 @@ export const site = {
 
   cases: {
     heading: 'Cosas que he construido.',
-    subheading: 'Capturas reales del producto entregado, no plantillas.',
+    subheading: 'Casos reales de producto entregado.',
     items: [
       {
         id: 'whatsapp-panel',
@@ -132,56 +132,63 @@ export const site = {
   },
 
   services: {
-    heading: 'Tres formas de trabajar conmigo.',
-    subheading: 'Proyectos con precio claro y entregables definidos.',
+    heading: 'En qué te ayudo.',
+    subheading: 'Tres servicios con tiempos claros y entregables definidos.',
+    disclaimer: 'Cotización personalizada según el alcance de tu proyecto.',
     items: [
       {
         id: 'web',
         title: 'Sitio web',
-        subtitle: 'Landing o web app',
+        subtitle: 'Tu presencia digital, lista para vender',
         bullets: [
-          'Hasta N pantallas o secciones',
-          'Diseño + desarrollo + deploy',
-          'Performance & SEO incluidos',
+          'Diseño moderno que carga rápido y convierte visitantes en leads',
+          'Conectado a tu CRM o ERP — los leads aterrizan donde tu equipo trabaja',
+          'Preparado para Google Ads y Meta Ads — con tracking de conversiones medidas',
+          'SEO técnico incluido — Google te encuentra',
         ],
         duration: '2-4 semanas',
-        priceFrom: '$15,000 MXN',
+        inversion: 1,
+        idealFor: 'Negocios que quieren un funnel de conversión completo',
         accent: 'blue',
       },
       {
         id: 'auto',
         title: 'Automatización con IA',
-        subtitle: 'Workflow + agente IA',
+        subtitle: 'Procesos que se ejecutan solos',
         bullets: [
-          'Diagnóstico + diseño del flujo',
-          'Implementación en n8n / Make',
-          'Integraciones a tus herramientas + 1 agente IA',
+          'Onboarding de clientes nuevos: alta en sistemas + contratos + bienvenida sin que muevas un dedo',
+          'Tu inbox de correos triado y respondido en automático',
+          'Reportes diarios o semanales armados solos con los datos de tus sistemas',
+          'Sync entre tus apps: ventas, contabilidad, inventario, CRM',
         ],
         duration: '2-3 semanas',
-        priceFrom: '$22,000 MXN',
+        inversion: 2,
+        idealFor: 'Equipos que pierden horas en tareas repetitivas entre sistemas',
         accent: 'iris',
       },
       {
         id: 'chatbot',
         title: 'Chatbot de WhatsApp',
-        subtitle: 'Bot + panel admin',
+        subtitle: 'Atiende a tus clientes 24/7 sin contratar más gente',
         bullets: [
-          'Chatbot con IA conversacional',
-          'Panel admin para tu equipo',
-          'Integraciones a CRM / ERP / e-commerce',
+          'Chatbot con IA conversacional que entiende tu negocio',
+          'Panel admin para que tu equipo intervenga cuando quiera',
+          'Integrado a tu CRM, ERP o e-commerce',
+          'Recupera carritos, agenda citas, califica leads automáticamente',
         ],
         duration: '3-5 semanas',
-        priceFrom: '$28,000 MXN',
+        inversion: 2,
+        idealFor: 'Negocios con volumen alto de mensajes en WhatsApp',
         accent: 'green',
       },
     ],
   },
 
   about: {
-    heading: 'Soy Gibran. Yo solo, todo el stack.',
+    heading: 'Dev independiente.',
     photoSrc: null as string | null,
     paragraphs: [
-      'Construyo sistemas de IA y automatización para PYMES en México y LATAM. Solo.',
+      'Construyo sistemas de IA y automatización para PYMES en México y LATAM. Como independiente.',
       'Sin agencias intermediarias, sin equipos lejanos, sin juntas eternas para entender lo que quieres.',
       'Yo te diagnostico. Yo te construyo. Yo te entrego.',
       'Si tu equipo sigue copiando datos a mano entre sistemas, estás perdiendo tiempo y dinero todos los días.',
@@ -189,12 +196,12 @@ export const site = {
   },
 
   finalCta: {
-    heading: '¿Listo para automatizar tu negocio?',
+    heading: 'Automatiza tu negocio, ¡ya!',
     sub: 'Empieza con el diagnóstico gratis de arriba ↑ o escríbeme directo desde el botón de WhatsApp del menú.',
   },
 
   footer: {
-    manifesto: 'Un solo dev. Todo el stack. Cero excusas.',
+    manifesto: 'Independiente. Todo el stack. Cero excusas.',
     note: 'Hecho en México · 2026',
   },
 } as const;

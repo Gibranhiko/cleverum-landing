@@ -27,12 +27,6 @@ const SERVICE_NAME: Record<string, string> = {
   chatbot: 'Chatbot de WhatsApp',
 };
 
-const SERVICE_PRICE: Record<string, string> = {
-  web: 'desde $15,000 MXN',
-  auto: 'desde $22,000 MXN',
-  chatbot: 'desde $28,000 MXN',
-};
-
 export default function AuditResult(props: Props): React.ReactElement {
   const {
     industry,
@@ -267,10 +261,7 @@ function OpportunityCard({
         </div>
         <div>
           <dt>Proyecto</dt>
-          <dd>
-            {SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}
-            <span className="audit-opp-price"> ({SERVICE_PRICE[o.sprint_recomendado] ?? '?'})</span>
-          </dd>
+          <dd>{SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}</dd>
         </div>
       </dl>
 

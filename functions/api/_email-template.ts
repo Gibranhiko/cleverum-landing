@@ -12,12 +12,6 @@ const CALENDLY_URL = site.contact.calendly.includes('REPLACE_ME')
 const GIBRAN_EMAIL = site.contact.email;
 const MANIFESTO = site.footer.manifesto;
 
-const SERVICE_PRICE: Record<string, string> = {
-  web: '$15,000 MXN',
-  auto: '$22,000 MXN',
-  chatbot: '$28,000 MXN',
-};
-
 const SERVICE_NAME: Record<string, string> = {
   web: 'Sitio web',
   auto: 'Automatización con IA',
@@ -51,7 +45,7 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
           <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Retorno:</strong> ${escapeHtml(o.roi_estimado)}</td></tr>
           <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Tecnologías:</strong> ${o.stack_recomendado.map(escapeHtml).join(' · ')}</td></tr>
           <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Tiempo:</strong> ${escapeHtml(o.tiempo_implementacion)} · Complejidad ${escapeHtml(o.complejidad)}</td></tr>
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Proyecto:</strong> ${SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado} (desde ${SERVICE_PRICE[o.sprint_recomendado] ?? '?'})</td></tr>
+          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Proyecto:</strong> ${SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}</td></tr>
         </table>
       </td></tr>
     `,

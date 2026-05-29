@@ -19,15 +19,6 @@ function isReal(url: string): boolean {
   return !url.includes('REPLACE_ME');
 }
 
-function parsePriceFrom(s: string): { amount: string; currency: string } {
-  const match = s.match(/\$([\d,]+)\s*([A-Z]{3})/);
-  if (!match) return { amount: '0', currency: 'MXN' };
-  return {
-    amount: match[1]!.replace(/,/g, ''),
-    currency: match[2]!,
-  };
-}
-
 const FAQS: Array<{ q: string; a: string }> = [
   {
     q: '¿Cuánto cuesta un chatbot de WhatsApp?',
@@ -120,7 +111,6 @@ export function buildJsonLd(): JsonLdGraph {
   };
 
   const services = siteServices.items.map((s) => {
-    const { amount, currency } = parsePriceFrom(s.priceFrom);
     return {
       '@type': 'Service',
       '@id': ID.service(s.id),
@@ -138,16 +128,12 @@ export function buildJsonLd(): JsonLdGraph {
       },
       offers: {
         '@type': 'Offer',
-        priceCurrency: currency,
-        price: amount,
         availability: 'https://schema.org/InStock',
         url: `${URL}/#services`,
         priceSpecification: {
           '@type': 'PriceSpecification',
-          price: amount,
-          priceCurrency: currency,
-          minPrice: amount,
-          valueAddedTaxIncluded: false,
+          priceCurrency: 'MXN',
+          description: 'Cotización personalizada según alcance',
         },
       },
     } as Record<string, unknown>;

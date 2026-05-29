@@ -23,13 +23,15 @@ export const GET: APIRoute = () => {
   const servicesSection = services.items
     .map((s) => {
       const bullets = s.bullets.map((b) => `- ${b}`).join('\n');
-      return `### ${s.title} — ${s.priceFrom}
+      return `### ${s.title}
 
 **Duration:** ${s.duration}
 
-${s.subtitle}:
+${s.subtitle}.
 
-${bullets}`;
+${bullets}
+
+Ideal for: ${s.idealFor}`;
     })
     .join('\n\n');
 

@@ -15,7 +15,7 @@ const { cases } = site;
     </header>
 
     <div class="cases-list">
-      {cases.items.map((c) => <CaseCard case={c} />)}
+      {cases.items.map((c, i) => <CaseCard case={c} index={i} />)}
     </div>
   </div>
 </section>
@@ -52,9 +52,16 @@ const { cases } = site;
     line-height: 1.5;
   }
 
+  /* Sticky card stack — cards apiladas conforme se scrollea */
   .cases-list {
     display: flex;
     flex-direction: column;
     gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  @media (max-width: 768px) {
+    .cases-list {
+      gap: clamp(1.25rem, 3vw, 1.75rem);
+    }
   }
 </style>

@@ -3,9 +3,10 @@ import type { Case } from '~/content/site';
 
 interface Props {
   case: Case;
+  index?: number;
 }
 
-const { case: c } = Astro.props;
+const { case: c, index = 0 } = Astro.props;
 
 const accents: Record<string, string> = {
   'whatsapp-panel': 'var(--color-accent-go)',
@@ -15,17 +16,11 @@ const accents: Record<string, string> = {
 const accent = accents[c.id] ?? 'var(--color-brand-iris)';
 ---
 
-<article class="case-card" style={`--accent: ${accent};`} data-case-id={c.id}>
-  <header class="case-header">
-    <span class="case-number font-display" aria-hidden="true">{c.number}</span>
-    <h3 class="case-title font-display">{c.solution}</h3>
-  </header>
-
-  <div class="case-body">
-    <p class="case-problem">{c.problem}</p>
-    <p class="case-impact">{c.impact}</p>
-  </div>
-
+<article
+  class="case-card"
+  style={`--accent: ${accent}; --card-index: ${index};`}
+  data-case-id={c.id}
+>
   <div class="case-media">
     {
       c.mediaSrc ? (
@@ -88,50 +83,85 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
     }
   </div>
 
-  <footer class="case-stack" aria-label="Stack utilizado">
-    {c.stack.map((s) => <span class="case-stack-chip">{s}</span>)}
-  </footer>
+  <div class="case-text">
+    <header class="case-header">
+      <span class="case-number font-display" aria-hidden="true">{c.number}</span>
+      <h3 class="case-title font-display">{c.solution}</h3>
+    </header>
 
-  {
-    c.link && (
-      <a class="case-link" href={c.link} target="_blank" rel="noopener noreferrer">
-        Ver caso
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="14"
-          height="14"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M7 17 17 7" />
-          <path d="M7 7h10v10" />
-        </svg>
-      </a>
-    )
-  }
+    <div class="case-body">
+      <p class="case-problem">{c.problem}</p>
+      <p class="case-impact">{c.impact}</p>
+    </div>
+
+    <footer class="case-stack" aria-label="Stack utilizado">
+      {c.stack.map((s) => <span class="case-stack-chip">{s}</span>)}
+    </footer>
+
+    {
+      c.link && (
+        <a class="case-link" href={c.link} target="_blank" rel="noopener noreferrer">
+          Ver caso
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M7 17 17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </a>
+      )
+    }
+  </div>
 </article>
 
 <style>
   .case-card {
-    position: relative;
-    background: color-mix(in srgb, var(--color-bg-elev) 88%, transparent);
+    position: sticky;
+    top: calc(5.5rem + var(--card-index, 0) * 1.5rem);
+    z-index: calc(var(--card-index, 0) + 1);
+    background: color-mix(in srgb, var(--color-bg-elev) 94%, transparent);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-card);
-    padding: clamp(1.5rem, 4vw, 2.5rem);
+    padding: clamp(1.5rem, 3vw, 2rem);
     display: grid;
+    grid-template-columns: 1fr;
     gap: clamp(1.25rem, 2.5vw, 1.75rem);
-    backdrop-filter: blur(8px);
+    align-items: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     overflow: hidden;
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    transition: border-color 0.3s ease;
+    box-shadow: 0 -10px 30px -16px rgba(0, 0, 0, 0.55);
+  }
+
+  /* Desktop side-by-side: media izquierda, texto derecha */
+  @media (min-width: 960px) {
+    .case-card {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(1.75rem, 3vw, 2.5rem);
+      padding: clamp(1.75rem, 3vw, 2.25rem);
+    }
   }
 
   .case-card:hover {
     border-color: color-mix(in srgb, var(--accent) 40%, var(--color-border));
+  }
+
+  /* Mobile: fallback a flujo normal — sticky con offsets queda apretado */
+  @media (max-width: 768px) {
+    .case-card {
+      position: static;
+      box-shadow: none;
+    }
   }
 
   .case-card::before {
@@ -145,53 +175,10 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
     opacity: 0.7;
   }
 
-  .case-header {
-    display: flex;
-    align-items: baseline;
-    gap: clamp(0.75rem, 2vw, 1.25rem);
-    flex-wrap: wrap;
-  }
-
-  .case-number {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
-    letter-spacing: -0.05em;
-    color: var(--accent);
-    line-height: 0.85;
-    opacity: 0.85;
-  }
-
-  .case-title {
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: var(--color-text-1);
-    margin: 0;
-    line-height: 1.15;
-  }
-
-  .case-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 1rem;
-    line-height: 1.55;
-  }
-
-  .case-problem {
-    color: var(--color-text-2);
-    margin: 0;
-  }
-
-  .case-impact {
-    color: var(--color-text-1);
-    font-weight: 500;
-    margin: 0;
-  }
-
+  /* Media column */
   .case-media {
     position: relative;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 4 / 3;
     border-radius: 12px;
     overflow: hidden;
     background: var(--color-bg-soft);
@@ -239,15 +226,68 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
     color: color-mix(in srgb, var(--color-text-2) 90%, transparent);
   }
 
+  /* Text column */
+  .case-text {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.85rem, 1.8vw, 1.25rem);
+    min-width: 0;
+  }
+
+  .case-header {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(0.75rem, 1.5vw, 1rem);
+    flex-wrap: wrap;
+  }
+
+  .case-number {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    line-height: 0.85;
+    opacity: 0.9;
+  }
+
+  .case-title {
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-text-1);
+    margin: 0;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .case-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .case-problem {
+    color: var(--color-text-2);
+    margin: 0;
+  }
+
+  .case-impact {
+    color: var(--color-text-1);
+    font-weight: 500;
+    margin: 0;
+  }
+
   .case-stack {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .case-stack-chip {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.78rem;
+    padding: 0.32rem 0.7rem;
+    font-size: 0.74rem;
     font-weight: 500;
     background: color-mix(in srgb, var(--color-bg-base) 65%, transparent);
     border: 1px solid var(--color-border);
@@ -272,29 +312,10 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
     gap: 0.6rem;
   }
 
-  /* Scroll-driven reveal (Chrome/Edge 115+). Fallback: visible by default. */
-  @supports (animation-timeline: view()) {
-    .case-card {
-      opacity: 0;
-      transform: translateY(40px);
-      animation: case-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 25%;
-    }
-
-    @keyframes case-reveal {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  }
-
+  /* Reduced motion: cards comparten el mismo top (sin offset incremental) */
   @media (prefers-reduced-motion: reduce) {
     .case-card {
-      animation: none !important;
-      opacity: 1 !important;
-      transform: none !important;
+      top: 5.5rem;
       transition: none;
     }
   }

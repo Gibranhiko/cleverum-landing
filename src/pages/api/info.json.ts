@@ -5,12 +5,6 @@ function isReal(url: string): boolean {
   return !url.includes('REPLACE_ME');
 }
 
-function parsePriceAmount(s: string): number | null {
-  const match = s.match(/\$([\d,]+)/);
-  if (!match) return null;
-  return Number(match[1]!.replace(/,/g, ''));
-}
-
 export const GET: APIRoute = () => {
   const { meta, brand, contact, services, cases, socials, footer, audit } = site;
 
@@ -24,7 +18,7 @@ export const GET: APIRoute = () => {
 
     founder: {
       name: contact.name,
-      role: 'Founder & indie hacker',
+      role: 'Founder & independent developer',
       email: contact.email,
       phone_display: contact.phoneDisplay,
       phone_tel: contact.phoneTel,
@@ -35,11 +29,11 @@ export const GET: APIRoute = () => {
       name: s.title,
       subtitle: s.subtitle,
       duration: s.duration,
-      price_from: s.priceFrom,
-      price_currency: 'MXN',
-      price_amount: parsePriceAmount(s.priceFrom),
       bullets: s.bullets,
-      whatsapp_message: `¡Hola Gibran! Me interesa el ${s.title}.`,
+      ideal_for: s.idealFor,
+      investment_tier: s.inversion,
+      pricing: 'Cotización personalizada según alcance',
+      whatsapp_message: `¡Hola Gibran! Me interesa el servicio de ${s.title}.`,
     })),
 
     cases: cases.items.map((c) => ({

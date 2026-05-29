@@ -21,7 +21,7 @@ export const GET: APIRoute = () => {
     : null;
 
   const serviceLines = services.items.map(
-    (s) => `- ${s.title} — ${s.subtitle.toLowerCase()}, ${s.duration}, ${s.priceFrom}`,
+    (s) => `- ${s.title} — ${s.subtitle.toLowerCase()}, ${s.duration}`,
   );
 
   const content = `# Cleverum
