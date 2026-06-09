@@ -16,9 +16,7 @@ export const GET: APIRoute = () => {
     location: brand.location,
     languages: ['es', 'en'],
 
-    founder: {
-      name: contact.name,
-      role: 'Founder & independent developer',
+    contact_info: {
       email: contact.email,
       phone_display: contact.phoneDisplay,
       phone_tel: contact.phoneTel,

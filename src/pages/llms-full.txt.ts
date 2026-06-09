@@ -50,21 +50,19 @@ Ideal for: ${s.idealFor}`;
 
   const content = `# ${brand.name}
 
-> ${brand.name} is a one-person studio building AI automation systems for small and medium businesses (SMBs) in Mexico and LATAM. The founder, ${contact.name}, is an indie hacker who handles the full stack: diagnosis, design, and delivery — no agency, no offshore team, no junior devs.
+> ${brand.name} is a team building AI automation systems for small and medium businesses (SMBs) in Mexico and LATAM. We handle the full stack: diagnosis, design, and delivery — no agency middleman, no offshore team, no endless discovery meetings.
 
 **Tagline:** ${footer.manifesto}
 
-## Founder
+## Contact
 
-- **Name:** ${contact.name}
-- **Role:** Founder & Technology Lead
 - **Location:** ${brand.location}
 - **Email:** ${contact.email}
 - **WhatsApp:** ${contact.phoneDisplay}
 ${calendlyLine}
 ${socialLines.join('\n')}
 
-## Bio
+## About
 
 ${aboutParagraphs}
 
@@ -78,9 +76,9 @@ The audit uses a multi-agent pipeline (industry classifier → senior business a
 
 **Input:** Business URL or short description (${audit.minInputLength}-${audit.maxInputLength} characters).
 
-**Output:** Industry classification + maturity score + 3 ranked opportunities (each with ROI estimate, recommended stack, suggested sprint, ICE score).
+**Output:** Industry classification + maturity score + 3 ranked opportunities (each with ROI estimate, recommended stack, suggested project, ICE score).
 
-**Bonus:** If you decide to execute, free 20-minute strategy session + 10% off your first sprint.
+**Bonus:** If you decide to execute, free 20-minute strategy session + 10% off your first project.
 
 ## Services
 

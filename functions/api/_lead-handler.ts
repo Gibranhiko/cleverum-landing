@@ -8,7 +8,7 @@ import {
 } from './_email-template';
 
 const RESEND_URL = 'https://api.resend.com/emails';
-const FROM_ADDRESS = `Gibran de Cleverum <hello@cleverum.org>`;
+const FROM_ADDRESS = `Cleverum <hello@cleverum.org>`;
 const NOTIFY_FROM = `Cleverum Bot <hello@cleverum.org>`;
 const GIBRAN_EMAIL = site.contact.email;
 const LEAD_TTL_SECONDS = 60 * 60 * 24 * 365;

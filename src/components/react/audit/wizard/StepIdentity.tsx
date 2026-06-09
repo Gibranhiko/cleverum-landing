@@ -29,7 +29,7 @@ export default function StepIdentity({
       <header className="wiz-step-header">
         <h3 className="wiz-step-title">¿Quién eres?</h3>
         <p className="wiz-step-sub">
-          Lo uso para personalizar tu reporte. Solo nosotros lo vemos.
+          Lo usamos para personalizar tu reporte. Solo nosotros lo vemos.
         </p>
       </header>
 

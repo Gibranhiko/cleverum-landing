@@ -26,9 +26,9 @@ export default function StepContact({
   return (
     <div className="wiz-step">
       <header className="wiz-step-header">
-        <h3 className="wiz-step-title">¿Cómo te paso el reporte detallado?</h3>
+        <h3 className="wiz-step-title">¿Cómo te enviamos el reporte detallado?</h3>
         <p className="wiz-step-sub">
-          Si me dejas tu email, te lo mando al terminar. Si no, lo ves aquí mismo.
+          Si nos dejas tu email, te lo enviamos al terminar. Si no, lo ves aquí mismo.
         </p>
       </header>
 

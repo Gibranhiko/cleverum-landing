@@ -73,7 +73,7 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
           Hola ${escapeHtml(nombre)}.
         </h1>
         <p style="margin:0 0 14px;color:#B4B4BF;font-size:16px;line-height:1.55;">
-          Aquí está el análisis completo que te prometí.
+          Aquí está el análisis completo que te prometimos.
         </p>
         <p style="margin:0;color:#B4B4BF;font-size:16px;line-height:1.55;">
           <strong style="color:#ffffff;">Tu negocio:</strong> ${escapeHtml(audit.negocio_detectado)}<br>
@@ -95,7 +95,7 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
         <table cellpadding="0" cellspacing="0" border="0" style="width:100%;background:#111114;border:1px solid #2a2440;border-radius:16px;">
           <tr><td style="padding:24px;">
             <div style="font-size:11px;color:#7C5CFF;letter-spacing:0.16em;text-transform:uppercase;font-weight:600;margin-bottom:10px;">
-              Mi recomendación
+              Nuestra recomendación
             </div>
             <p style="margin:0;color:#ffffff;font-size:16px;line-height:1.5;">
               ${escapeHtml(audit.recomendacion_prioritaria.razon)}
@@ -109,11 +109,11 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
           Tu regalo
         </div>
         <h2 style="margin:0 0 14px;font-size:24px;color:#ffffff;font-weight:600;letter-spacing:-0.02em;line-height:1.15;">
-          Sesión 20 min conmigo, gratis.
+          Sesión 20 min con nosotros, gratis.
         </h2>
         <p style="margin:0 0 24px;color:#B4B4BF;font-size:15px;line-height:1.55;">
-          Agendamos. Te explico cómo aterrizar la oportunidad #1. Resolvemos dudas. Sin venta forzada.<br>
-          <strong style="color:#ffffff;">Bonus extra:</strong> si arrancamos en los próximos 14 días, <strong>10% off</strong> en tu primer sprint.
+          Agendamos. Te explicamos cómo aterrizar la oportunidad #1. Resolvemos dudas. Sin venta forzada.<br>
+          <strong style="color:#ffffff;">Bonus extra:</strong> si arrancamos en los próximos 14 días, <strong>10% off</strong> en tu primer proyecto.
         </p>
         <table cellpadding="0" cellspacing="0" border="0">
           <tr>
@@ -133,8 +133,7 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
 
       <tr><td style="padding:48px 0 0;border-top:1px solid #1f1f24;">
         <p style="margin:0;color:#B4B4BF;font-size:15px;line-height:1.55;">
-          — Gibran Villarreal<br>
-          <span style="color:#8A8A96;font-size:13px;">${BRAND_NAME} · single war machine</span><br>
+          — El equipo de ${BRAND_NAME}<br>
           <a href="mailto:${GIBRAN_EMAIL}" style="color:#7C5CFF;text-decoration:none;font-size:13px;">${GIBRAN_EMAIL}</a>
         </p>
       </td></tr>

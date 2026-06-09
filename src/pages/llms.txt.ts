@@ -26,9 +26,8 @@ export const GET: APIRoute = () => {
 
   const content = `# Cleverum
 
-> Indie hacker building AI automation systems for SMBs in Mexico and LATAM. One developer, full stack, zero excuses.
+> Cleverum is a team building AI automation systems for SMBs in Mexico and LATAM. Full stack, zero excuses.
 
-Founder: ${contact.name}
 Location: ${brand.location}
 Languages: Spanish (primary), English
 
@@ -59,7 +58,7 @@ ${calendlyLine ? calendlyLine + '\n' : ''}${socialLines.join('\n')}
 
 ## Pages
 
-- [/](${meta.url}/): Home — hero, AI audit tool, cases, services, about Gibran, contact
+- [/](${meta.url}/): Home — hero, AI audit tool, cases, services, about Cleverum, contact
 - [/llms-full.txt](${meta.url}/llms-full.txt): Extended markdown version of this file
 `;
 

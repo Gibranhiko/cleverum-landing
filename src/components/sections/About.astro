@@ -1,7 +1,7 @@
 ---
 import { site } from '~/content/site';
 
-const { about, socials, contact } = site;
+const { about, socials } = site;
 ---
 
 <section id="about" class="about section-pad" aria-labelledby="about-heading">
@@ -11,14 +11,14 @@ const { about, socials, contact } = site;
         about.photoSrc ? (
           <img
             src={about.photoSrc}
-            alt={`Foto de ${contact.name}`}
+            alt={`${site.brand.name} — equipo`}
             width="800"
             height="800"
             loading="lazy"
           />
         ) : (
           <div class="about-photo-placeholder" aria-hidden="true">
-            <span class="about-photo-monogram font-display">GV</span>
+            <span class="about-photo-monogram font-display">C</span>
           </div>
         )
       }
@@ -33,7 +33,7 @@ const { about, socials, contact } = site;
         {about.paragraphs.map((p) => <p>{p}</p>)}
       </div>
 
-      <ul class="about-socials" aria-label="Redes sociales de Gibran">
+      <ul class="about-socials" aria-label="Redes sociales de Cleverum">
         <li>
           <a href={socials.linkedin} target="_blank" rel="noopener noreferrer">
             <svg

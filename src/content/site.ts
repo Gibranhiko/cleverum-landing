@@ -7,15 +7,15 @@ export const site = {
   meta: {
     title: 'Cleverum — Sistemas de IA y automatización para PYMES',
     description:
-      'Construyo sistemas que ponen tu negocio en piloto automático. Trabajo solo, hago todo: desde el diseño hasta la entrega.',
+      'Construimos sistemas que ponen tu negocio en piloto automático. Diseñamos, desarrollamos y entregamos IA y automatización para PYMES en México y LATAM.',
     url: 'https://cleverum.org',
     locale: 'es_MX',
-    author: 'Gibran Villarreal',
+    author: 'Cleverum',
   },
 
   brand: {
     name: 'Cleverum',
-    bajada: 'por Gibran Villarreal',
+    bajada: 'Sistemas inteligentes',
     location: 'México · LATAM',
   },
 
@@ -27,7 +27,7 @@ export const site = {
     whatsapp: {
       number: '5215541433545',
       prefilledMessage:
-        '¡Hola Gibran! Vi tu sitio y quiero hablar sobre un proyecto.',
+        '¡Hola! Vi el sitio de Cleverum y quiero hablar sobre un proyecto.',
     },
     calendly: 'https://calendly.com/REPLACE_ME',
   },
@@ -58,10 +58,10 @@ export const site = {
     eyebrow: 'DIAGNÓSTICO GRATIS · 30 SEGUNDOS',
     heading: 'Diagnóstico de tu negocio.',
     intro:
-      'Te regalo 3 ideas ganadoras en 30 segundos, cuéntame.',
+      'Te regalamos 3 ideas ganadoras en 30 segundos. Cuéntanos.',
 
     groups: {
-      business: 'Cuéntame de tu negocio',
+      business: 'Cuéntanos de tu negocio',
       context: 'Contexto extra (opcional · mejora mucho el análisis)',
       contact: 'Para enviarte el reporte',
     },
@@ -80,7 +80,7 @@ export const site = {
 
     submitLabel: 'Analizar mi negocio',
     microNote:
-      'Sin email te muestro el resultado aquí mismo, pero no puedo enviarte el reporte detallado.',
+      'Sin email te mostramos el resultado aquí mismo, pero no podemos enviarte el reporte detallado.',
 
     maxInputLength: 500,
     minInputLength: 10,
@@ -95,7 +95,7 @@ export const site = {
   },
 
   cases: {
-    heading: 'Cosas que he construido.',
+    heading: 'Cosas que hemos construido.',
     subheading: 'Casos reales de producto entregado.',
     items: [
       {
@@ -132,7 +132,7 @@ export const site = {
   },
 
   services: {
-    heading: 'En qué te ayudo.',
+    heading: 'En qué te ayudamos.',
     subheading: 'Tres servicios con tiempos claros y entregables definidos.',
     disclaimer: 'Cotización personalizada según el alcance de tu proyecto.',
     items: [
@@ -185,23 +185,23 @@ export const site = {
   },
 
   about: {
-    heading: 'Dev independiente.',
+    heading: 'Somos Cleverum.',
     photoSrc: null as string | null,
     paragraphs: [
-      'Construyo sistemas de IA y automatización para PYMES en México y LATAM. Como independiente.',
-      'Sin agencias intermediarias, sin equipos lejanos, sin juntas eternas para entender lo que quieres.',
-      'Yo te diagnostico. Yo te construyo. Yo te entrego.',
+      'Construimos sistemas de IA y automatización para PYMES en México y LATAM.',
+      'Sin agencias intermediarias, sin equipos lejanos, sin juntas eternas para entender lo que necesitas.',
+      'Te diagnosticamos. Te construimos. Te entregamos.',
       'Si tu equipo sigue copiando datos a mano entre sistemas, estás perdiendo tiempo y dinero todos los días.',
     ],
   },
 
   finalCta: {
     heading: 'Automatiza tu negocio, ¡ya!',
-    sub: 'Empieza con el diagnóstico gratis de arriba ↑ o escríbeme directo desde el botón de WhatsApp del menú.',
+    sub: 'Empieza con el diagnóstico gratis de arriba ↑ o escríbenos directo desde el botón de WhatsApp del menú.',
   },
 
   footer: {
-    manifesto: 'Independiente. Todo el stack. Cero excusas.',
+    manifesto: 'Un equipo. Todo el stack. Cero excusas.',
     note: 'Hecho en México · 2026',
   },
 } as const;

@@ -122,7 +122,7 @@ export default function AuditResult(props: Props): React.ReactElement {
 
       {finalAudit && finalAudit.recomendacion_prioritaria && (
         <div className="audit-result-recomendacion">
-          <div className="audit-result-stage-label">Mi recomendación</div>
+          <div className="audit-result-stage-label">Nuestra recomendación</div>
           <p>{finalAudit.recomendacion_prioritaria.razon}</p>
         </div>
       )}
@@ -273,7 +273,7 @@ function OpportunityCard({
         <span className="audit-opp-ice-avg">∅ {o.ice_score.promedio.toFixed(1)}</span>
       </div>
 
-      <div className="audit-opp-confianza">Qué tan seguro estoy: {o.confianza}/100</div>
+      <div className="audit-opp-confianza">Qué tan seguros estamos: {o.confianza}/100</div>
     </article>
   );
 }
