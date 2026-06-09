@@ -31,7 +31,7 @@ const { socials, footer, brand, contact, finalCta } = site;
     </a>
 
     <p class="footer-invitation">
-      El diagnóstico gratis está arriba ↑ — o escríbeme directo:
+      El diagnóstico gratis está arriba ↑ — o escríbenos directo:
     </p>
 
     <ul class="footer-contact" aria-label="Contacto directo">
@@ -39,7 +39,12 @@ const { socials, footer, brand, contact, finalCta } = site;
         <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a>
       </li>
       <li>
-        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        <a
+          href={`mailto:${contact.email}`}
+          aria-label={`Mandar mail a ${brand.name}`}
+        >
+          Manda un mail
+        </a>
       </li>
     </ul>
 

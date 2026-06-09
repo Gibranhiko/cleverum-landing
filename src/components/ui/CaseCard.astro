@@ -11,7 +11,7 @@ const { case: c, index = 0 } = Astro.props;
 const accents: Record<string, string> = {
   'whatsapp-panel': 'var(--color-accent-go)',
   web: 'var(--color-brand-blue)',
-  mobile: 'var(--color-brand-iris)',
+  automation: 'var(--color-brand-iris)',
 };
 const accent = accents[c.id] ?? 'var(--color-brand-iris)';
 ---
@@ -23,7 +23,15 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
 >
   <div class="case-media">
     {
-      c.mediaSrc ? (
+      c.videoId ? (
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${c.videoId}?start=2&rel=0`}
+          title={`${c.solution} — video del producto`}
+          loading="lazy"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        />
+      ) : c.mediaSrc ? (
         <img src={c.mediaSrc} alt={`${c.solution} — captura del producto`} loading="lazy" />
       ) : (
         <div class="case-media-placeholder" aria-hidden="true">
@@ -60,7 +68,7 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
                 <line x1="12" x2="12" y1="17" y2="21" />
               </svg>
             )}
-            {c.id === 'mobile' && (
+            {c.id === 'automation' && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -72,8 +80,7 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
-                <rect x="5" y="2" width="14" height="20" rx="2.5" ry="2.5" />
-                <line x1="11" x2="13" y1="18.5" y2="18.5" />
+                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
               </svg>
             )}
           </div>
@@ -185,11 +192,16 @@ const accent = accents[c.id] ?? 'var(--color-brand-iris)';
     width: 100%;
   }
 
-  .case-media img {
+  .case-media img,
+  .case-media iframe {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
+    border: 0;
+  }
+
+  .case-media img {
+    object-fit: cover;
   }
 
   .case-media-placeholder {
