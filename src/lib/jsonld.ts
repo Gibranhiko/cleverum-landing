@@ -60,7 +60,7 @@ export function buildJsonLd(): JsonLdGraph {
     '@id': ID.org,
     name: brand.name,
     url: URL,
-    logo: `${URL}/favicon.svg`,
+    logo: `${URL}/icon-512.png`,
     image: `${URL}/og.png`,
     description: site.meta.description,
     founder: { '@id': ID.person },

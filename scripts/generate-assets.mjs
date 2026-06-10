@@ -28,6 +28,49 @@ async function svgToPng(svgPath, outPath, width, height) {
   console.log(`  → ${outPath} (${width}×${height})`);
 }
 
+// Color de fondo de marca (--bg-base #08080B). El favicon fuente ya viene
+// sobre fondo oscuro; lo cuadramos rellenando con este tono.
+const BRAND_BG = { r: 8, g: 8, b: 11, alpha: 1 };
+
+// Master cuadrado del favicon, cacheado para reutilizar en todas las variantes.
+async function buildFaviconMaster(srcPath) {
+  const meta = await sharp(srcPath).metadata();
+  const size = Math.max(meta.width, meta.height);
+  return sharp(srcPath)
+    .resize(size, size, { fit: 'contain', background: BRAND_BG })
+    .flatten({ background: BRAND_BG })
+    .png()
+    .toBuffer();
+}
+
+async function faviconPng(master, outPath, dim) {
+  await ensureDir(outPath);
+  await sharp(master).resize(dim, dim).png({ compressionLevel: 9 }).toFile(outPath);
+  console.log(`  → ${outPath} (${dim}×${dim})`);
+}
+
+// .ico con un único PNG de 32×32 embebido (formato PNG-in-ICO, soportado por
+// todos los navegadores modernos).
+async function faviconIco(master, outPath) {
+  await ensureDir(outPath);
+  const png = await sharp(master).resize(32, 32).png().toBuffer();
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0); // reservado
+  header.writeUInt16LE(1, 2); // tipo = icono
+  header.writeUInt16LE(1, 4); // número de imágenes
+  const entry = Buffer.alloc(16);
+  entry.writeUInt8(32, 0); // ancho
+  entry.writeUInt8(32, 1); // alto
+  entry.writeUInt8(0, 2); // colores de paleta
+  entry.writeUInt8(0, 3); // reservado
+  entry.writeUInt16LE(1, 4); // planos
+  entry.writeUInt16LE(32, 6); // bits por pixel
+  entry.writeUInt32LE(png.length, 8); // tamaño de datos
+  entry.writeUInt32LE(6 + 16, 12); // offset de datos
+  await writeFile(outPath, Buffer.concat([header, entry, png]));
+  console.log(`  → ${outPath} (32×32 ICO)`);
+}
+
 async function optimizeLogo(srcPath, outPath, size = 128) {
   await ensureDir(outPath);
   const beforeBytes = (await stat(srcPath)).size;
@@ -57,19 +100,22 @@ async function main() {
     630,
   );
 
-  // 2) Favicons (a partir de favicon.svg).
+  // 2) Favicons (a partir de scripts/sources/favicon-source.png).
   // Sólo generamos los tamaños que realmente referenciamos:
+  //   - .ico:  <link rel="icon"> legacy
   //   - 16/32: <link rel="icon"> en BaseLayout
   //   - 180:   apple-touch-icon
   //   - 192/512: site.webmanifest (PWA / Android)
-  // SVG cubre el resto de navegadores modernos.
   console.log('\nFavicons:');
-  const faviconSvg = resolve(publicDir, 'favicon.svg');
-  await svgToPng(faviconSvg, resolve(publicDir, 'favicon-16x16.png'), 16, 16);
-  await svgToPng(faviconSvg, resolve(publicDir, 'favicon-32x32.png'), 32, 32);
-  await svgToPng(faviconSvg, resolve(publicDir, 'apple-touch-icon.png'), 180, 180);
-  await svgToPng(faviconSvg, resolve(publicDir, 'icon-192.png'), 192, 192);
-  await svgToPng(faviconSvg, resolve(publicDir, 'icon-512.png'), 512, 512);
+  const faviconMaster = await buildFaviconMaster(
+    resolve(sourcesDir, 'favicon-source.png'),
+  );
+  await faviconIco(faviconMaster, resolve(publicDir, 'favicon.ico'));
+  await faviconPng(faviconMaster, resolve(publicDir, 'favicon-16x16.png'), 16);
+  await faviconPng(faviconMaster, resolve(publicDir, 'favicon-32x32.png'), 32);
+  await faviconPng(faviconMaster, resolve(publicDir, 'apple-touch-icon.png'), 180);
+  await faviconPng(faviconMaster, resolve(publicDir, 'icon-192.png'), 192);
+  await faviconPng(faviconMaster, resolve(publicDir, 'icon-512.png'), 512);
 
   // 3) Logos de marca (Devindry / Cleverum / Wabbi)
   // Originales viven en scripts/sources/logos/ (versionados como backup).
@@ -109,7 +155,6 @@ async function main() {
     icons: [
       { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
-      { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' },
     ],
   };
   const manifestPath = resolve(publicDir, 'site.webmanifest');
