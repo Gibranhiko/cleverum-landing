@@ -19,6 +19,7 @@ import {
   verifyTurnstile,
   checkAndConsumeRateLimit,
   checkAndIncrementDailyCap,
+  isIpAllowlisted,
   callAnthropic,
   callAnthropicWithThinking,
   parseJsonFromLlm,
@@ -120,25 +121,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     );
   }
 
-  // --- 5. Rate limit per IP -----------------------------------------------
+  // --- 5. Rate limit + daily cap (saltados para IPs en la allowlist) -------
   const ip = request.headers.get('CF-Connecting-IP') ?? '';
-  const rl = await checkAndConsumeRateLimit(env.KV, ip);
-  if (!rl.allowed) {
-    return jsonError(
-      429,
-      rl.reason ?? 'rate_limited',
-      'Ya solicitaste un audit hoy desde esta IP. Vuelve mañana o escríbeme por WhatsApp.',
-    );
-  }
+  if (!isIpAllowlisted(ip, env.AUDIT_IP_ALLOWLIST)) {
+    const rl = await checkAndConsumeRateLimit(env.KV, ip);
+    if (!rl.allowed) {
+      return jsonError(
+        429,
+        rl.reason ?? 'rate_limited',
+        'Ya hiciste varios diagnósticos hoy desde esta red. Vuelve mañana o escríbeme por WhatsApp.',
+      );
+    }
 
-  // --- 6. Daily cap -------------------------------------------------------
-  const cap = await checkAndIncrementDailyCap(env.KV, env.DAILY_AUDIT_CAP);
-  if (!cap.allowed) {
-    return jsonError(
-      429,
-      'daily_cap_reached',
-      'Audits gratis agotados por hoy. Vuelve mañana o escríbeme por WhatsApp.',
-    );
+    const cap = await checkAndIncrementDailyCap(env.KV, env.DAILY_AUDIT_CAP);
+    if (!cap.allowed) {
+      return jsonError(
+        429,
+        'daily_cap_reached',
+        'Audits gratis agotados por hoy. Vuelve mañana o escríbeme por WhatsApp.',
+      );
+    }
   }
 
   // --- 7. Fetch URL HTML if input looks like a URL -------------------------

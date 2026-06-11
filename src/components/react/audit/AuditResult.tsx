@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import './AuditResult.css';
 import type {
   AuditResult as AuditResultType,
@@ -91,7 +91,7 @@ export default function AuditResult(props: Props): React.ReactElement {
 
   return (
     <div className="audit-result" aria-live="polite">
-      {!finalAudit && <ProgressSteps stage={stage} hasIndustry={industry !== null} />}
+      {!finalAudit && <ProcessingPanel stage={stage} industry={industry} />}
 
       {industry && (
         <div className="audit-result-industry">
@@ -238,24 +238,58 @@ function EmailStatusBanner({
 
 const STEPS = ['Leyendo tu negocio', 'Detectando industria', 'Analizando', 'Afinando'] as const;
 
-function ProgressSteps({
+function buildTips(industria?: string): string[] {
+  const tips = [
+    'Leyendo tu negocio a fondo…',
+    'Cruzando con 15 patrones de automatización reales…',
+    'Calculando el retorno de cada oportunidad…',
+    'Priorizando por impacto, confianza y facilidad…',
+    'Afinando las ideas para tu caso específico…',
+  ];
+  if (industria) {
+    tips.splice(2, 0, `Comparando con otros negocios de ${industria}…`);
+  }
+  return tips;
+}
+
+function ProcessingPanel({
   stage,
-  hasIndustry,
+  industry,
 }: {
   stage: string;
-  hasIndustry: boolean;
+  industry: IndustryClassification | null;
 }): React.ReactElement {
+  const tips = useMemo(() => buildTips(industry?.industria), [industry?.industria]);
+  const [tipIdx, setTipIdx] = useState(0);
+
+  useEffect(() => {
+    setTipIdx(0);
+    const id = setInterval(() => {
+      setTipIdx((i) => (i + 1) % tips.length);
+    }, 2600);
+    return () => clearInterval(id);
+  }, [tips]);
+
   const active =
     stage === 'critiquing' || stage === 'saving'
       ? 3
       : stage === 'analyzing'
         ? 2
-        : hasIndustry || stage === 'classifying'
+        : industry || stage === 'classifying'
           ? 1
           : 0;
 
   return (
-    <>
+    <div className="audit-processing">
+      <div className="audit-orb" aria-hidden="true">
+        <span className="audit-orb-core" />
+        <span className="audit-orb-ring" />
+      </div>
+
+      <p className="audit-tip" key={tipIdx}>
+        {tips[tipIdx]}
+      </p>
+
       <ol className="audit-steps" aria-label="Progreso del diagnóstico">
         {STEPS.map((label, i) => {
           const state = i < active ? 'is-done' : i === active ? 'is-active' : '';
@@ -269,10 +303,9 @@ function ProgressSteps({
           );
         })}
       </ol>
-      <p className="audit-wait-note">
-        El análisis a fondo tarda ~1 minuto. No cierres esta pestaña.
-      </p>
-    </>
+
+      <p className="audit-wait-note">~1 minuto · No cierres esta pestaña.</p>
+    </div>
   );
 }
 

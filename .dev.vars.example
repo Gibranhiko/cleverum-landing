@@ -19,3 +19,7 @@ RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXX
 
 # Daily cap on audit runs (cost guard). Increment a KV key per day; reject when reached.
 DAILY_AUDIT_CAP=100
+
+# (Opcional) IPs separadas por coma que se saltan el rate limit por IP + el daily cap.
+# Útil para dev/demos del owner. Saca tu IP pública en https://whatismyipaddress.com
+# AUDIT_IP_ALLOWLIST=200.10.20.30,189.40.50.60

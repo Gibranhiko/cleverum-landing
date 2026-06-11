@@ -27,6 +27,32 @@
   overflow: hidden;
 }
 
+/* Aura pulsante mientras el audit procesa (se apaga al terminar) */
+.audit-card.is-processing {
+  animation: audit-card-aura 2.4s ease-in-out infinite;
+}
+
+@keyframes audit-card-aura {
+  0%, 100% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 30px 80px -42px color-mix(in srgb, var(--color-brand-iris) 55%, transparent),
+      0 0 26px -8px color-mix(in srgb, var(--color-brand-iris) 35%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 34px 92px -40px color-mix(in srgb, var(--color-brand-iris) 72%, transparent),
+      0 0 54px 2px color-mix(in srgb, var(--color-brand-iris) 48%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audit-card.is-processing {
+    animation: none;
+  }
+}
+
 /* Barra de acento superior — degradado de marca (azul → iris → uva) */
 .audit-card::before {
   content: '';

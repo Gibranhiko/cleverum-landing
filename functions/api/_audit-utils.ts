@@ -115,13 +115,28 @@ export interface RateLimitResult {
 export async function checkAndConsumeRateLimit(
   kv: KVNamespace,
   ip: string,
+  maxPerDay = 3,
 ): Promise<RateLimitResult> {
   if (!ip) return { allowed: false, reason: 'no_ip' };
   const key = `rate:${ip}`;
   const existing = await kv.get(key);
-  if (existing) return { allowed: false, reason: 'rate_limited' };
-  await kv.put(key, '1', { expirationTtl: 60 * 60 * 24 });
+  const current = existing ? parseInt(existing, 10) || 0 : 0;
+  if (current >= maxPerDay) return { allowed: false, reason: 'rate_limited' };
+  await kv.put(key, String(current + 1), { expirationTtl: 60 * 60 * 24 });
   return { allowed: true };
+}
+
+/**
+ * IPs en la allowlist (env AUDIT_IP_ALLOWLIST, separadas por coma) se saltan
+ * rate limit + daily cap. Para dev/demos del owner.
+ */
+export function isIpAllowlisted(ip: string, allowlist?: string): boolean {
+  if (!ip || !allowlist) return false;
+  return allowlist
+    .split(',')
+    .map((x) => x.trim())
+    .filter(Boolean)
+    .includes(ip);
 }
 
 export interface DailyCapResult {

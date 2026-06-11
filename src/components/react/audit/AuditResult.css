@@ -693,12 +693,89 @@
 }
 
 /* ============================================================
+ * Processing panel — orbe IA + tip rotativo (loading screen)
+ * ========================================================== */
+
+.audit-processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 0.5rem 0 0.25rem;
+}
+
+.audit-orb {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audit-orb-core {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    var(--color-brand-blue),
+    var(--color-brand-iris) 55%,
+    var(--color-brand-grape)
+  );
+  box-shadow: 0 0 24px 4px color-mix(in srgb, var(--color-brand-iris) 55%, transparent);
+  animation: audit-orb-breathe 2.2s ease-in-out infinite;
+}
+
+.audit-orb-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--color-brand-iris) 45%, transparent);
+  animation: audit-orb-ping 2.2s ease-out infinite;
+}
+
+@keyframes audit-orb-breathe {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 24px 4px color-mix(in srgb, var(--color-brand-iris) 50%, transparent);
+  }
+  50% {
+    transform: scale(1.12);
+    box-shadow: 0 0 42px 9px color-mix(in srgb, var(--color-brand-iris) 72%, transparent);
+  }
+}
+
+@keyframes audit-orb-ping {
+  0% { transform: scale(0.7); opacity: 0.8; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+.audit-tip {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-1);
+  min-height: 1.4em;
+  max-width: 38ch;
+  line-height: 1.4;
+  animation: audit-tip-in 0.5s ease;
+}
+
+@keyframes audit-tip-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
  * Progress steps — stepper visible durante el procesamiento
  * ========================================================== */
 
 .audit-steps {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
   list-style: none;
   margin: 0;
@@ -776,6 +853,9 @@
   .audit-thinking-dot,
   .audit-thinking-cursor,
   .audit-step.is-active .audit-step-marker,
+  .audit-orb-core,
+  .audit-orb-ring,
+  .audit-tip,
   .audit-email-banner-spinner {
     animation: none !important;
   }

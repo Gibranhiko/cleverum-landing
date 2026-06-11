@@ -7,6 +7,8 @@ export interface Env {
   RESEND_API_KEY: string;
   DAILY_AUDIT_CAP: string;
   KV: KVNamespace;
+  // IPs separadas por coma que se saltan rate limit + daily cap (dev/demos).
+  AUDIT_IP_ALLOWLIST?: string;
 }
 
 export const CORS_HEADERS = {
