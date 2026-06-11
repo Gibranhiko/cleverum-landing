@@ -47,13 +47,13 @@ export const site = {
       'Pregunta a tu *IA* y obtén el reporte que antes tardaba días.',
       'Atiende a tus clientes *24/7* sin contratar otro agente.',
     ],
-    subline: 'Diagnóstico con IA en 30 segundos. Gratis.',
+    subline: 'Diagnóstico con IA en ~1 minuto. Gratis.',
     ctaLabel: 'Diagnostica mi negocio',
     ctaPrimary: 'Hablemos por WhatsApp',
   },
 
   audit: {
-    eyebrow: 'DIAGNÓSTICO GRATIS · 30 SEGUNDOS',
+    eyebrow: 'DIAGNÓSTICO GRATIS · ~1 MINUTO',
     heading: 'Diagnóstico de tu negocio.',
 
     groups: {

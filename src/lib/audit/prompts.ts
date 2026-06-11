@@ -3,8 +3,9 @@
  *
  * Tres agentes en cadena:
  *   1) INDUSTRY_CLASSIFIER_PROMPT — Haiku, ~1s. Identifica industria + sub-vertical + score de madurez.
- *   2) SENIOR_ANALYST_PROMPT      — Haiku con extended thinking, ~3-4s. Aplica patrones, genera 3 oportunidades.
- *   3) CRITIC_PROMPT              — Haiku, ~1-2s. Valida ICE score ≥ 7 en cada criterio; regenera lo que falle.
+ *   2) SENIOR_ANALYST_PROMPT      — Haiku con extended thinking. Aplica patrones, genera 2 oportunidades.
+ *   3) CRITIC_PATCH_PROMPT        — Haiku, rápido. Revisa el draft y devuelve SOLO parches (correcciones
+ *      puntuales), no regenera todo. El benchmark se calcula en código (determinista).
  *
  * Todos los outputs son JSON estricto. El parser espera el JSON dentro de un bloque
  * ```json … ``` o como texto plano. El streaming SSE se hace fuera de estos prompts
@@ -50,7 +51,7 @@ Tu cliente acaba de pedir un audit gratuito. Tienes:
 2) Una clasificación de industria + score de madurez ya hecha por otro agente.
 3) Una biblioteca de 15 patrones de automatización que Cleverum ejecuta (abajo).
 
-Tu trabajo: identificar las 3 mejores oportunidades de automatización/IA para ese negocio, en orden de impacto. Cada una debe combinar uno o más patrones de la biblioteca y aterrizarlos al contexto específico del cliente.
+Tu trabajo: identificar las 2 mejores oportunidades de automatización/IA para ese negocio, en orden de impacto. Cada una debe combinar uno o más patrones de la biblioteca y aterrizarlos al contexto específico del cliente.
 
 FRAMEWORKS A USAR:
 - **Jobs To Be Done**: ¿qué "trabajo" está intentando hacer este negocio que la automatización resuelve mejor?
@@ -60,13 +61,14 @@ FRAMEWORKS A USAR:
   - strategic: ROI grande pero requiere 4+ semanas, mayor complejidad, cambia el negocio.
 
 REGLAS:
-1. Las 3 oportunidades deben ser DIFERENTES (no 3 chatbots, no 3 dashboards). Mezcla quick-wins y strategic.
+1. Las 2 oportunidades deben ser DIFERENTES entre sí (no dos chatbots, no dos dashboards). Idealmente una quick-win y una strategic.
 2. Cada oportunidad referencia 1-2 patrones de la biblioteca por su id (PATRON_XX).
 3. ROI estimado debe ser cuantificable (hrs/mes ahorradas, % conversión, % cobranza, etc.).
 4. Stack recomendado: usa nombres reales del patrón referenciado.
 5. Proyecto recomendado: 'web' / 'auto' / 'chatbot' (los 3 proyectos productizados de Cleverum: Sitio web, Automatización con IA, Chatbot de WhatsApp).
 6. Confianza: 0-100, cuán seguro estás de que es la jugada correcta para este negocio específico.
 7. Si el input es muy vago o ambiguo, asume el caso más común para esa industria y reduce confianza.
+8. AUTOCRÍTICA antes de emitir: cada oportunidad debe tener ICE promedio ≥ 7, "porque" anclado a datos concretos del negocio (no genérico/cliché), y "roi_estimado" con números. Si algo no cumple, mejóralo o cambia de patrón antes de responder.
 
 BIBLIOTECA DE PATRONES:
 ${PATTERNS_TEXT}
@@ -103,41 +105,33 @@ OUTPUT: JSON estricto. Sin markdown wrappers, sin texto antes ni después.
 
 Piensa primero (usa extended thinking si está disponible) — analiza el negocio, descarta patrones que no aplican, prioriza por impacto. Después emite el JSON.`;
 
-export const CRITIC_PROMPT = `Eres un crítico técnico de Cleverum. Acabas de recibir un draft de audit con 3 oportunidades generadas por el Senior Analyst.
+export const CRITIC_PATCH_PROMPT = `Eres un crítico técnico de Cleverum. Recibes un draft de audit con oportunidades generadas por el Senior Analyst. Tu trabajo es revisarlas y devolver SOLO las correcciones necesarias (parches), no reescribir todo.
 
-Tu trabajo:
-1. Revisar cada oportunidad contra estos criterios:
-   - ¿ICE score (cada componente: impact, confidence, ease) tiene un valor entre 1 y 10?
-   - ¿El promedio es ≥ 7? (Si no, regenera la oportunidad subiendo lo que falte o cambia de patrón)
-   - ¿"porque" es específico al negocio o genérico/cliché? (Si genérico, reescríbelo con anclas concretas)
-   - ¿"roi_estimado" es cuantificable (números) o vago? (Si vago, ajusta con rango realista)
-   - ¿stack_recomendado contiene tech real, no buzzwords?
-   - ¿complejidad alineada con tiempo_implementacion?
-2. Asegurar diversidad: las 3 oportunidades no pueden ser variantes de lo mismo.
-3. Asegurar coherencia de moneda: roi en hrs, %, o MXN — no mezclar.
-4. Calcular y validar:
-   - "score_madurez" del negocio (heredado del classifier o ajustado si tienes mejor evidencia, 1-10)
-   - "benchmark": industria_promedio (4-6 típico), lider (8-9), tu_potencial (= score_madurez + 3, max 10)
-   - "industria": copy del classifier
-5. Asignar "audit_id": deja como string vacío "" — el endpoint lo reemplaza con UUID antes de guardar.
+Revisa CADA oportunidad contra estos criterios:
+- ICE score: cada componente (impact, confidence, ease) entre 1 y 10, y el promedio ≥ 7. Si el promedio es < 7, sube lo que falte de forma justificada o ajusta el alcance.
+- "porque": debe ser específico al negocio (anclado a datos concretos del input), no genérico ni cliché. Si es genérico, reescríbelo con anclas concretas.
+- "roi_estimado": cuantificable (números: hrs/mes, %, MXN). Si es vago, ajústalo con un rango realista.
+- "stack_recomendado": tech real, no buzzwords.
+- "complejidad" coherente con "tiempo_implementacion".
+- Diversidad: las oportunidades no pueden ser variantes de lo mismo. Si dos se parecen demasiado, reorienta una.
 
-OUTPUT: JSON estricto del shape final \`AuditResult\`. Sin markdown wrappers, sin texto previo ni posterior.
+REGLA DE ORO: si una oportunidad YA cumple todo, NO la incluyas en los parches. Solo emite parches para lo que realmente necesita corrección. Si todo está bien, devuelve "patches": [].
+
+Cada parche lleva el "index" (posición de la oportunidad en el array, empezando en 0) y SOLO los campos que cambian (mismos nombres que en el draft: titulo, porque, stack_recomendado, roi_estimado, complejidad, tiempo_implementacion, sprint_recomendado, categoria, ice_score, confianza).
+
+Opcionalmente, si crees que el orden de prioridad debe cambiar, devuelve "recomendacion_prioritaria" actualizada; si no, omítela.
+
+OUTPUT: JSON estricto, sin markdown wrappers, sin texto antes ni después.
 
 {
-  "audit_id": "",
-  "negocio_detectado": "string del draft (puedes mejorar redacción)",
-  "industria": "string heredado del classifier",
-  "score_madurez": 5,
-  "benchmark": {
-    "industria_promedio": 5,
-    "lider": 9,
-    "tu_potencial": 8
-  },
-  "oportunidades": [/* las 3 oportunidades del draft, posiblemente regeneradas */],
-  "recomendacion_prioritaria": {
-    "oportunidad_index": 0,
-    "razon": "string"
-  }
+  "patches": [
+    {
+      "index": 0,
+      "porque": "versión corregida y específica…",
+      "ice_score": { "impact": 8, "confidence": 8, "ease": 7, "promedio": 7.7 }
+    }
+  ],
+  "recomendacion_prioritaria": { "oportunidad_index": 0, "razon": "string" }
 }
 
-Sé estricto. Si una oportunidad no cumple, regénera SOLO esa, no las otras. Devuelve siempre 3.`;
+Sé estricto pero quirúrgico: parches mínimos, no reescrituras innecesarias.`;

@@ -79,13 +79,13 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
           <strong style="color:#ffffff;">Tu negocio:</strong> ${escapeHtml(audit.negocio_detectado)}<br>
           <strong style="color:#ffffff;">Score de madurez:</strong> ${audit.score_madurez}/10
           <span style="color:#8A8A96;">(industria promedio: ${audit.benchmark.industria_promedio}/10, líder: ${audit.benchmark.lider}/10)</span><br>
-          <strong style="color:#ffffff;">Tu potencial:</strong> ${audit.benchmark.tu_potencial}/10 si ejecutas las 3 jugadas de abajo.
+          <strong style="color:#ffffff;">Tu potencial:</strong> ${audit.benchmark.tu_potencial}/10 si ejecutas las ${audit.oportunidades.length} jugadas de abajo.
         </p>
       </td></tr>
 
       <tr><td style="padding:32px 0 12px;">
         <div style="font-size:11px;color:#8A8A96;letter-spacing:0.16em;text-transform:uppercase;font-weight:600;">
-          Las 3 oportunidades · en orden de impacto
+          Las ${audit.oportunidades.length} oportunidades · en orden de impacto
         </div>
       </td></tr>
 

@@ -74,7 +74,7 @@ The audit uses a multi-agent pipeline (industry classifier → senior business a
 
 **Input:** Business URL or short description (${audit.minInputLength}-${audit.maxInputLength} characters).
 
-**Output:** Industry classification + maturity score + 3 ranked opportunities (each with ROI estimate, recommended stack, suggested project, ICE score).
+**Output:** Industry classification + maturity score + 2 ranked opportunities (each with ROI estimate, recommended stack, suggested project, ICE score).
 
 **Bonus:** If you decide to execute, free 20-minute strategy session + 10% off your first project.
 

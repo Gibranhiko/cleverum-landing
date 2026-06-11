@@ -4,7 +4,7 @@ import { CORS_HEADERS } from '../types';
 import {
   INDUSTRY_CLASSIFIER_PROMPT,
   SENIOR_ANALYST_PROMPT,
-  CRITIC_PROMPT,
+  CRITIC_PATCH_PROMPT,
 } from '../../src/lib/audit/prompts';
 import type {
   IndustryClassification,
@@ -43,6 +43,14 @@ interface AnalystDraft {
   negocio_detectado: string;
   oportunidades: Opportunity[];
   recomendacion_prioritaria: { oportunidad_index: number; razon: string };
+}
+
+// El crítico devuelve solo correcciones puntuales (parches), no el JSON completo.
+type OpportunityPatch = Partial<Opportunity> & { index: number };
+
+interface CriticResponse {
+  patches?: OpportunityPatch[];
+  recomendacion_prioritaria?: { oportunidad_index: number; razon: string };
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -162,23 +170,60 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         const analystText = await callAnthropicWithThinking(env.ANTHROPIC_API_KEY, {
           system: SENIOR_ANALYST_PROMPT,
           user: analystUser,
-          maxTokens: 4000,
-          thinkingBudget: 3000,
+          maxTokens: 2800,
+          thinkingBudget: 1800,
           onThinking: (delta) => send('thinking', { delta }),
         });
         const draft = parseJsonFromLlm<AnalystDraft>(analystText);
         send('opportunities_draft', draft);
 
-        // ---- AGENT 3: Critic + polish ----
+        // ---- AGENT 3: Critic (patch-based) ----
+        // Revisa el draft y devuelve SOLO correcciones puntuales, no el JSON
+        // completo → mucho más rápido que regenerar todo. Si falla, seguimos
+        // con el draft del analista (degradación elegante).
         send('status', { stage: 'critiquing' });
-        const criticUser = buildCriticUserMessage(industry, draft);
-        const criticText = await callAnthropic(env.ANTHROPIC_API_KEY, {
-          system: CRITIC_PROMPT,
-          user: criticUser,
-          maxTokens: 4000,
-          temperature: 0.4,
-        });
-        const final = parseJsonFromLlm<AuditResult>(criticText);
+        let oportunidades = draft.oportunidades;
+        let recomendacion = draft.recomendacion_prioritaria;
+        try {
+          const criticText = await callAnthropic(env.ANTHROPIC_API_KEY, {
+            system: CRITIC_PATCH_PROMPT,
+            user: buildCriticPatchUserMessage(industry, draft),
+            maxTokens: 1500,
+            temperature: 0.3,
+          });
+          const critic = parseJsonFromLlm<CriticResponse>(criticText);
+          if (critic.patches?.length) {
+            oportunidades = oportunidades.map((o, i) => {
+              const patch = critic.patches?.find((p) => p.index === i);
+              if (!patch) return o;
+              const { index: _index, ...fields } = patch;
+              return { ...o, ...fields };
+            });
+            send('opportunities_draft', { ...draft, oportunidades });
+          }
+          if (critic.recomendacion_prioritaria) {
+            recomendacion = critic.recomendacion_prioritaria;
+          }
+        } catch {
+          // Crítico falló o devolvió JSON inválido — usamos el draft tal cual.
+        }
+
+        // ---- Assemble final audit ----
+        // El benchmark es determinista (no necesita otra llamada a la IA): el
+        // score viene del clasificador y el potencial es score + 3 (cap 10).
+        const final: AuditResult = {
+          audit_id: '',
+          negocio_detectado: draft.negocio_detectado,
+          industria: industry.industria,
+          score_madurez: industry.maturity_score,
+          benchmark: {
+            industria_promedio: 5,
+            lider: 9,
+            tu_potencial: Math.min(10, industry.maturity_score + 3),
+          },
+          oportunidades,
+          recomendacion_prioritaria: recomendacion,
+        };
 
         // ---- Save + return ----
         const auditId = crypto.randomUUID();
@@ -273,23 +318,23 @@ Clasificación previa:
 - Score de madurez: ${industry.maturity_score}/10
 - Signals detectados: ${industry.signals.join('; ')}
 
-Analiza este negocio. Aplica los patrones de la biblioteca. Devuelve 3 oportunidades en orden de impacto + la prioritaria. JSON estricto.`;
+Analiza este negocio. Aplica los patrones de la biblioteca. Devuelve 2 oportunidades en orden de impacto + la prioritaria. JSON estricto.`;
 }
 
-function buildCriticUserMessage(
+function buildCriticPatchUserMessage(
   industry: IndustryClassification,
   draft: AnalystDraft,
 ): string {
   return `Clasificación de industria:
 - Industria: ${industry.industria}
 - Sub-vertical: ${industry.sub_vertical}
-- Score de madurez heredado: ${industry.maturity_score}/10
+- Score de madurez: ${industry.maturity_score}/10
 
-Draft del Senior Analyst (negocio_detectado + 3 oportunidades + prioritaria):
+Draft del Senior Analyst (negocio_detectado + oportunidades + prioritaria):
 
 \`\`\`json
 ${JSON.stringify(draft, null, 2)}
 \`\`\`
 
-Critica, regenera lo que falle el ICE ≥ 7, calcula score_madurez + benchmark, y devuelve el AuditResult final como JSON estricto.`;
+Revisa cada oportunidad y devuelve SOLO los parches necesarios (index + campos a corregir). Si una oportunidad ya cumple, no la incluyas. JSON estricto.`;
 }

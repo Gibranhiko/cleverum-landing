@@ -19,7 +19,7 @@ export default function StepRecap({ values, onEdit }: Props): React.ReactElement
     <div className="wiz-step">
       <header className="wiz-step-header">
         <h3 className="wiz-step-title">Listo, vamos a analizar esto.</h3>
-        <p className="wiz-step-sub">Tarda ~30 segundos. Quédate aquí.</p>
+        <p className="wiz-step-sub">Tarda ~1 minuto. No cierres esta pestaña.</p>
       </header>
 
       <div className="wiz-recap-list">

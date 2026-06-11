@@ -163,7 +163,7 @@ export default function AiAuditTool(): React.ReactElement {
       case 'analyzing':
         return 'Cleverum AI · pensando';
       case 'critiquing':
-        return 'Cleverum AI · refinando';
+        return 'Cleverum AI · afinando';
       case 'saving':
         return 'Guardando';
       case 'done':
@@ -223,6 +223,8 @@ export default function AiAuditTool(): React.ReactElement {
             emailProvidedUpfront={emailProvidedUpfront}
             emailUsed={emailUsed}
             emailStatus={emailStatus}
+            clientName={submitted?.nombre}
+            clientCompany={submitted?.empresa}
           />
         </div>
       )}

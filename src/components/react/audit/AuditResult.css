@@ -639,12 +639,143 @@
   font-size: 0.82rem;
 }
 
+/* ============================================================
+ * Descargar PDF
+ * ========================================================== */
+
+.audit-result-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.audit-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--color-text-1);
+  background: color-mix(in srgb, var(--color-brand-iris) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-brand-iris) 45%, var(--color-border));
+  border-radius: 9999px;
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.audit-pdf-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--color-brand-iris) 22%, transparent);
+  border-color: var(--color-brand-iris);
+}
+
+.audit-pdf-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.audit-pdf-btn svg {
+  color: var(--color-brand-iris);
+  flex: 0 0 auto;
+}
+
+.audit-pdf-error {
+  font-size: 0.82rem;
+  color: #fca5a5;
+}
+
+/* ============================================================
+ * Progress steps — stepper visible durante el procesamiento
+ * ========================================================== */
+
+.audit-steps {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.audit-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  color: var(--color-text-3);
+  transition: color 0.3s ease;
+}
+
+.audit-step-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  font-size: 0.68rem;
+  font-weight: 600;
+  flex: 0 0 auto;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.audit-step.is-active {
+  color: var(--color-text-1);
+}
+
+.audit-step.is-active .audit-step-marker {
+  border-color: var(--color-brand-iris);
+  background: color-mix(in srgb, var(--color-brand-iris) 18%, transparent);
+  color: var(--color-text-1);
+  animation: audit-step-pulse 1.6s ease-in-out infinite;
+}
+
+.audit-step.is-done {
+  color: var(--color-text-2);
+}
+
+.audit-step.is-done .audit-step-marker {
+  border-color: var(--color-accent-go);
+  background: color-mix(in srgb, var(--color-accent-go) 18%, transparent);
+  color: var(--color-accent-go);
+}
+
+@keyframes audit-step-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-brand-iris) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-brand-iris) 0%, transparent);
+  }
+}
+
+.audit-wait-note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-3);
+  line-height: 1.5;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .audit-result,
   .audit-opp,
   .audit-maturity-fill,
   .audit-thinking-dot,
   .audit-thinking-cursor,
+  .audit-step.is-active .audit-step-marker,
   .audit-email-banner-spinner {
     animation: none !important;
   }

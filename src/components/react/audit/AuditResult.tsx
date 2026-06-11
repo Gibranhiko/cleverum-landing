@@ -19,6 +19,8 @@ interface Props {
   emailProvidedUpfront: boolean;
   emailUsed: string;
   emailStatus: EmailStatus;
+  clientName?: string;
+  clientCompany?: string;
 }
 
 const SERVICE_NAME: Record<string, string> = {
@@ -38,7 +40,23 @@ export default function AuditResult(props: Props): React.ReactElement {
     emailProvidedUpfront,
     emailUsed,
     emailStatus,
+    clientName,
+    clientCompany,
   } = props;
+
+  const [pdfState, setPdfState] = useState<'idle' | 'loading' | 'error'>('idle');
+
+  const handleDownloadPdf = async (): Promise<void> => {
+    if (!finalAudit || pdfState === 'loading') return;
+    setPdfState('loading');
+    try {
+      const { downloadAuditPdf } = await import('./auditPdf');
+      await downloadAuditPdf(finalAudit, { nombre: clientName, empresa: clientCompany });
+      setPdfState('idle');
+    } catch {
+      setPdfState('error');
+    }
+  };
 
   // Dispatch audit state based on stream progress
   const dispatchedRevealing = useRef(false);
@@ -73,6 +91,8 @@ export default function AuditResult(props: Props): React.ReactElement {
 
   return (
     <div className="audit-result" aria-live="polite">
+      {!finalAudit && <ProgressSteps stage={stage} hasIndustry={industry !== null} />}
+
       {industry && (
         <div className="audit-result-industry">
           <div className="audit-result-stage-label">Industria detectada</div>
@@ -97,7 +117,9 @@ export default function AuditResult(props: Props): React.ReactElement {
           )}
 
           <div className="audit-result-stage-label audit-result-opps-label">
-            Las 3 oportunidades · en orden de impacto
+            {opps.length === 1
+              ? 'La oportunidad principal'
+              : `Las ${opps.length} oportunidades · en orden de impacto`}
           </div>
 
           <div className="audit-result-opps">
@@ -124,6 +146,40 @@ export default function AuditResult(props: Props): React.ReactElement {
         <div className="audit-result-recomendacion">
           <div className="audit-result-stage-label">Nuestra recomendación</div>
           <p>{finalAudit.recomendacion_prioritaria.razon}</p>
+        </div>
+      )}
+
+      {finalAudit && (
+        <div className="audit-result-actions">
+          <button
+            type="button"
+            className="audit-pdf-btn"
+            onClick={() => void handleDownloadPdf()}
+            disabled={pdfState === 'loading'}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span>{pdfState === 'loading' ? 'Generando PDF…' : 'Descargar PDF'}</span>
+          </button>
+          {pdfState === 'error' && (
+            <span className="audit-pdf-error" role="alert">
+              No se pudo generar el PDF. Intenta de nuevo.
+            </span>
+          )}
         </div>
       )}
 
@@ -180,6 +236,46 @@ function EmailStatusBanner({
  * Subcomponents
  * ========================================================== */
 
+const STEPS = ['Leyendo tu negocio', 'Detectando industria', 'Analizando', 'Afinando'] as const;
+
+function ProgressSteps({
+  stage,
+  hasIndustry,
+}: {
+  stage: string;
+  hasIndustry: boolean;
+}): React.ReactElement {
+  const active =
+    stage === 'critiquing' || stage === 'saving'
+      ? 3
+      : stage === 'analyzing'
+        ? 2
+        : hasIndustry || stage === 'classifying'
+          ? 1
+          : 0;
+
+  return (
+    <>
+      <ol className="audit-steps" aria-label="Progreso del diagnóstico">
+        {STEPS.map((label, i) => {
+          const state = i < active ? 'is-done' : i === active ? 'is-active' : '';
+          return (
+            <li key={label} className={`audit-step ${state}`}>
+              <span className="audit-step-marker" aria-hidden="true">
+                {i < active ? '✓' : i + 1}
+              </span>
+              <span className="audit-step-label">{label}</span>
+            </li>
+          );
+        })}
+      </ol>
+      <p className="audit-wait-note">
+        El análisis a fondo tarda ~1 minuto. No cierres esta pestaña.
+      </p>
+    </>
+  );
+}
+
 function ThinkingStream({ text, stage }: { text: string; stage: string }): React.ReactElement {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -195,7 +291,7 @@ function ThinkingStream({ text, stage }: { text: string; stage: string }): React
       : stage === 'analyzing'
         ? 'Cleverum AI · pensando'
         : stage === 'critiquing'
-          ? 'Cleverum AI · refinando'
+          ? 'Cleverum AI · afinando'
           : 'Cleverum AI · procesando';
 
   return (
