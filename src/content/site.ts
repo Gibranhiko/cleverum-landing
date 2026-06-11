@@ -47,18 +47,14 @@ export const site = {
       'Pregunta a tu *IA* y obtén el reporte que antes tardaba días.',
       'Atiende a tus clientes *24/7* sin contratar otro agente.',
     ],
-    subline:
-      'Gratis diagnóstico con IA en 30 segundos. Tres ideas concretas para automatizar tu negocio.',
+    subline: 'Diagnóstico con IA en 30 segundos. Gratis.',
     ctaLabel: 'Diagnostica mi negocio',
-    microNote: '30 segundos · gratis · sin compromiso',
     ctaPrimary: 'Hablemos por WhatsApp',
   },
 
   audit: {
     eyebrow: 'DIAGNÓSTICO GRATIS · 30 SEGUNDOS',
     heading: 'Diagnóstico de tu negocio.',
-    intro:
-      'Te regalamos 3 ideas ganadoras en 30 segundos. Cuéntanos.',
 
     groups: {
       business: 'Cuéntanos de tu negocio',
@@ -95,8 +91,7 @@ export const site = {
   },
 
   cases: {
-    heading: 'Cosas que hemos construido.',
-    subheading: 'Casos reales de producto entregado.',
+    heading: 'Lo que construimos.',
     items: [
       {
         id: 'whatsapp-panel',
@@ -136,7 +131,6 @@ export const site = {
 
   services: {
     heading: 'En qué te ayudamos.',
-    subheading: 'Tres servicios con tiempos claros y entregables definidos.',
     disclaimer: 'Cotización personalizada según el alcance de tu proyecto.',
     items: [
       {

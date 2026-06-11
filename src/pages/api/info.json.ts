@@ -31,7 +31,7 @@ export const GET: APIRoute = () => {
       ideal_for: s.idealFor,
       investment_tier: s.inversion,
       pricing: 'Cotización personalizada según alcance',
-      whatsapp_message: `¡Hola Gibran! Me interesa el servicio de ${s.title}.`,
+      whatsapp_message: `¡Hola! Me interesa el servicio de ${s.title}.`,
     })),
 
     cases: cases.items.map((c) => ({
@@ -59,7 +59,6 @@ export const GET: APIRoute = () => {
     ai_audit: {
       endpoint: `${meta.url}/api/audit`,
       description: audit.heading,
-      intro: audit.intro,
       input: {
         min_length: audit.minInputLength,
         max_length: audit.maxInputLength,

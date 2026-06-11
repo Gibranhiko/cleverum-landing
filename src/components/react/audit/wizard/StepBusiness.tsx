@@ -53,9 +53,6 @@ export default function StepBusiness({ value, onChange }: Props): React.ReactEle
     <div className="wiz-step">
       <header className="wiz-step-header">
         <h3 className="wiz-step-title">Cuéntanos de tu negocio.</h3>
-        <p className="wiz-step-sub">
-          Pega la URL de tu web o describe tu negocio en 1-2 líneas.
-        </p>
       </header>
 
       <div className="wiz-input-wrap">

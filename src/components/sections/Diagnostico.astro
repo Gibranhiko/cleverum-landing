@@ -13,7 +13,6 @@ const { audit } = site;
         {audit.eyebrow}
       </div>
       <h2 id="diag-heading" class="diag-heading font-display">{audit.heading}</h2>
-      <p class="diag-intro">{audit.intro}</p>
     </header>
 
     <AiAuditTool client:visible />
@@ -73,14 +72,6 @@ const { audit } = site;
     margin: 0;
     text-wrap: balance;
     max-width: 18ch;
-  }
-
-  .diag-intro {
-    font-size: clamp(1rem, 1.4vw, 1.15rem);
-    color: var(--color-text-2);
-    line-height: 1.55;
-    margin: 0;
-    max-width: 56ch;
   }
 
   @media (prefers-reduced-motion: reduce) {

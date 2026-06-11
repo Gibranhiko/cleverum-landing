@@ -70,8 +70,6 @@ ${aboutParagraphs}
 
 ${audit.heading} Available at ${meta.url}/#diagnostico.
 
-${audit.intro}
-
 The audit uses a multi-agent pipeline (industry classifier → senior business analyst with extended thinking → critic) trained on 50+ real workflows built by ${brand.name} across LATAM.
 
 **Input:** Business URL or short description (${audit.minInputLength}-${audit.maxInputLength} characters).
@@ -82,13 +80,13 @@ The audit uses a multi-agent pipeline (industry classifier → senior business a
 
 ## Services
 
-${services.heading} ${services.subheading}
+${services.heading}
 
 ${servicesSection}
 
 ## Cases
 
-${cases.heading} ${cases.subheading}
+${cases.heading}
 
 ${casesSection}
 

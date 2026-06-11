@@ -16,6 +16,9 @@ import type { WizardValues } from './audit/wizard/useFormWizard';
 
 const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
 
+const FORM_UNAVAILABLE_MSG =
+  'El diagnóstico no está disponible por ahora. Escríbenos por WhatsApp y con gusto te ayudamos.';
+
 interface PendingSubmit {
   input: string;
   extra: AuditExtra | undefined;
@@ -48,9 +51,7 @@ export default function AiAuditTool(): React.ReactElement {
 
   const handleWizardSubmit = (values: WizardValues): void => {
     if (!SITE_KEY) {
-      setError(
-        'Anti-bot no configurado. Avísale a Gibran que falta TURNSTILE_SITE_KEY.',
-      );
+      setError(FORM_UNAVAILABLE_MSG);
       return;
     }
 
@@ -130,15 +131,19 @@ export default function AiAuditTool(): React.ReactElement {
     }
   };
 
-  useEffect(() => {
-    if ((industry || finalAudit) && resultRef.current) {
-      resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }, [industry !== null, finalAudit !== null]);
-
   const auditStarted = running || industry !== null || finalAudit !== null;
   const showWizard = !auditStarted && !error;
   const showResult = auditStarted || error !== null;
+
+  // Al arrancar el audit el wizard se reemplaza por un resumen más corto: la
+  // card se encoge y el scroll quedaría en la sección de abajo. Re-anclamos al
+  // inicio de la sección de diagnóstico (respeta su scroll-margin del navbar).
+  useEffect(() => {
+    if (!auditStarted) return;
+    document
+      .getElementById('diagnostico')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [auditStarted]);
 
   const emailProvidedUpfront = Boolean(submitted?.email.trim());
   const emailUsed = submitted?.email.trim() ?? '';
@@ -146,7 +151,7 @@ export default function AiAuditTool(): React.ReactElement {
   const formErrorMessage = useMemo(() => {
     if (!error) return null;
     if (tsError === 'missing_site_key' || !SITE_KEY) {
-      return 'Anti-bot no configurado. Avísale a Gibran que falta TURNSTILE_SITE_KEY.';
+      return FORM_UNAVAILABLE_MSG;
     }
     return error;
   }, [error, tsError]);

@@ -37,7 +37,7 @@ ${serviceLines.join('\n')}
 
 ## AI Audit Tool
 
-${audit.heading} ${audit.intro} Available at ${meta.url}/#diagnostico. Submit your URL or business description and receive:
+${audit.heading} Available at ${meta.url}/#diagnostico. Submit your URL or business description and receive:
 
 - Industry classification with a maturity score
 - 3 specific automation opportunities

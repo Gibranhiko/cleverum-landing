@@ -5,7 +5,6 @@ const URL = site.meta.url;
 const ID = {
   org: `${URL}#organization`,
   website: `${URL}#website`,
-  person: `${URL}#gibran`,
   service: (id: string) => `${URL}#service-${id}`,
   faq: `${URL}#faq`,
 } as const;
@@ -33,8 +32,8 @@ const FAQS: Array<{ q: string; a: string }> = [
     a: 'Un Sprint Automatización IA tarda 2 a 3 semanas y cubre: diagnóstico del proceso, diseño del flujo, implementación en n8n o Make, integración a tus herramientas existentes, más un agente IA conversacional. El Sprint Web tarda 2-4 semanas y el Sprint Chatbot WhatsApp tarda 3-5 semanas.',
   },
   {
-    q: '¿Trabajas solo o en equipo?',
-    a: 'Solo. Un único developer de stack completo (Gibran Villarreal). Sin agencia, sin equipo offshore, sin junior devs, sin reuniones de descubrimiento de 8 horas. Yo te diagnostico, yo te construyo, yo te entrego. Esa es la propuesta de valor de Cleverum.',
+    q: '¿Cómo trabaja Cleverum?',
+    a: 'Cleverum opera como un equipo lean de stack completo. Sin agencia intermediaria, sin equipo offshore, sin junior devs, sin reuniones de descubrimiento de 8 horas. Te diagnosticamos, te construimos y te entregamos. Esa es la propuesta de valor de Cleverum.',
   },
   {
     q: '¿Qué stack tecnológico usas?',
@@ -63,7 +62,6 @@ export function buildJsonLd(): JsonLdGraph {
     logo: `${URL}/icon-512.png`,
     image: `${URL}/og.png`,
     description: site.meta.description,
-    founder: { '@id': ID.person },
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
@@ -87,27 +85,6 @@ export function buildJsonLd(): JsonLdGraph {
     description: site.meta.description,
     inLanguage: 'es-MX',
     publisher: { '@id': ID.org },
-  };
-
-  const person = {
-    '@type': 'Person',
-    '@id': ID.person,
-    name: contact.name,
-    email: contact.email,
-    telephone: contact.phoneTel,
-    url: URL,
-    worksFor: { '@id': ID.org },
-    jobTitle: 'Founder & Technology Lead',
-    knowsAbout: [
-      'AI automation',
-      'WhatsApp chatbots',
-      'Workflow automation',
-      'n8n',
-      'Anthropic Claude',
-      'Web development',
-      'React Native',
-    ],
-    sameAs,
   };
 
   const services = siteServices.items.map((s) => {
@@ -155,6 +132,6 @@ export function buildJsonLd(): JsonLdGraph {
 
   return {
     '@context': 'https://schema.org',
-    '@graph': [organization, website, person, faqPage, ...services],
+    '@graph': [organization, website, faqPage, ...services],
   };
 }

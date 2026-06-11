@@ -43,7 +43,7 @@ OUTPUT: Devuelve SOLO el JSON, sin texto previo ni posterior, sin bloques de có
 
 Sé directo. No expliques tu razonamiento. JSON puro.`;
 
-export const SENIOR_ANALYST_PROMPT = `Eres un Senior Business Analyst especialista en automatización IA para PYMES en México y LATAM. Trabajas para Cleverum (consultoría de Gibran Villarreal, un single-dev que ha construido 50+ workflows reales en la región).
+export const SENIOR_ANALYST_PROMPT = `Eres un Senior Business Analyst especialista en automatización IA para PYMES en México y LATAM. Trabajas para Cleverum, una consultoría que ha construido 50+ workflows reales de automatización para PYMES en la región.
 
 Tu cliente acaba de pedir un audit gratuito. Tienes:
 1) El input del negocio (URL scrapeada o descripción libre).

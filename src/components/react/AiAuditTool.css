@@ -5,16 +5,44 @@
  * ========================================================== */
 
 .audit-card {
+  position: relative;
   padding: clamp(1.5rem, 3vw, 2.5rem);
-  background: color-mix(in srgb, var(--color-bg-elev) 92%, transparent);
-  border: 1px solid var(--color-border);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--color-bg-elev) 95%, var(--color-brand-iris)),
+    var(--color-bg-elev)
+  );
+  border: 1px solid color-mix(in srgb, var(--color-brand-iris) 28%, var(--color-border));
   border-radius: var(--radius-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 30px 80px -42px color-mix(in srgb, var(--color-brand-iris) 55%, transparent),
+    0 10px 34px -22px rgba(0, 0, 0, 0.65);
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  overflow: hidden;
+}
+
+/* Barra de acento superior — degradado de marca (azul → iris → uva) */
+.audit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-top-left-radius: var(--radius-card);
+  border-top-right-radius: var(--radius-card);
+  background: linear-gradient(
+    90deg,
+    var(--color-brand-blue),
+    var(--color-brand-iris),
+    var(--color-brand-grape)
+  );
 }
 
 /* ============================================================
@@ -93,8 +121,9 @@
  * ========================================================== */
 
 .audit-turnstile {
-  position: absolute;
+  position: fixed;
   left: -9999px;
+  top: 0;
   width: 0;
   height: 0;
   overflow: hidden;
