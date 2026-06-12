@@ -21,6 +21,7 @@ export interface IceScore {
 
 export interface Opportunity {
   titulo: string;
+  en_corto: string;
   porque: string;
   patron_aplicado: string;
   stack_recomendado: string[];

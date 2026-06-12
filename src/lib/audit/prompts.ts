@@ -73,17 +73,25 @@ REGLAS:
 BIBLIOTECA DE PATRONES:
 ${PATTERNS_TEXT}
 
+CÓMO ESCRIBIR (CRÍTICO — esto define si el cliente entiende o no):
+Le escribes al DUEÑO del negocio: una persona práctica, ocupada, que NO es de sistemas ni de marketing. Piensa en el dueño de un taller, un restaurante o una tienda, alguien que está en la operación diaria.
+- Español llano, frases cortas, como explicándole a un amigo dueño de negocio.
+- PROHIBIDO usar jerga sin traducir: "lead scoring", "lead enrichment", "ICP", "close rate", "inbound", "pipeline", "fit", "funnel", "nurturing", "consecutivos", "B2B". Si un concepto es necesario, dilo en palabras de todos los días.
+- Términos cotidianos OK (CRM, leads, chatbot) pero explícalos cortito la primera vez con un guion. Ej: "un CRM —el lugar digital donde guardas a todos tus clientes—".
+- Habla del día a día del dueño: horas que pierde, clientes que se enfrían o se van con la competencia, dinero que deja sobre la mesa. NO de métricas abstractas.
+
 OUTPUT: JSON estricto. Sin markdown wrappers, sin texto antes ni después.
 
 {
-  "negocio_detectado": "string conciso describiendo qué hace el negocio",
+  "negocio_detectado": "1-2 oraciones en español llano: qué hace el negocio y su principal reto hoy",
   "oportunidades": [
     {
-      "titulo": "string punchy, 4-8 palabras, ej. 'Chatbot WhatsApp para FAQs y carritos'",
-      "porque": "string 1-2 oraciones explicando POR QUÉ es la jugada correcta para este negocio específico (no genérico)",
+      "titulo": "beneficio claro en palabras simples, 4-8 palabras, SIN jerga. Ej: 'Organiza y atiende a tus clientes nuevos'",
+      "en_corto": "UNA frase (máx ~20 palabras) en lenguaje de la calle: qué gana el dueño. Cero tecnicismos. Ej: 'Dejas de perder clientes nuevos porque todos quedan en un solo lugar y atiendes primero a los que más te compran.'",
+      "porque": "2-4 oraciones, como explicándole a un amigo dueño de negocio. Habla de su día a día (tiempo perdido, clientes que se enfrían, dinero dejado en la mesa). Específico a SU negocio, no genérico ni cliché.",
       "patron_aplicado": "PATRON_XX",
-      "stack_recomendado": ["array de strings con tech reales"],
-      "roi_estimado": "string cuantificable, ej. '20-30 hrs/mes ahorradas + conversión +15%'",
+      "stack_recomendado": ["array de strings con tech reales (nombres técnicos OK aquí; van ocultos tras un toggle)"],
+      "roi_estimado": "en dinero, horas y clientes concretos, en llano. Si usas %, explícalo ('de cada 10 cotizaciones cerrarías ~2 más'). Ej: 'Recuperas ~8 horas a la semana y cierras 2-3 clientes más al mes.'",
       "complejidad": "baja" | "media" | "alta",
       "tiempo_implementacion": "string, ej. '3-4 semanas'",
       "sprint_recomendado": "web" | "auto" | "chatbot",
@@ -108,6 +116,8 @@ Piensa primero (usa extended thinking si está disponible) — analiza el negoci
 export const CRITIC_PATCH_PROMPT = `Eres un crítico técnico de Cleverum. Recibes un draft de audit con oportunidades generadas por el Senior Analyst. Tu trabajo es revisarlas y devolver SOLO las correcciones necesarias (parches), no reescribir todo.
 
 Revisa CADA oportunidad contra estos criterios:
+- LENGUAJE LLANO (el más importante): el cliente es el DUEÑO del negocio, NO técnico ni de marketing. Si "titulo", "en_corto", "porque" o "roi_estimado" tienen jerga sin traducir (scoring, enrichment, ICP, close rate, pipeline, inbound, fit, funnel, nurturing, consecutivos, B2B), reescríbelos en español de la calle. El "titulo" y el "en_corto" deben entenderse de un vistazo, sin que el dueño tenga que adivinar nada.
+- "en_corto": debe existir, ser UNA frase corta y 100% sin tecnicismos. Si falta o tiene jerga, escríbelo/arréglalo.
 - ICE score: cada componente (impact, confidence, ease) entre 1 y 10, y el promedio ≥ 7. Si el promedio es < 7, sube lo que falte de forma justificada o ajusta el alcance.
 - "porque": debe ser específico al negocio (anclado a datos concretos del input), no genérico ni cliché. Si es genérico, reescríbelo con anclas concretas.
 - "roi_estimado": cuantificable (números: hrs/mes, %, MXN). Si es vago, ajústalo con un rango realista.
@@ -117,7 +127,7 @@ Revisa CADA oportunidad contra estos criterios:
 
 REGLA DE ORO: si una oportunidad YA cumple todo, NO la incluyas en los parches. Solo emite parches para lo que realmente necesita corrección. Si todo está bien, devuelve "patches": [].
 
-Cada parche lleva el "index" (posición de la oportunidad en el array, empezando en 0) y SOLO los campos que cambian (mismos nombres que en el draft: titulo, porque, stack_recomendado, roi_estimado, complejidad, tiempo_implementacion, sprint_recomendado, categoria, ice_score, confianza).
+Cada parche lleva el "index" (posición de la oportunidad en el array, empezando en 0) y SOLO los campos que cambian (mismos nombres que en el draft: titulo, en_corto, porque, stack_recomendado, roi_estimado, complejidad, tiempo_implementacion, sprint_recomendado, categoria, ice_score, confianza).
 
 Opcionalmente, si crees que el orden de prioridad debe cambiar, devuelve "recomendacion_prioritaria" actualizada; si no, omítela.
 

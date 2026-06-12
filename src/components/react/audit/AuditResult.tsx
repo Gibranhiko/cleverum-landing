@@ -98,7 +98,7 @@ export default function AuditResult(props: Props): React.ReactElement {
           <div className="audit-result-stage-label">Industria detectada</div>
           <div className="audit-result-industry-name">{industry.industria}</div>
           <div className="audit-result-industry-sub">
-            {industry.sub_vertical} · score inicial {industry.maturity_score}/10
+            {industry.sub_vertical} · nivel de automatización {industry.maturity_score}/10
           </div>
         </div>
       )}
@@ -343,6 +343,14 @@ function ThinkingStream({ text, stage }: { text: string; stage: string }): React
   );
 }
 
+function impactoWord(n: number): string {
+  return n >= 8 ? 'alto' : n >= 6 ? 'medio' : 'bajo';
+}
+
+function recomendacionWord(promedio: number): string {
+  return promedio >= 8 ? 'Muy recomendada' : promedio >= 7 ? 'Recomendada' : 'Con potencial';
+}
+
 function OpportunityCard({
   opportunity: o,
   index,
@@ -352,6 +360,9 @@ function OpportunityCard({
   index: number;
   prioritaria: boolean;
 }): React.ReactElement {
+  const [showTools, setShowTools] = useState(false);
+  const impacto = impactoWord(o.ice_score.impact);
+
   return (
     <article
       className={`audit-opp ${prioritaria ? 'is-prioritaria' : ''}`}
@@ -365,19 +376,21 @@ function OpportunityCard({
       </header>
 
       <h3 className="audit-opp-title">{o.titulo}</h3>
+
+      {o.en_corto && <p className="audit-opp-encorto">{o.en_corto}</p>}
+
       <p className="audit-opp-porque">{o.porque}</p>
 
-      <div className="audit-opp-stack">
-        {o.stack_recomendado.map((tech, j) => (
-          <span key={j} className="audit-opp-chip">
-            {tech}
-          </span>
-        ))}
+      <div className="audit-opp-signals">
+        <span className={`audit-opp-signal is-impacto-${impacto}`}>Impacto {impacto}</span>
+        <span className="audit-opp-signal is-reco">
+          {recomendacionWord(o.ice_score.promedio)}
+        </span>
       </div>
 
       <dl className="audit-opp-meta">
         <div>
-          <dt>Retorno</dt>
+          <dt>Lo que ganas</dt>
           <dd>{o.roi_estimado}</dd>
         </div>
         <div>
@@ -385,38 +398,50 @@ function OpportunityCard({
           <dd>{o.tiempo_implementacion}</dd>
         </div>
         <div>
-          <dt>Complejidad</dt>
+          <dt>Esfuerzo</dt>
           <dd>{o.complejidad}</dd>
         </div>
         <div>
-          <dt>Proyecto</dt>
+          <dt>Servicio</dt>
           <dd>{SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}</dd>
         </div>
       </dl>
 
-      <div className="audit-opp-ice" aria-label="Puntaje de la oportunidad">
-        <span className="audit-opp-ice-label">Puntaje</span>
-        <IceBar label="Impacto" value={o.ice_score.impact} />
-        <IceBar label="Confianza" value={o.ice_score.confidence} />
-        <IceBar label="Facilidad" value={o.ice_score.ease} />
-        <span className="audit-opp-ice-avg">∅ {o.ice_score.promedio.toFixed(1)}</span>
+      <div className="audit-opp-tools">
+        <button
+          type="button"
+          className="audit-opp-tools-toggle"
+          onClick={() => setShowTools((v) => !v)}
+          aria-expanded={showTools}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.25"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className={showTools ? 'is-open' : ''}
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+          {showTools ? 'Ocultar herramientas' : 'Ver herramientas'}
+        </button>
+        {showTools && (
+          <div className="audit-opp-stack">
+            {o.stack_recomendado.map((tech, j) => (
+              <span key={j} className="audit-opp-chip">
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
-
-      <div className="audit-opp-confianza">Qué tan seguros estamos: {o.confianza}/100</div>
     </article>
-  );
-}
-
-function IceBar({ label, value }: { label: string; value: number }): React.ReactElement {
-  const pct = Math.max(0, Math.min(100, value * 10));
-  return (
-    <div className="audit-ice-bar">
-      <span className="audit-ice-bar-label">{label}</span>
-      <div className="audit-ice-bar-track">
-        <div className="audit-ice-bar-fill" style={{ width: `${pct}%` }} />
-      </div>
-      <span className="audit-ice-bar-value">{value}</span>
-    </div>
   );
 }
 
@@ -435,7 +460,7 @@ function MaturityScore({
 
   return (
     <section className="audit-maturity">
-      <div className="audit-result-stage-label">Madurez digital</div>
+      <div className="audit-result-stage-label">Qué tan automatizado estás hoy</div>
       <div className="audit-maturity-value">
         <span className="audit-maturity-score-big">{score}</span>
         <span className="audit-maturity-score-max">/{max}</span>

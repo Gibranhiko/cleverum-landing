@@ -38,14 +38,19 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
         <h3 style="margin:0 0 12px;color:#ffffff;font-size:22px;line-height:1.2;font-weight:600;letter-spacing:-0.015em;">
           ${escapeHtml(o.titulo)}
         </h3>
+        ${
+          o.en_corto
+            ? `<p style="margin:0 0 12px;padding-left:12px;border-left:3px solid #7C5CFF;color:#ffffff;font-size:16px;line-height:1.5;font-weight:500;">${escapeHtml(o.en_corto)}</p>`
+            : ''
+        }
         <p style="margin:0 0 16px;color:#B4B4BF;font-size:15px;line-height:1.55;">
           ${escapeHtml(o.porque)}
         </p>
         <table cellpadding="0" cellspacing="0" border="0" style="width:100%;font-size:14px;color:#B4B4BF;line-height:1.5;">
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Retorno:</strong> ${escapeHtml(o.roi_estimado)}</td></tr>
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Tecnologías:</strong> ${o.stack_recomendado.map(escapeHtml).join(' · ')}</td></tr>
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Tiempo:</strong> ${escapeHtml(o.tiempo_implementacion)} · Complejidad ${escapeHtml(o.complejidad)}</td></tr>
-          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Proyecto:</strong> ${SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}</td></tr>
+          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Lo que ganas:</strong> ${escapeHtml(o.roi_estimado)}</td></tr>
+          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Tiempo:</strong> ${escapeHtml(o.tiempo_implementacion)} · Esfuerzo ${escapeHtml(o.complejidad)}</td></tr>
+          <tr><td style="padding:3px 0;"><strong style="color:#ffffff;">Servicio:</strong> ${SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}</td></tr>
+          <tr><td style="padding:3px 0;color:#8A8A96;font-size:13px;">Herramientas: ${o.stack_recomendado.map(escapeHtml).join(' · ')}</td></tr>
         </table>
       </td></tr>
     `,

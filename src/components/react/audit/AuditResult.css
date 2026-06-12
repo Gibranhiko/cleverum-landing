@@ -230,6 +230,81 @@
   color: var(--color-text-2);
 }
 
+/* "En corto" — resumen llano destacado */
+.audit-opp-encorto {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--color-text-1);
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--color-brand-iris);
+}
+
+/* Señales en palabras (impacto / recomendación) */
+.audit-opp-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.audit-opp-signal {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.32rem 0.72rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-2);
+  text-transform: capitalize;
+}
+
+.audit-opp-signal.is-impacto-alto {
+  color: var(--color-accent-go);
+  border-color: color-mix(in srgb, var(--color-accent-go) 45%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent-go) 12%, transparent);
+}
+
+.audit-opp-signal.is-impacto-medio,
+.audit-opp-signal.is-reco {
+  color: var(--color-brand-iris);
+  border-color: color-mix(in srgb, var(--color-brand-iris) 42%, var(--color-border));
+  background: color-mix(in srgb, var(--color-brand-iris) 10%, transparent);
+}
+
+/* Herramientas (toggle) */
+.audit-opp-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.audit-opp-tools-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--color-text-3);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.audit-opp-tools-toggle:hover {
+  color: var(--color-text-1);
+}
+
+.audit-opp-tools-toggle svg {
+  transition: transform 0.2s ease;
+}
+
+.audit-opp-tools-toggle svg.is-open {
+  transform: rotate(180deg);
+}
+
 .audit-opp-meta {
   display: grid;
   grid-template-columns: 1fr 1fr;

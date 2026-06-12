@@ -115,6 +115,15 @@ const s = StyleSheet.create({
   },
   cardNum: { fontSize: 18, fontFamily: 'Helvetica-Bold', color: C.line },
   cardTitle: { fontSize: 13, fontFamily: 'Helvetica-Bold', color: C.ink, marginBottom: 5, letterSpacing: -0.3 },
+  cardEnCorto: {
+    fontSize: 10,
+    color: C.ink,
+    lineHeight: 1.45,
+    marginBottom: 8,
+    paddingLeft: 8,
+    borderLeftWidth: 2,
+    borderLeftColor: C.iris,
+  },
   cardPorque: { fontSize: 9.5, color: C.body, lineHeight: 1.5, marginBottom: 9 },
 
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginBottom: 10 },
@@ -182,6 +191,7 @@ function OppCard({ o, i, prio }: { o: Opportunity; i: number; prio: boolean }) {
         <Text style={s.cardNum}>{String(i + 1).padStart(2, '0')}</Text>
       </View>
       <Text style={s.cardTitle}>{o.titulo}</Text>
+      {o.en_corto ? <Text style={s.cardEnCorto}>{o.en_corto}</Text> : null}
       <Text style={s.cardPorque}>{o.porque}</Text>
 
       <View style={s.chipsRow}>
@@ -194,7 +204,7 @@ function OppCard({ o, i, prio }: { o: Opportunity; i: number; prio: boolean }) {
 
       <View style={s.metaGrid}>
         <View style={s.metaCell}>
-          <Text style={s.metaLabel}>Retorno</Text>
+          <Text style={s.metaLabel}>Lo que ganas</Text>
           <Text style={s.metaValue}>{o.roi_estimado}</Text>
         </View>
         <View style={s.metaCell}>
@@ -202,11 +212,11 @@ function OppCard({ o, i, prio }: { o: Opportunity; i: number; prio: boolean }) {
           <Text style={s.metaValue}>{o.tiempo_implementacion}</Text>
         </View>
         <View style={s.metaCell}>
-          <Text style={s.metaLabel}>Complejidad</Text>
+          <Text style={s.metaLabel}>Esfuerzo</Text>
           <Text style={s.metaValue}>{o.complejidad}</Text>
         </View>
         <View style={s.metaCell}>
-          <Text style={s.metaLabel}>Proyecto</Text>
+          <Text style={s.metaLabel}>Servicio</Text>
           <Text style={s.metaValue}>{SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}</Text>
         </View>
       </View>
