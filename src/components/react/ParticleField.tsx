@@ -102,7 +102,9 @@ function Particles(): React.ReactElement {
         digitAttrRef.current.needsUpdate = true;
       }
       auditStateNum.current = auditStateToNumeric(state);
-      auditMixTarget.current = state === 'idle' ? 0 : 1;
+      // Mantener el campo de partículas como fondo calmado durante el audit:
+      // no concentrarlas en un cúmulo blanco (uColorHot) que se veía roto.
+      auditMixTarget.current = 0;
     });
 
     const onMouseMove = (e: MouseEvent): void => {
