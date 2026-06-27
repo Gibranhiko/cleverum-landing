@@ -74,7 +74,7 @@ function Particles(): React.ReactElement {
         uColorA: { value: new THREE.Color('#4F8AF7') },
         uColorB: { value: new THREE.Color('#7C5CFF') },
         uColorC: { value: new THREE.Color('#22C55E') },
-        uColorHot: { value: new THREE.Color('#FFFFFF') },
+        uColorHot: { value: new THREE.Color('#7C5CFF') },
         uOpacity: { value: 0.55 },
       },
       transparent: true,
@@ -102,9 +102,9 @@ function Particles(): React.ReactElement {
         digitAttrRef.current.needsUpdate = true;
       }
       auditStateNum.current = auditStateToNumeric(state);
-      // Mantener el campo de partículas como fondo calmado durante el audit:
-      // no concentrarlas en un cúmulo blanco (uColorHot) que se veía roto.
-      auditMixTarget.current = 0;
+      // Durante el audit las partículas se recogen/concentran al fondo
+      // (deja ver mejor el análisis). El color "hot" ya no es blanco duro.
+      auditMixTarget.current = state === 'idle' ? 0 : 1;
     });
 
     const onMouseMove = (e: MouseEvent): void => {

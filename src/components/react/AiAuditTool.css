@@ -6,12 +6,12 @@
 
 .audit-card {
   position: relative;
+  z-index: 1;
   padding: clamp(1.5rem, 3vw, 2.5rem);
-  background: linear-gradient(
-    160deg,
-    color-mix(in srgb, var(--color-bg-elev) 95%, var(--color-brand-iris)),
-    var(--color-bg-elev)
-  );
+  /* Fondo SÓLIDO opaco: panel integral que envuelve todo (verificando +
+     procesamiento). Las partículas quedan DETRÁS del panel (visibles alrededor
+     en la sección), nunca a través del contenido. */
+  background: linear-gradient(160deg, #16131f, var(--color-bg-elev));
   border: 1px solid color-mix(in srgb, var(--color-brand-iris) 28%, var(--color-border));
   border-radius: var(--radius-card);
   backdrop-filter: blur(12px);

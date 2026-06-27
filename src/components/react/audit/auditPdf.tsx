@@ -5,7 +5,7 @@
  * `import()` dinámico desde el botón "Descargar PDF" para que no entre al
  * bundle inicial del audit island.
  */
-import { Document, Page, View, Text, StyleSheet, pdf } from '@react-pdf/renderer';
+import { Document, Page, View, Text, Image, StyleSheet, pdf } from '@react-pdf/renderer';
 import { site } from '~/content/site';
 import type { AuditResult, Opportunity } from '~/lib/audit/types';
 
@@ -50,6 +50,8 @@ const s = StyleSheet.create({
     borderBottomColor: C.line,
     marginBottom: 14,
   },
+  brandLockup: { flexDirection: 'row', alignItems: 'center', gap: 9 },
+  logo: { width: 28, height: 28 },
   brand: { fontSize: 18, fontFamily: 'Helvetica-Bold', color: C.ink, letterSpacing: -0.5 },
   brandSub: { fontSize: 8, color: C.muted, marginTop: 2 },
   headerRight: { alignItems: 'flex-end' },
@@ -293,9 +295,12 @@ function AuditDoc({ audit, client }: { audit: AuditResult; client?: ClientInfo }
 
         <View style={s.body}>
           <View style={s.header}>
-            <View>
-              <Text style={s.brand}>{site.brand.name}</Text>
-              <Text style={s.brandSub}>{site.brand.bajada}</Text>
+            <View style={s.brandLockup}>
+              <Image src="/icon-512.png" style={s.logo} />
+              <View>
+                <Text style={s.brand}>{site.brand.name}</Text>
+                <Text style={s.brandSub}>{site.brand.bajada}</Text>
+              </View>
             </View>
             <View style={s.headerRight}>
               <Text style={s.kicker}>Diagnóstico de IA</Text>
