@@ -5,8 +5,7 @@ const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
 const ANTHROPIC_MODEL = 'claude-haiku-4-5-20251001';
 const ANTHROPIC_VERSION = '2023-06-01';
 
-const TURNSTILE_VERIFY_URL =
-  'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 /* ============================================================
  * HTTP helpers
@@ -54,8 +53,7 @@ export async function fetchHtml(input: string, maxChars = 3000): Promise<string 
     const r = await fetch(target, {
       signal: ac.signal,
       headers: {
-        'User-Agent':
-          'Mozilla/5.0 (compatible; CleverumAuditBot/1.0; +https://cleverum.org)',
+        'User-Agent': 'Mozilla/5.0 (compatible; CleverumAuditBot/1.0; +https://cleverum.org)',
         Accept: 'text/html',
       },
       redirect: 'follow',
@@ -191,10 +189,7 @@ function cacheableSystem(text: string) {
   return [{ type: 'text', text, cache_control: { type: 'ephemeral' } }];
 }
 
-export async function callAnthropic(
-  apiKey: string,
-  opts: CallAnthropicOptions,
-): Promise<string> {
+export async function callAnthropic(apiKey: string, opts: CallAnthropicOptions): Promise<string> {
   const r = await fetch(ANTHROPIC_URL, {
     method: 'POST',
     headers: {
@@ -234,7 +229,15 @@ interface CallAnthropicThinkingOptions {
 }
 
 interface SseDelta {
-  type: 'message_start' | 'content_block_start' | 'content_block_delta' | 'content_block_stop' | 'message_delta' | 'message_stop' | 'ping' | string;
+  type:
+    | 'message_start'
+    | 'content_block_start'
+    | 'content_block_delta'
+    | 'content_block_stop'
+    | 'message_delta'
+    | 'message_stop'
+    | 'ping'
+    | string;
   delta?: {
     type?: 'text_delta' | 'thinking_delta' | string;
     text?: string;

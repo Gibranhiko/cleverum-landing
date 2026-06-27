@@ -5,14 +5,7 @@
  * `import()` dinámico desde el botón "Descargar PDF" para que no entre al
  * bundle inicial del audit island.
  */
-import {
-  Document,
-  Page,
-  View,
-  Text,
-  StyleSheet,
-  pdf,
-} from '@react-pdf/renderer';
+import { Document, Page, View, Text, StyleSheet, pdf } from '@react-pdf/renderer';
 import { site } from '~/content/site';
 import type { AuditResult, Opportunity } from '~/lib/audit/types';
 
@@ -69,7 +62,13 @@ const s = StyleSheet.create({
   },
   headerDate: { fontSize: 8, color: C.muted, marginTop: 3 },
 
-  h1: { fontSize: 22, fontFamily: 'Helvetica-Bold', color: C.ink, letterSpacing: -0.6, marginBottom: 6 },
+  h1: {
+    fontSize: 22,
+    fontFamily: 'Helvetica-Bold',
+    color: C.ink,
+    letterSpacing: -0.6,
+    marginBottom: 6,
+  },
   lead: { fontSize: 10.5, color: C.body, lineHeight: 1.5, marginBottom: 18 },
   leadStrong: { fontFamily: 'Helvetica-Bold', color: C.ink },
 
@@ -102,7 +101,12 @@ const s = StyleSheet.create({
     marginBottom: 12,
   },
   cardPrio: { borderColor: C.iris, backgroundColor: '#FAF8FF' },
-  cardHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 },
+  cardHead: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
   badge: {
     fontSize: 7,
     fontFamily: 'Helvetica-Bold',
@@ -114,7 +118,13 @@ const s = StyleSheet.create({
     color: C.white,
   },
   cardNum: { fontSize: 18, fontFamily: 'Helvetica-Bold', color: C.line },
-  cardTitle: { fontSize: 13, fontFamily: 'Helvetica-Bold', color: C.ink, marginBottom: 5, letterSpacing: -0.3 },
+  cardTitle: {
+    fontSize: 13,
+    fontFamily: 'Helvetica-Bold',
+    color: C.ink,
+    marginBottom: 5,
+    letterSpacing: -0.3,
+  },
   cardEnCorto: {
     fontSize: 10,
     color: C.ink,
@@ -138,7 +148,14 @@ const s = StyleSheet.create({
 
   metaGrid: { flexDirection: 'row', flexWrap: 'wrap', marginBottom: 8 },
   metaCell: { width: '50%', marginBottom: 6, paddingRight: 8 },
-  metaLabel: { fontSize: 7, color: C.muted, fontFamily: 'Helvetica-Bold', letterSpacing: 0.6, textTransform: 'uppercase', marginBottom: 2 },
+  metaLabel: {
+    fontSize: 7,
+    color: C.muted,
+    fontFamily: 'Helvetica-Bold',
+    letterSpacing: 0.6,
+    textTransform: 'uppercase',
+    marginBottom: 2,
+  },
   metaValue: { fontSize: 9, color: C.ink },
 
   iceRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 4 },
@@ -217,7 +234,9 @@ function OppCard({ o, i, prio }: { o: Opportunity; i: number; prio: boolean }) {
         </View>
         <View style={s.metaCell}>
           <Text style={s.metaLabel}>Servicio</Text>
-          <Text style={s.metaValue}>{SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}</Text>
+          <Text style={s.metaValue}>
+            {SERVICE_NAME[o.sprint_recomendado] ?? o.sprint_recomendado}
+          </Text>
         </View>
       </View>
 
@@ -336,7 +355,9 @@ function AuditDoc({ audit, client }: { audit: AuditResult; client?: ClientInfo }
           </Text>
           <Text
             style={s.footerBrand}
-            render={({ pageNumber, totalPages }) => `${site.brand.name} · ${pageNumber}/${totalPages}`}
+            render={({ pageNumber, totalPages }) =>
+              `${site.brand.name} · ${pageNumber}/${totalPages}`
+            }
           />
         </View>
       </Page>
@@ -356,10 +377,7 @@ function slugify(text: string): string {
   );
 }
 
-export async function downloadAuditPdf(
-  audit: AuditResult,
-  client?: ClientInfo,
-): Promise<void> {
+export async function downloadAuditPdf(audit: AuditResult, client?: ClientInfo): Promise<void> {
   const blob = await pdf(<AuditDoc audit={audit} client={client} />).toBlob();
   const url = URL.createObjectURL(blob);
   const base = slugify(client?.empresa || audit.industria || 'cleverum');

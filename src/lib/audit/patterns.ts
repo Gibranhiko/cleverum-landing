@@ -33,12 +33,7 @@ export const PATTERNS: Pattern[] = [
     name: 'WhatsApp + IA para FAQs y ventas',
     description:
       'Chatbot con IA que responde preguntas frecuentes, captura leads, y recupera carritos abandonados. Handoff a humano cuando detecta intención de compra alta o queja.',
-    stack: [
-      'n8n',
-      'Anthropic Claude Haiku',
-      'WhatsApp Business Cloud API',
-      'Supabase',
-    ],
+    stack: ['n8n', 'Anthropic Claude Haiku', 'WhatsApp Business Cloud API', 'Supabase'],
     cases: ['ecommerce', 'restaurantes', 'servicios profesionales', 'inmobiliarias'],
     roi: '25-40 hrs/mes ahorradas en soporte + conversión +12-18% en abandono',
     duration: '3-5 semanas',
@@ -168,12 +163,7 @@ export const PATTERNS: Pattern[] = [
     name: 'RAG sobre documentación interna',
     description:
       'Asistente IA con acceso a tu Notion/Drive/Confluence que responde preguntas internas con citas a la fuente. Onboarding de nuevos empleados, soporte L1 técnico, búsqueda semántica.',
-    stack: [
-      'Anthropic Claude Sonnet',
-      'Supabase pgvector',
-      'embeddings (voyage / openai)',
-      'n8n',
-    ],
+    stack: ['Anthropic Claude Sonnet', 'Supabase pgvector', 'embeddings (voyage / openai)', 'n8n'],
     cases: ['empresas con > 30 empleados', 'soporte interno', 'compliance / legal'],
     roi: '15-30 hrs/sem ahorradas en preguntas repetidas + onboarding 3× más rápido',
     duration: '3-5 semanas',

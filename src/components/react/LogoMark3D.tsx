@@ -67,12 +67,9 @@ function Gem(): React.ReactElement {
     if (!groupRef.current || reduced) return;
     const t = state.clock.elapsedTime;
     const boost = hovered ? 2.5 : 1;
-    groupRef.current.rotation.x +=
-      dt * 0.17 * boost * (1 + Math.sin(t * 0.13) * 0.35);
-    groupRef.current.rotation.y +=
-      dt * 0.29 * boost * (1 + Math.cos(t * 0.09) * 0.28);
-    groupRef.current.rotation.z +=
-      dt * 0.11 * boost * (1 + Math.sin(t * 0.07) * 0.45);
+    groupRef.current.rotation.x += dt * 0.17 * boost * (1 + Math.sin(t * 0.13) * 0.35);
+    groupRef.current.rotation.y += dt * 0.29 * boost * (1 + Math.cos(t * 0.09) * 0.28);
+    groupRef.current.rotation.z += dt * 0.11 * boost * (1 + Math.sin(t * 0.07) * 0.45);
     groupRef.current.position.x = Math.sin(t * 0.41) * 0.05;
     groupRef.current.position.y = Math.cos(t * 0.31) * 0.08;
   });

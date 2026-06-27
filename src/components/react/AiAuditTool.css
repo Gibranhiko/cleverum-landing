@@ -33,7 +33,8 @@
 }
 
 @keyframes audit-card-aura {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow:
       0 1px 0 rgba(255, 255, 255, 0.06) inset,
       0 30px 80px -42px color-mix(in srgb, var(--color-brand-iris) 55%, transparent),
@@ -120,12 +121,21 @@
 }
 
 @keyframes audit-summary-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(0.85); }
-  50%      { opacity: 1;   transform: scale(1.15); }
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .audit-summary-dot { animation: none; }
+  .audit-summary-dot {
+    animation: none;
+  }
 }
 
 .audit-summary-text {

@@ -167,10 +167,7 @@ export interface LeadRecord {
   created_at: string;
 }
 
-export function buildGibranNotificationHtml(
-  lead: LeadRecord,
-  audit: AuditResult,
-): string {
+export function buildGibranNotificationHtml(lead: LeadRecord, audit: AuditResult): string {
   const oppList = audit.oportunidades
     .map(
       (o, i) =>

@@ -26,8 +26,7 @@ export const site = {
     phoneTel: '+525541433545',
     whatsapp: {
       number: '5215541433545',
-      prefilledMessage:
-        '¡Hola! Vi el sitio de Cleverum y quiero hablar sobre un proyecto.',
+      prefilledMessage: '¡Hola! Vi el sitio de Cleverum y quiero hablar sobre un proyecto.',
     },
     calendly: 'https://calendly.com/REPLACE_ME',
   },

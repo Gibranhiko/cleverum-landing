@@ -16,9 +16,7 @@ export const GET: APIRoute = () => {
     .filter((s) => isReal(s.url))
     .map((s) => `- ${s.name}: ${s.url}`);
 
-  const calendlyLine = isReal(contact.calendly)
-    ? `- Calendly: ${contact.calendly}`
-    : null;
+  const calendlyLine = isReal(contact.calendly) ? `- Calendly: ${contact.calendly}` : null;
 
   const serviceLines = services.items.map(
     (s) => `- ${s.title} — ${s.subtitle.toLowerCase()}, ${s.duration}`,

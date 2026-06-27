@@ -7,11 +7,7 @@ interface Props {
   onChange: (field: 'nombre' | 'empresa', value: string) => void;
 }
 
-export default function StepIdentity({
-  nombre,
-  empresa,
-  onChange,
-}: Props): React.ReactElement {
+export default function StepIdentity({ nombre, empresa, onChange }: Props): React.ReactElement {
   const firstRef = useRef<HTMLInputElement>(null);
   const { audit } = site;
 
@@ -49,9 +45,7 @@ export default function StepIdentity({
             autoComplete="given-name"
             aria-invalid={nombreError}
           />
-          {nombreError && (
-            <span className="wiz-field-error">Mínimo 2 caracteres.</span>
-          )}
+          {nombreError && <span className="wiz-field-error">Mínimo 2 caracteres.</span>}
         </label>
         <label className="wiz-field">
           <span>
@@ -67,9 +61,7 @@ export default function StepIdentity({
             autoComplete="organization"
             aria-invalid={empresaError}
           />
-          {empresaError && (
-            <span className="wiz-field-error">Mínimo 2 caracteres.</span>
-          )}
+          {empresaError && <span className="wiz-field-error">Mínimo 2 caracteres.</span>}
         </label>
       </div>
     </div>

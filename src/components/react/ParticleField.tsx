@@ -97,10 +97,7 @@ function Particles(): React.ReactElement {
     const unsubscribeAudit = subscribeAuditState((state, payload) => {
       // On 'done', generate digit positions from the maturity score
       if (state === 'done' && payload.score !== undefined && digitAttrRef.current) {
-        const positions = generateDigitPositions(
-          payload.score.toFixed(1),
-          PARTICLE_COUNT,
-        );
+        const positions = generateDigitPositions(payload.score.toFixed(1), PARTICLE_COUNT);
         (digitAttrRef.current.array as Float32Array).set(positions);
         digitAttrRef.current.needsUpdate = true;
       }
@@ -136,8 +133,7 @@ function Particles(): React.ReactElement {
 
   useFrame((_, dt) => {
     const scrollK = Math.min(1, dt * SCRUB_SPEED);
-    currentProgress.current +=
-      (targetProgress.current - currentProgress.current) * scrollK;
+    currentProgress.current += (targetProgress.current - currentProgress.current) * scrollK;
     material.uniforms.uProgress!.value = currentProgress.current;
 
     const mK = Math.min(1, dt * MOUSE_LERP);
@@ -154,8 +150,7 @@ function Particles(): React.ReactElement {
 
     // Audit transition
     const auditK = Math.min(1, dt * AUDIT_LERP);
-    auditMixCurrent.current +=
-      (auditMixTarget.current - auditMixCurrent.current) * auditK;
+    auditMixCurrent.current += (auditMixTarget.current - auditMixCurrent.current) * auditK;
     material.uniforms.uAuditState!.value = auditStateNum.current;
     material.uniforms.uAuditMix!.value = auditMixCurrent.current;
 

@@ -8,11 +8,7 @@ interface Props {
   onChange: (field: 'email' | 'telefono', value: string) => void;
 }
 
-export default function StepContact({
-  email,
-  telefono,
-  onChange,
-}: Props): React.ReactElement {
+export default function StepContact({ email, telefono, onChange }: Props): React.ReactElement {
   const firstRef = useRef<HTMLInputElement>(null);
   const { audit } = site;
 
@@ -47,9 +43,7 @@ export default function StepContact({
             autoComplete="email"
             aria-invalid={emailError}
           />
-          {emailError && (
-            <span className="wiz-field-error">Email no parece válido.</span>
-          )}
+          {emailError && <span className="wiz-field-error">Email no parece válido.</span>}
         </label>
         <label className="wiz-field">
           <span>{audit.fields.telefono}</span>
@@ -62,11 +56,7 @@ export default function StepContact({
             autoComplete="tel"
             aria-invalid={phoneError}
           />
-          {phoneError && (
-            <span className="wiz-field-error">
-              Solo números, mínimo 7 dígitos.
-            </span>
-          )}
+          {phoneError && <span className="wiz-field-error">Solo números, mínimo 7 dígitos.</span>}
         </label>
       </div>
     </div>

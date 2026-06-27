@@ -99,10 +99,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   if (cNombre.length < 2) return jsonError(400, 'nombre_required', 'Necesito tu nombre.');
   if (cNombre.length > MAX_NAME_LENGTH) return jsonError(400, 'nombre_too_long');
-  if (cEmpresa.length < 2) return jsonError(400, 'empresa_required', 'Necesito el nombre de tu empresa.');
+  if (cEmpresa.length < 2)
+    return jsonError(400, 'empresa_required', 'Necesito el nombre de tu empresa.');
   if (cEmpresa.length > MAX_NAME_LENGTH) return jsonError(400, 'empresa_too_long');
   // Email obligatorio: garantiza que el reporte llegue aunque el cliente abandone.
-  if (!cEmail) return jsonError(400, 'email_required', 'Necesito tu email para enviarte el reporte.');
+  if (!cEmail)
+    return jsonError(400, 'email_required', 'Necesito tu email para enviarte el reporte.');
   if (!isValidEmail(cEmail)) return jsonError(400, 'email_invalid');
   if (cEmail && isDisposableEmail(cEmail)) {
     return jsonError(400, 'email_disposable', 'Usa un email real para enviarte el reporte.');
@@ -110,11 +112,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (cTelefono && cTelefono.length > MAX_PHONE_LENGTH) return jsonError(400, 'telefono_too_long');
 
   // --- 4. Turnstile verification ------------------------------------------
-  const tsOk = await verifyTurnstile(
-    body.turnstileToken,
-    env.TURNSTILE_SECRET_KEY,
-    request,
-  );
+  const tsOk = await verifyTurnstile(body.turnstileToken, env.TURNSTILE_SECRET_KEY, request);
   if (!tsOk) {
     return jsonError(
       401,
@@ -158,117 +156,117 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   };
 
   const pipeline = (async () => {
+    try {
+      // ---- AGENT 1: Industry classifier ----
+      send('status', { stage: 'classifying' });
+      const classifierUser = buildClassifierUserMessage(input, body.extra, htmlContext);
+      const classifierText = await callAnthropic(env.ANTHROPIC_API_KEY, {
+        system: INDUSTRY_CLASSIFIER_PROMPT,
+        user: classifierUser,
+        maxTokens: 500,
+        temperature: 0.3,
+      });
+      const industry = parseJsonFromLlm<IndustryClassification>(classifierText);
+      send('industry', industry);
+
+      // ---- AGENT 2: Senior analyst (streaming with thinking) ----
+      send('status', { stage: 'analyzing' });
+      const analystUser = buildAnalystUserMessage(input, body.extra, htmlContext, industry);
+      const analystText = await callAnthropicWithThinking(env.ANTHROPIC_API_KEY, {
+        system: SENIOR_ANALYST_PROMPT,
+        user: analystUser,
+        maxTokens: 2000,
+        thinkingBudget: 1100,
+        onThinking: (delta) => send('thinking', { delta }),
+      });
+      const draft = parseJsonFromLlm<AnalystDraft>(analystText);
+      send('opportunities_draft', draft);
+
+      // ---- AGENT 3: Critic (patch-based) ----
+      // Revisa el draft y devuelve SOLO correcciones puntuales, no el JSON
+      // completo → mucho más rápido que regenerar todo. Si falla, seguimos
+      // con el draft del analista (degradación elegante).
+      send('status', { stage: 'critiquing' });
+      let oportunidades = draft.oportunidades;
+      let recomendacion = draft.recomendacion_prioritaria;
       try {
-        // ---- AGENT 1: Industry classifier ----
-        send('status', { stage: 'classifying' });
-        const classifierUser = buildClassifierUserMessage(input, body.extra, htmlContext);
-        const classifierText = await callAnthropic(env.ANTHROPIC_API_KEY, {
-          system: INDUSTRY_CLASSIFIER_PROMPT,
-          user: classifierUser,
-          maxTokens: 500,
+        const criticText = await callAnthropic(env.ANTHROPIC_API_KEY, {
+          system: CRITIC_PATCH_PROMPT,
+          user: buildCriticPatchUserMessage(industry, draft),
+          maxTokens: 1500,
           temperature: 0.3,
         });
-        const industry = parseJsonFromLlm<IndustryClassification>(classifierText);
-        send('industry', industry);
-
-        // ---- AGENT 2: Senior analyst (streaming with thinking) ----
-        send('status', { stage: 'analyzing' });
-        const analystUser = buildAnalystUserMessage(input, body.extra, htmlContext, industry);
-        const analystText = await callAnthropicWithThinking(env.ANTHROPIC_API_KEY, {
-          system: SENIOR_ANALYST_PROMPT,
-          user: analystUser,
-          maxTokens: 2000,
-          thinkingBudget: 1100,
-          onThinking: (delta) => send('thinking', { delta }),
-        });
-        const draft = parseJsonFromLlm<AnalystDraft>(analystText);
-        send('opportunities_draft', draft);
-
-        // ---- AGENT 3: Critic (patch-based) ----
-        // Revisa el draft y devuelve SOLO correcciones puntuales, no el JSON
-        // completo → mucho más rápido que regenerar todo. Si falla, seguimos
-        // con el draft del analista (degradación elegante).
-        send('status', { stage: 'critiquing' });
-        let oportunidades = draft.oportunidades;
-        let recomendacion = draft.recomendacion_prioritaria;
-        try {
-          const criticText = await callAnthropic(env.ANTHROPIC_API_KEY, {
-            system: CRITIC_PATCH_PROMPT,
-            user: buildCriticPatchUserMessage(industry, draft),
-            maxTokens: 1500,
-            temperature: 0.3,
+        const critic = parseJsonFromLlm<CriticResponse>(criticText);
+        if (critic.patches?.length) {
+          oportunidades = oportunidades.map((o, i) => {
+            const patch = critic.patches?.find((p) => p.index === i);
+            if (!patch) return o;
+            const { index: _index, ...fields } = patch;
+            return { ...o, ...fields };
           });
-          const critic = parseJsonFromLlm<CriticResponse>(criticText);
-          if (critic.patches?.length) {
-            oportunidades = oportunidades.map((o, i) => {
-              const patch = critic.patches?.find((p) => p.index === i);
-              if (!patch) return o;
-              const { index: _index, ...fields } = patch;
-              return { ...o, ...fields };
-            });
-            send('opportunities_draft', { ...draft, oportunidades });
-          }
-          if (critic.recomendacion_prioritaria) {
-            recomendacion = critic.recomendacion_prioritaria;
-          }
-        } catch {
-          // Crítico falló o devolvió JSON inválido — usamos el draft tal cual.
+          send('opportunities_draft', { ...draft, oportunidades });
         }
-
-        // ---- Assemble final audit ----
-        // El benchmark es determinista (no necesita otra llamada a la IA): el
-        // score viene del clasificador y el potencial es score + 3 (cap 10).
-        const final: AuditResult = {
-          audit_id: '',
-          negocio_detectado: draft.negocio_detectado,
-          industria: industry.industria,
-          score_madurez: industry.maturity_score,
-          benchmark: {
-            industria_promedio: 5,
-            lider: 9,
-            tu_potencial: Math.min(10, industry.maturity_score + 3),
-          },
-          oportunidades,
-          recomendacion_prioritaria: recomendacion,
-        };
-
-        // ---- Save + return ----
-        const auditId = crypto.randomUUID();
-        final.audit_id = auditId;
-        send('status', { stage: 'saving' });
-        await env.KV.put(`audit:${auditId}`, JSON.stringify(final), {
-          expirationTtl: AUDIT_TTL_SECONDS,
-        });
-
-        // Persist lead snapshot and notify Gibran for every successful audit
-        const normalizedContact = {
-          nombre: cNombre,
-          empresa: cEmpresa,
-          ...(cEmail && { email: cEmail }),
-          ...(cTelefono && { telefono: cTelefono }),
-        };
-        const lead = await persistLead(env.KV, final, normalizedContact);
-        send('done', { audit_id: auditId, audit: final });
-
-        // Correos — se esperan (await) para que se completen DENTRO de la
-        // ventana de waitUntil, aunque el cliente ya se haya ido. Por eso el
-        // correo llega aunque el usuario abandone a media carga.
-        const [, sent] = await Promise.all([
-          notifyGibran(env.RESEND_API_KEY, lead, final),
-          normalizedContact.email
-            ? sendClientReport(env.RESEND_API_KEY, final, normalizedContact)
-            : Promise.resolve(false),
-        ]);
-        send('email_status', {
-          sent,
-          ...(sent ? {} : { reason: normalizedContact.email ? 'send_failed' : 'no_email' }),
-        });
-      } catch (err) {
-        const message = err instanceof Error ? err.message : 'unknown';
-        send('error', { code: 'pipeline_failed', message });
-      } finally {
-        await writer.close().catch(() => {});
+        if (critic.recomendacion_prioritaria) {
+          recomendacion = critic.recomendacion_prioritaria;
+        }
+      } catch {
+        // Crítico falló o devolvió JSON inválido — usamos el draft tal cual.
       }
+
+      // ---- Assemble final audit ----
+      // El benchmark es determinista (no necesita otra llamada a la IA): el
+      // score viene del clasificador y el potencial es score + 3 (cap 10).
+      const final: AuditResult = {
+        audit_id: '',
+        negocio_detectado: draft.negocio_detectado,
+        industria: industry.industria,
+        score_madurez: industry.maturity_score,
+        benchmark: {
+          industria_promedio: 5,
+          lider: 9,
+          tu_potencial: Math.min(10, industry.maturity_score + 3),
+        },
+        oportunidades,
+        recomendacion_prioritaria: recomendacion,
+      };
+
+      // ---- Save + return ----
+      const auditId = crypto.randomUUID();
+      final.audit_id = auditId;
+      send('status', { stage: 'saving' });
+      await env.KV.put(`audit:${auditId}`, JSON.stringify(final), {
+        expirationTtl: AUDIT_TTL_SECONDS,
+      });
+
+      // Persist lead snapshot and notify Gibran for every successful audit
+      const normalizedContact = {
+        nombre: cNombre,
+        empresa: cEmpresa,
+        ...(cEmail && { email: cEmail }),
+        ...(cTelefono && { telefono: cTelefono }),
+      };
+      const lead = await persistLead(env.KV, final, normalizedContact);
+      send('done', { audit_id: auditId, audit: final });
+
+      // Correos — se esperan (await) para que se completen DENTRO de la
+      // ventana de waitUntil, aunque el cliente ya se haya ido. Por eso el
+      // correo llega aunque el usuario abandone a media carga.
+      const [, sent] = await Promise.all([
+        notifyGibran(env.RESEND_API_KEY, lead, final),
+        normalizedContact.email
+          ? sendClientReport(env.RESEND_API_KEY, final, normalizedContact)
+          : Promise.resolve(false),
+      ]);
+      send('email_status', {
+        sent,
+        ...(sent ? {} : { reason: normalizedContact.email ? 'send_failed' : 'no_email' }),
+      });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'unknown';
+      send('error', { code: 'pipeline_failed', message });
+    } finally {
+      await writer.close().catch(() => {});
+    }
   })();
 
   // Mantiene viva la Function hasta que el pipeline termine (incl. el correo),

@@ -8,7 +8,11 @@ const { socials, footer, brand, contact, finalCta } = site;
 <footer id="contacto" class="footer" role="contentinfo">
   <div class="footer-inner container-narrow">
     <!-- Question + arrow up linking to diagnóstico -->
-    <a href="#diagnostico" class="footer-question" aria-label={`${finalCta.heading} Ir al diagnóstico`}>
+    <a
+      href="#diagnostico"
+      class="footer-question"
+      aria-label={`${finalCta.heading} Ir al diagnóstico`}
+    >
       <span class="footer-question-text font-display">
         <span class="gradient-text-go">{finalCta.heading}</span>
       </span>
@@ -24,25 +28,20 @@ const { socials, footer, brand, contact, finalCta } = site;
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          <path d="M12 19V5" />
-          <path d="m5 12 7-7 7 7" />
+          <path d="M12 19V5"></path>
+          <path d="m5 12 7-7 7 7"></path>
         </svg>
       </span>
     </a>
 
-    <p class="footer-invitation">
-      El diagnóstico gratis está arriba ↑ — o escríbenos directo:
-    </p>
+    <p class="footer-invitation">El diagnóstico gratis está arriba ↑ — o escríbenos directo:</p>
 
     <ul class="footer-contact" aria-label="Contacto directo">
       <li>
         <a href={`tel:${contact.phoneTel}`}>{contact.phoneDisplay}</a>
       </li>
       <li>
-        <a
-          href={`mailto:${contact.email}`}
-          aria-label={`Mandar mail a ${brand.name}`}
-        >
+        <a href={`mailto:${contact.email}`} aria-label={`Mandar mail a ${brand.name}`}>
           Manda un mail
         </a>
       </li>
@@ -50,12 +49,7 @@ const { socials, footer, brand, contact, finalCta } = site;
 
     <ul class="footer-socials" aria-label="Redes sociales">
       <li>
-        <a
-          href={socials.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-        >
+        <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -92,12 +86,7 @@ const { socials, footer, brand, contact, finalCta } = site;
         </a>
       </li>
       <li>
-        <a
-          href={socials.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-        >
+        <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -243,7 +232,9 @@ const { socials, footer, brand, contact, finalCta } = site;
     letter-spacing: -0.005em;
     padding: 0.35rem 0.5rem;
     border-radius: 6px;
-    transition: color 0.2s ease, background-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
   }
 
   .footer-contact a:hover {

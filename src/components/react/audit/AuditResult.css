@@ -9,8 +9,14 @@
 }
 
 @keyframes audit-result-fade {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .audit-result-error {
@@ -118,7 +124,9 @@
 }
 
 @keyframes audit-cursor {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* ============================================================
@@ -147,7 +155,10 @@
 }
 
 @keyframes audit-opp-reveal {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .audit-opp.is-prioritaria {
@@ -474,7 +485,9 @@
 }
 
 @keyframes audit-maturity-fill-anim {
-  from { width: 0; }
+  from {
+    width: 0;
+  }
 }
 
 .audit-maturity-marker {
@@ -486,9 +499,15 @@
   transform: translateX(-50%);
 }
 
-.audit-maturity-marker-avg { color: var(--color-text-3); }
-.audit-maturity-marker-leader { color: var(--color-brand-iris); }
-.audit-maturity-marker-potencial { color: var(--color-accent-go); }
+.audit-maturity-marker-avg {
+  color: var(--color-text-3);
+}
+.audit-maturity-marker-leader {
+  color: var(--color-brand-iris);
+}
+.audit-maturity-marker-potencial {
+  color: var(--color-accent-go);
+}
 
 .audit-maturity-legend {
   display: flex;
@@ -513,10 +532,18 @@
   border-radius: 50%;
 }
 
-.dot-you { background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-iris)); }
-.dot-avg { background: var(--color-text-3); }
-.dot-leader { background: var(--color-brand-iris); }
-.dot-potencial { background: var(--color-accent-go); }
+.dot-you {
+  background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-iris));
+}
+.dot-avg {
+  background: var(--color-text-3);
+}
+.dot-leader {
+  background: var(--color-brand-iris);
+}
+.dot-potencial {
+  background: var(--color-accent-go);
+}
 
 /* ============================================================
  * Recomendación prioritaria
@@ -614,7 +641,9 @@
 }
 
 @keyframes audit-banner-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ============================================================
@@ -693,7 +722,9 @@
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .audit-mini-gate-row button:hover:not(:disabled) {
@@ -812,7 +843,8 @@
 }
 
 @keyframes audit-orb-breathe {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: 0 0 24px 4px color-mix(in srgb, var(--color-brand-iris) 50%, transparent);
   }
@@ -823,8 +855,14 @@
 }
 
 @keyframes audit-orb-ping {
-  0% { transform: scale(0.7); opacity: 0.8; }
-  100% { transform: scale(1.55); opacity: 0; }
+  0% {
+    transform: scale(0.7);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
 }
 
 .audit-tip {
@@ -839,8 +877,14 @@
 }
 
 @keyframes audit-tip-in {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ============================================================
@@ -906,7 +950,8 @@
 }
 
 @keyframes audit-step-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-brand-iris) 45%, transparent);
   }
   50% {

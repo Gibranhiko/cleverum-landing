@@ -22,18 +22,18 @@ Owner: Gibran Villarreal · `gibran.villarreal@cleverum.com` · `+52 55 4143 354
 
 ## 3. Stack
 
-| Capa | Paquete |
-|---|---|
-| Framework | Astro 5 (`output: 'static'`) |
-| Islas | React 19 |
-| Estilos | Tailwind CSS v4 |
-| Scroll anim | GSAP 3 + ScrollTrigger |
-| 3D/WebGL | React Three Fiber + drei + three.js |
-| Iconos | `lucide-astro` (`lucide-react` solo en islas) |
-| Fuentes | `astro:fonts` — Geist (display) + Inter (body) |
-| YouTube | `@astro-community/astro-embed-youtube` (lite, lazy) |
-| Hosting | Cloudflare Pages (static, free) |
-| Analytics | Cloudflare Web Analytics (sin cookies) |
+| Capa        | Paquete                                             |
+| ----------- | --------------------------------------------------- |
+| Framework   | Astro 5 (`output: 'static'`)                        |
+| Islas       | React 19                                            |
+| Estilos     | Tailwind CSS v4                                     |
+| Scroll anim | GSAP 3 + ScrollTrigger                              |
+| 3D/WebGL    | React Three Fiber + drei + three.js                 |
+| Iconos      | `lucide-astro` (`lucide-react` solo en islas)       |
+| Fuentes     | `astro:fonts` — Geist (display) + Inter (body)      |
+| YouTube     | `@astro-community/astro-embed-youtube` (lite, lazy) |
+| Hosting     | Cloudflare Pages (static, free)                     |
+| Analytics   | Cloudflare Web Analytics (sin cookies)              |
 
 No agregar deps sin razón fuerte.
 
@@ -57,12 +57,12 @@ Sin state/listeners → `.astro`. Con → `.tsx` isla, directiva mínima.
 
 ## 5. Directivas de islas
 
-| Directiva | Cuándo |
-|---|---|
-| `client:load` | Casi nunca. Solo si necesita primer paint |
-| `client:idle` | Interacciones no críticas (ej. ScrollProgress) |
-| `client:visible` | Default: 3D, animaciones scroll, reveals |
-| `client:media` | Depende de breakpoint (ej. no 3D mobile) |
+| Directiva        | Cuándo                                         |
+| ---------------- | ---------------------------------------------- |
+| `client:load`    | Casi nunca. Solo si necesita primer paint      |
+| `client:idle`    | Interacciones no críticas (ej. ScrollProgress) |
+| `client:visible` | Default: 3D, animaciones scroll, reveals       |
+| `client:media`   | Depende de breakpoint (ej. no 3D mobile)       |
 
 Nunca `client:only` salvo incompatible con SSR.
 
@@ -134,16 +134,16 @@ Spacing: múltiplos de 4. Secciones `py-24 md:py-32 lg:py-40`.
 
 ## 11. Performance budgets
 
-| Métrica | Budget |
-|---|---|
-| LCP | <1.5s |
-| CLS | <0.05 |
-| TBT | <100ms |
-| JS inicial | <50KB |
-| Página total (sin video) | <300KB |
-| FPS 3D | 60 desktop / 30 mobile |
-| Lighthouse Perf | ≥95 |
-| Lighthouse SEO/BP/A11y | 100 |
+| Métrica                  | Budget                 |
+| ------------------------ | ---------------------- |
+| LCP                      | <1.5s                  |
+| CLS                      | <0.05                  |
+| TBT                      | <100ms                 |
+| JS inicial               | <50KB                  |
+| Página total (sin video) | <300KB                 |
+| FPS 3D                   | 60 desktop / 30 mobile |
+| Lighthouse Perf          | ≥95                    |
+| Lighthouse SEO/BP/A11y   | 100                    |
 
 Rompe budget → simplificar o descartar.
 

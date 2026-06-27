@@ -103,9 +103,7 @@ export default function AuditResult(props: Props): React.ReactElement {
         </div>
       )}
 
-      {thinkingText && !finalAudit && (
-        <ThinkingStream text={thinkingText} stage={stage} />
-      )}
+      {thinkingText && !finalAudit && <ThinkingStream text={thinkingText} stage={stage} />}
 
       {opps && opps.length > 0 && (
         <>
@@ -136,10 +134,7 @@ export default function AuditResult(props: Props): React.ReactElement {
       )}
 
       {finalAudit && (
-        <MaturityScore
-          score={finalAudit.score_madurez}
-          benchmark={finalAudit.benchmark}
-        />
+        <MaturityScore score={finalAudit.score_madurez} benchmark={finalAudit.benchmark} />
       )}
 
       {finalAudit && finalAudit.recomendacion_prioritaria && (
@@ -187,9 +182,7 @@ export default function AuditResult(props: Props): React.ReactElement {
         <EmailStatusBanner emailStatus={emailStatus} emailUsed={emailUsed} />
       )}
 
-      {finalAudit && !emailProvidedUpfront && (
-        <MiniEmailGate auditId={finalAudit.audit_id} />
-      )}
+      {finalAudit && !emailProvidedUpfront && <MiniEmailGate auditId={finalAudit.audit_id} />}
     </div>
   );
 }
@@ -204,7 +197,9 @@ function EmailStatusBanner({
   if (emailStatus === 'sent') {
     return (
       <div className="audit-email-banner is-success" role="status">
-        <span className="audit-email-banner-icon" aria-hidden="true">✓</span>
+        <span className="audit-email-banner-icon" aria-hidden="true">
+          ✓
+        </span>
         <p>
           Reporte enviado a <strong>{emailUsed}</strong>. Revisa también spam.
         </p>
@@ -214,10 +209,12 @@ function EmailStatusBanner({
   if (emailStatus === 'failed') {
     return (
       <div className="audit-email-banner is-error" role="alert">
-        <span className="audit-email-banner-icon" aria-hidden="true">!</span>
+        <span className="audit-email-banner-icon" aria-hidden="true">
+          !
+        </span>
         <p>
-          Hubo un problema al enviarte el reporte a <strong>{emailUsed}</strong>.
-          Tu diagnóstico quedó guardado, escríbeme por WhatsApp y te lo paso a mano.
+          Hubo un problema al enviarte el reporte a <strong>{emailUsed}</strong>. Tu diagnóstico
+          quedó guardado, escríbeme por WhatsApp y te lo paso a mano.
         </p>
       </div>
     );
@@ -305,8 +302,7 @@ function ProcessingPanel({
       </ol>
 
       <p className="audit-wait-note">
-        Tarda ~1 minuto. ¿Sin tiempo? Puedes cerrar la pestaña — el resultado te
-        llega a tu correo.
+        Tarda ~1 minuto. ¿Sin tiempo? Puedes cerrar la pestaña — el resultado te llega a tu correo.
       </p>
     </div>
   );
@@ -386,9 +382,7 @@ function OpportunityCard({
 
       <div className="audit-opp-signals">
         <span className={`audit-opp-signal is-impacto-${impacto}`}>Impacto {impacto}</span>
-        <span className="audit-opp-signal is-reco">
-          {recomendacionWord(o.ice_score.promedio)}
-        </span>
+        <span className="audit-opp-signal is-reco">{recomendacionWord(o.ice_score.promedio)}</span>
       </div>
 
       <dl className="audit-opp-meta">
@@ -546,7 +540,9 @@ function MiniEmailGate({ auditId }: { auditId: string }): React.ReactElement {
   if (sent) {
     return (
       <div className="audit-email-banner is-success" role="status">
-        <span className="audit-email-banner-icon" aria-hidden="true">✓</span>
+        <span className="audit-email-banner-icon" aria-hidden="true">
+          ✓
+        </span>
         <p>
           Reporte enviado a <strong>{email.trim()}</strong>. Revisa también spam.
         </p>
@@ -565,10 +561,7 @@ function MiniEmailGate({ auditId }: { auditId: string }): React.ReactElement {
     >
       <div className="audit-mini-gate-text">
         <h3>¿Quieres el reporte detallado por email?</h3>
-        <p>
-          Lo mando con tecnologías, retorno esperado y un plan de cómo arrancar.
-          Sin spam.
-        </p>
+        <p>Lo mando con tecnologías, retorno esperado y un plan de cómo arrancar. Sin spam.</p>
       </div>
 
       <div className="audit-mini-gate-row">
@@ -582,10 +575,7 @@ function MiniEmailGate({ auditId }: { auditId: string }): React.ReactElement {
           autoComplete="email"
           aria-label="Email"
         />
-        <button
-          type="submit"
-          disabled={sending || !isValid}
-        >
+        <button type="submit" disabled={sending || !isValid}>
           {sending ? 'Enviando…' : 'Enviar reporte'}
         </button>
       </div>

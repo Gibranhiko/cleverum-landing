@@ -2,11 +2,7 @@
 import type { Env } from '../types';
 import type { AuditResult, LeadRequestBody } from '../../src/lib/audit/types';
 import { jsonError, jsonOk } from './_audit-utils';
-import {
-  isValidEmail,
-  isDisposableEmail,
-  sendClientReport,
-} from './_lead-handler';
+import { isValidEmail, isDisposableEmail, sendClientReport } from './_lead-handler';
 import type { LeadRecord } from './_email-template';
 
 /**
@@ -28,7 +24,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return jsonError(400, 'invalid_body', 'Body inválido (JSON requerido).');
   }
 
-  const email = String(body.email ?? '').trim().toLowerCase();
+  const email = String(body.email ?? '')
+    .trim()
+    .toLowerCase();
   const auditId = String(body.audit_id ?? '').trim();
 
   if (!email || !isValidEmail(email)) {

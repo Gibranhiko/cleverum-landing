@@ -22,11 +22,17 @@ const navLinks = [
     </a>
 
     <nav class="nav-links" aria-label="Navegación principal">
-      {navLinks.map((l) => <a class="nav-link" href={l.href}>{l.label}</a>)}
+      {
+        navLinks.map((l) => (
+          <a class="nav-link" href={l.href}>
+            {l.label}
+          </a>
+        ))
+      }
     </nav>
 
     <div class="nav-cta">
-      <WhatsAppButton label="Conecta por WhatsApp" variant="secondary" size="sm" />
+      <WhatsAppButton label="Conecta por WhatsApp" variant="secondary" size="sm" iconOnly />
     </div>
   </div>
 </header>

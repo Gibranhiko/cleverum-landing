@@ -32,7 +32,7 @@ export default function ProgressDots({
             <button
               key={i}
               type="button"
-              className={`wiz-dot${isActive ? ' is-active' : ''}${isCompleted ? ' is-completed' : ''}`}
+              className={`wiz-dot${isActive ? 'is-active' : ''}${isCompleted ? 'is-completed' : ''}`}
               aria-label={
                 isCompleted
                   ? `Paso ${i + 1} completado — click para editar`
