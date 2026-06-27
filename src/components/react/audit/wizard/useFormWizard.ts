@@ -57,8 +57,8 @@ function validateStep(
         values.nombre.trim().length >= 2 && values.empresa.trim().length >= 2
       );
     case 3: {
-      const emailOk =
-        values.email.trim() === '' || isValidEmailFormat(values.email);
+      // Email obligatorio: así podemos enviarle el reporte aunque abandone.
+      const emailOk = isValidEmailFormat(values.email);
       const phoneOk =
         values.telefono.trim() === '' || isValidPhoneFormat(values.telefono);
       return emailOk && phoneOk;
@@ -106,7 +106,7 @@ export function useFormWizard(): UseFormWizardResult {
   );
 
   const isStepOptional = useCallback(
-    (step: StepIndex): boolean => step === 1 || step === 3,
+    (step: StepIndex): boolean => step === 1,
     [],
   );
 

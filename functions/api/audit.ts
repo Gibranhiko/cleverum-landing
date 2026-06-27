@@ -101,7 +101,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (cNombre.length > MAX_NAME_LENGTH) return jsonError(400, 'nombre_too_long');
   if (cEmpresa.length < 2) return jsonError(400, 'empresa_required', 'Necesito el nombre de tu empresa.');
   if (cEmpresa.length > MAX_NAME_LENGTH) return jsonError(400, 'empresa_too_long');
-  if (cEmail && !isValidEmail(cEmail)) return jsonError(400, 'email_invalid');
+  // Email obligatorio: garantiza que el reporte llegue aunque el cliente abandone.
+  if (!cEmail) return jsonError(400, 'email_required', 'Necesito tu email para enviarte el reporte.');
+  if (!isValidEmail(cEmail)) return jsonError(400, 'email_invalid');
   if (cEmail && isDisposableEmail(cEmail)) {
     return jsonError(400, 'email_disposable', 'Usa un email real para enviarte el reporte.');
   }
@@ -146,13 +148,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   // --- 7. Fetch URL HTML if input looks like a URL -------------------------
   const htmlContext = isUrl(input) ? await fetchHtml(input) : null;
 
-  // --- 8. SSE stream ------------------------------------------------------
-  const stream = new ReadableStream<Uint8Array>({
-    async start(controller) {
-      const send = (event: string, data: unknown): void => {
-        controller.enqueue(sseEvent(event, data));
-      };
+  // --- 8. SSE stream — el pipeline corre hasta el final vía context.waitUntil,
+  //        aunque el cliente cierre la pestaña (garantiza el envío del correo).
+  const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+  const writer = writable.getWriter();
+  const send = (event: string, data: unknown): void => {
+    // Si el cliente se desconectó, el write falla; lo ignoramos y el pipeline sigue.
+    void writer.write(sseEvent(event, data)).catch(() => {});
+  };
 
+  const pipeline = (async () => {
       try {
         // ---- AGENT 1: Industry classifier ----
         send('status', { stage: 'classifying' });
@@ -172,8 +177,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         const analystText = await callAnthropicWithThinking(env.ANTHROPIC_API_KEY, {
           system: SENIOR_ANALYST_PROMPT,
           user: analystUser,
-          maxTokens: 2800,
-          thinkingBudget: 1800,
+          maxTokens: 2000,
+          thinkingBudget: 1100,
           onThinking: (delta) => send('thinking', { delta }),
         });
         const draft = parseJsonFromLlm<AnalystDraft>(analystText);
@@ -243,28 +248,34 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           ...(cTelefono && { telefono: cTelefono }),
         };
         const lead = await persistLead(env.KV, final, normalizedContact);
-        void notifyGibran(env.RESEND_API_KEY, lead, final);
-
         send('done', { audit_id: auditId, audit: final });
 
-        // If user provided email upfront, send report and emit status
-        if (normalizedContact.email) {
-          const sent = await sendClientReport(env.RESEND_API_KEY, final, normalizedContact);
-          send('email_status', { sent, ...(sent ? {} : { reason: 'send_failed' }) });
-        } else {
-          send('email_status', { sent: false, reason: 'no_email' });
-        }
-
-        controller.close();
+        // Correos — se esperan (await) para que se completen DENTRO de la
+        // ventana de waitUntil, aunque el cliente ya se haya ido. Por eso el
+        // correo llega aunque el usuario abandone a media carga.
+        const [, sent] = await Promise.all([
+          notifyGibran(env.RESEND_API_KEY, lead, final),
+          normalizedContact.email
+            ? sendClientReport(env.RESEND_API_KEY, final, normalizedContact)
+            : Promise.resolve(false),
+        ]);
+        send('email_status', {
+          sent,
+          ...(sent ? {} : { reason: normalizedContact.email ? 'send_failed' : 'no_email' }),
+        });
       } catch (err) {
         const message = err instanceof Error ? err.message : 'unknown';
         send('error', { code: 'pipeline_failed', message });
-        controller.close();
+      } finally {
+        await writer.close().catch(() => {});
       }
-    },
-  });
+  })();
 
-  return new Response(stream, {
+  // Mantiene viva la Function hasta que el pipeline termine (incl. el correo),
+  // aunque el cliente cierre la conexión SSE.
+  context.waitUntil(pipeline);
+
+  return new Response(readable, {
     headers: {
       ...CORS_HEADERS,
       'Content-Type': 'text/event-stream; charset=utf-8',
@@ -320,7 +331,7 @@ Clasificación previa:
 - Score de madurez: ${industry.maturity_score}/10
 - Signals detectados: ${industry.signals.join('; ')}
 
-Analiza este negocio. Aplica los patrones de la biblioteca. Devuelve 2 oportunidades en orden de impacto + la prioritaria. JSON estricto.`;
+Analiza este negocio. Aplica los patrones de la biblioteca. Devuelve SOLO 1 oportunidad (la de mayor impacto) + la prioritaria (index 0). JSON estricto.`;
 }
 
 function buildCriticPatchUserMessage(

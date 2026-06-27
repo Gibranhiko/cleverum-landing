@@ -180,6 +180,17 @@ interface AnthropicMessageResponse {
   stop_reason?: string;
 }
 
+/**
+ * Construye el bloque `system` con cache_control para aprovechar prompt caching.
+ * Los system prompts (analista con 15 patrones, crítico) son idénticos en cada
+ * audit → a partir del 2º request dentro del TTL (~5 min) se sirven de caché:
+ * TTFT más rápido y ~10% del costo de input. Mínimo cacheable en Haiku: 4096
+ * tokens (prompts más cortos simplemente no cachean, sin error).
+ */
+function cacheableSystem(text: string) {
+  return [{ type: 'text', text, cache_control: { type: 'ephemeral' } }];
+}
+
 export async function callAnthropic(
   apiKey: string,
   opts: CallAnthropicOptions,
@@ -194,7 +205,7 @@ export async function callAnthropic(
     body: JSON.stringify({
       model: ANTHROPIC_MODEL,
       max_tokens: opts.maxTokens,
-      system: opts.system,
+      system: cacheableSystem(opts.system),
       messages: [{ role: 'user', content: opts.user }],
       temperature: opts.temperature ?? 0.7,
     }),
@@ -249,7 +260,7 @@ export async function callAnthropicWithThinking(
     body: JSON.stringify({
       model: ANTHROPIC_MODEL,
       max_tokens: opts.maxTokens,
-      system: opts.system,
+      system: cacheableSystem(opts.system),
       messages: [{ role: 'user', content: opts.user }],
       stream: true,
       thinking: {

@@ -40,7 +40,7 @@ ${serviceLines.join('\n')}
 ${audit.heading} Available at ${meta.url}/#diagnostico. Submit your URL or business description and receive:
 
 - Industry classification with a maturity score
-- 2 specific automation opportunities
+- 1 high-impact automation opportunity
 - ROI estimates per opportunity
 - Recommended technology stack
 - Optional 20-minute free strategy session

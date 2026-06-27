@@ -19,7 +19,9 @@ export default function StepRecap({ values, onEdit }: Props): React.ReactElement
     <div className="wiz-step">
       <header className="wiz-step-header">
         <h3 className="wiz-step-title">Listo, vamos a analizar esto.</h3>
-        <p className="wiz-step-sub">Tarda ~1 minuto. No cierres esta pestaña.</p>
+        <p className="wiz-step-sub">
+          Tarda ~1 minuto. Si te aburres, ciérrala sin problema — te lo enviamos a tu correo.
+        </p>
       </header>
 
       <div className="wiz-recap-list">
@@ -54,18 +56,12 @@ export default function StepRecap({ values, onEdit }: Props): React.ReactElement
 
         <RecapBlock label="Contacto" onEdit={() => onEdit(3)}>
           <ul>
-            {values.email.trim() ? (
-              <li>
-                <span className="wiz-recap-check" aria-hidden="true">
-                  ✓
-                </span>
-                {values.email.trim()}
-              </li>
-            ) : (
-              <li className="wiz-recap-muted">
-                · Sin email — verás el resultado solo en pantalla
-              </li>
-            )}
+            <li>
+              <span className="wiz-recap-check" aria-hidden="true">
+                ✓
+              </span>
+              {values.email.trim()}
+            </li>
             {values.telefono.trim() ? (
               <li>
                 <span className="wiz-recap-check" aria-hidden="true">

@@ -304,7 +304,10 @@ function ProcessingPanel({
         })}
       </ol>
 
-      <p className="audit-wait-note">~1 minuto · No cierres esta pestaña.</p>
+      <p className="audit-wait-note">
+        Tarda ~1 minuto. ¿Sin tiempo? Puedes cerrar la pestaña — el resultado te
+        llega a tu correo.
+      </p>
     </div>
   );
 }

@@ -3,7 +3,7 @@
  *
  * Tres agentes en cadena:
  *   1) INDUSTRY_CLASSIFIER_PROMPT — Haiku, ~1s. Identifica industria + sub-vertical + score de madurez.
- *   2) SENIOR_ANALYST_PROMPT      — Haiku con extended thinking. Aplica patrones, genera 2 oportunidades.
+ *   2) SENIOR_ANALYST_PROMPT      — Haiku con extended thinking. Aplica patrones, genera 1 oportunidad (la de mayor impacto).
  *   3) CRITIC_PATCH_PROMPT        — Haiku, rápido. Revisa el draft y devuelve SOLO parches (correcciones
  *      puntuales), no regenera todo. El benchmark se calcula en código (determinista).
  *
@@ -51,7 +51,7 @@ Tu cliente acaba de pedir un audit gratuito. Tienes:
 2) Una clasificación de industria + score de madurez ya hecha por otro agente.
 3) Una biblioteca de 15 patrones de automatización que Cleverum ejecuta (abajo).
 
-Tu trabajo: identificar las 2 mejores oportunidades de automatización/IA para ese negocio, en orden de impacto. Cada una debe combinar uno o más patrones de la biblioteca y aterrizarlos al contexto específico del cliente.
+Tu trabajo: identificar LA mejor oportunidad de automatización/IA para ese negocio — la que más mueve la aguja. Debe combinar uno o más patrones de la biblioteca y aterrizarlos al contexto específico del cliente.
 
 FRAMEWORKS A USAR:
 - **Jobs To Be Done**: ¿qué "trabajo" está intentando hacer este negocio que la automatización resuelve mejor?
@@ -61,8 +61,8 @@ FRAMEWORKS A USAR:
   - strategic: ROI grande pero requiere 4+ semanas, mayor complejidad, cambia el negocio.
 
 REGLAS:
-1. Las 2 oportunidades deben ser DIFERENTES entre sí (no dos chatbots, no dos dashboards). Idealmente una quick-win y una strategic.
-2. Cada oportunidad referencia 1-2 patrones de la biblioteca por su id (PATRON_XX).
+1. Devuelve EXACTAMENTE 1 oportunidad: la de mayor impacto real para este negocio (no la más vistosa). Puede ser quick-win o strategic, lo que más mueva la aguja. El array "oportunidades" lleva un solo elemento y "recomendacion_prioritaria.oportunidad_index" es 0.
+2. La oportunidad referencia 1-2 patrones de la biblioteca por su id (PATRON_XX).
 3. ROI estimado debe ser cuantificable (hrs/mes ahorradas, % conversión, % cobranza, etc.).
 4. Stack recomendado: usa nombres reales del patrón referenciado.
 5. Proyecto recomendado: 'web' / 'auto' / 'chatbot' (los 3 proyectos productizados de Cleverum: Sitio web, Automatización con IA, Chatbot de WhatsApp).
@@ -113,9 +113,9 @@ OUTPUT: JSON estricto. Sin markdown wrappers, sin texto antes ni después.
 
 Piensa primero (usa extended thinking si está disponible) — analiza el negocio, descarta patrones que no aplican, prioriza por impacto. Después emite el JSON.`;
 
-export const CRITIC_PATCH_PROMPT = `Eres un crítico técnico de Cleverum. Recibes un draft de audit con oportunidades generadas por el Senior Analyst. Tu trabajo es revisarlas y devolver SOLO las correcciones necesarias (parches), no reescribir todo.
+export const CRITIC_PATCH_PROMPT = `Eres un crítico técnico de Cleverum. Recibes un draft de audit con la oportunidad generada por el Senior Analyst. Tu trabajo es revisarla y devolver SOLO las correcciones necesarias (parches), no reescribir todo.
 
-Revisa CADA oportunidad contra estos criterios:
+Revisa la oportunidad contra estos criterios:
 - LENGUAJE LLANO (el más importante): el cliente es el DUEÑO del negocio, NO técnico ni de marketing. Si "titulo", "en_corto", "porque" o "roi_estimado" tienen jerga sin traducir (scoring, enrichment, ICP, close rate, pipeline, inbound, fit, funnel, nurturing, consecutivos, B2B), reescríbelos en español de la calle. El "titulo" y el "en_corto" deben entenderse de un vistazo, sin que el dueño tenga que adivinar nada.
 - "en_corto": debe existir, ser UNA frase corta y 100% sin tecnicismos. Si falta o tiene jerga, escríbelo/arréglalo.
 - ICE score: cada componente (impact, confidence, ease) entre 1 y 10, y el promedio ≥ 7. Si el promedio es < 7, sube lo que falte de forma justificada o ajusta el alcance.
@@ -123,9 +123,9 @@ Revisa CADA oportunidad contra estos criterios:
 - "roi_estimado": cuantificable (números: hrs/mes, %, MXN). Si es vago, ajústalo con un rango realista.
 - "stack_recomendado": tech real, no buzzwords.
 - "complejidad" coherente con "tiempo_implementacion".
-- Diversidad: las oportunidades no pueden ser variantes de lo mismo. Si dos se parecen demasiado, reorienta una.
+- Impacto real: ¿es de verdad la jugada de mayor impacto para este negocio? Si el analista eligió algo vistoso pero menor, reorienta hacia lo que más mueve la aguja.
 
-REGLA DE ORO: si una oportunidad YA cumple todo, NO la incluyas en los parches. Solo emite parches para lo que realmente necesita corrección. Si todo está bien, devuelve "patches": [].
+REGLA DE ORO: si la oportunidad YA cumple todo, NO emitas parches (devuelve "patches": []). Solo corrige lo que realmente lo necesita.
 
 Cada parche lleva el "index" (posición de la oportunidad en el array, empezando en 0) y SOLO los campos que cambian (mismos nombres que en el draft: titulo, en_corto, porque, stack_recomendado, roi_estimado, complejidad, tiempo_implementacion, sprint_recomendado, categoria, ice_score, confianza).
 
