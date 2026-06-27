@@ -45,10 +45,7 @@ export class AuditHttpError extends Error {
   }
 }
 
-export async function streamAudit(
-  req: AuditRequest,
-  handlers: SseHandlers,
-): Promise<void> {
+export async function streamAudit(req: AuditRequest, handlers: SseHandlers): Promise<void> {
   const r = await fetch('/api/audit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

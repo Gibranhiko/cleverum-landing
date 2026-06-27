@@ -10,21 +10,21 @@
 - ✅ Bootstrap Astro + tokens + Tailwind v4 + R3F + ParticleField
 - ✅ ScrollProgress singleton + Navbar + Hero (con rotating titles a reescribir)
 - ✅ HowWeWork, BrandsStack, BentoDifferentiators, CapabilitiesMarquee, ContactCTA, Footer
-- ✅ Cloudflare Pages config (_headers, _redirects)
+- ✅ Cloudflare Pages config (\_headers, \_redirects)
 - ✅ JSON-LD básico, OG image, favicons, robots, sitemap
 - ✅ Logos optimizados, fonts self-hosted, fluid scale
 
 ## Cambios estructurales en este plan
 
-| Tema | Antes | Ahora |
-|---|---|---|
-| Marca | Devindry + Cleverum + Wabbi | **Cleverum** (única, by Gibran) |
-| Posicionamiento | Portafolio multi-marca | Indie hacker · sistemas de IA · MX/LATAM |
-| Pieza diferencial | Videos placeholders | **AI Audit Tool multi-agent** con extended thinking |
-| Pricing | Oculto | Público (3 sprints con "desde") |
-| CTAs | Solo WhatsApp ×5 | WhatsApp (alta) + Calendly (media) + AI Audit (baja) |
-| Manifiesto | (eliminado) | **"Un solo dev. Todo el stack. Cero excusas."** |
-| SEO | Estándar | **AI-readable** (`/llms.txt` + JSON-LD enriquecido + `/api/info.json`) |
+| Tema              | Antes                       | Ahora                                                                  |
+| ----------------- | --------------------------- | ---------------------------------------------------------------------- |
+| Marca             | Devindry + Cleverum + Wabbi | **Cleverum** (única, by Gibran)                                        |
+| Posicionamiento   | Portafolio multi-marca      | Indie hacker · sistemas de IA · MX/LATAM                               |
+| Pieza diferencial | Videos placeholders         | **AI Audit Tool multi-agent** con extended thinking                    |
+| Pricing           | Oculto                      | Público (3 sprints con "desde")                                        |
+| CTAs              | Solo WhatsApp ×5            | WhatsApp (alta) + Calendly (media) + AI Audit (baja)                   |
+| Manifiesto        | (eliminado)                 | **"Un solo dev. Todo el stack. Cero excusas."**                        |
+| SEO               | Estándar                    | **AI-readable** (`/llms.txt` + JSON-LD enriquecido + `/api/info.json`) |
 
 ## Nueva estructura del sitio
 
@@ -81,24 +81,28 @@
 ## Índice de tickets
 
 ### Fase 1 — Limpieza brutal (1 día)
+
 - [V2-T1 — Eliminar secciones obsoletas + componentes huérfanos](#v2-t1)
 - [V2-T2 — Actualizar `site.ts` con nuevo posicionamiento + copy + socials placeholder](#v2-t2)
 - [V2-T3 — Hero rewrite (copy nuevo, hooks para AI Audit)](#v2-t3)
 - [V2-T4 — Navbar update + Footer manifesto](#v2-t4)
 
 ### Fase 2 — Contenido real (1-2 días)
+
 - [V2-T5 — Sección `Cases.astro` (3 cards problem-first)](#v2-t5)
 - [V2-T6 — Sección `Services.astro` (3 sprints con pricing público)](#v2-t6)
 - [V2-T7 — Sección `AboutGibran.astro` (foto + bio filosa + socials)](#v2-t7)
 - [V2-T8 — `ContactCTA.astro` actualizado (Calendly + WhatsApp)](#v2-t8)
 
 ### Fase 3 — AI-readable site (1 día)
+
 - [V2-T9 — `/llms.txt` y `/llms-full.txt`](#v2-t9)
 - [V2-T10 — JSON-LD expandido (Service ×3 con Offer/Price, FAQPage)](#v2-t10)
 - [V2-T11 — `robots.txt` enriquecido (allow AI bots)](#v2-t11)
 - [V2-T12 — Endpoint `/api/info.json` (structured site info)](#v2-t12)
 
 ### Fase 4 — AI Audit Tool multi-agent (4-5 días)
+
 - [V2-T13 — Setup Cloudflare Pages Functions + Turnstile + KV bindings](#v2-t13)
 - [V2-T14 — `src/lib/audit/patterns.ts` (los 15 patrones — librería interna)](#v2-t14)
 - [V2-T15 — `src/lib/audit/prompts.ts` (los 3 system prompts)](#v2-t15)
@@ -110,6 +114,7 @@
 - [V2-T20 — Email template del reporte detallado (HTML inline)](#v2-t20)
 
 ### Fase 5 — Polish + deploy (1 día)
+
 - [V2-T21 — Responsive review + animaciones polish](#v2-t21)
 - [V2-T22 — Lighthouse pass + sitemap update](#v2-t22)
 - [V2-T23 — Deploy a Cloudflare Pages + dominio cleverum.org + env vars](#v2-t23)
@@ -119,6 +124,7 @@
 # Fase 1 — Limpieza brutal
 
 ## V2-T1
+
 ### Eliminar secciones obsoletas + componentes huérfanos
 
 **Objetivo:** Borrar todo el código que ya no se usa para que el repo quede limpio antes de construir lo nuevo.
@@ -126,6 +132,7 @@
 **Dependencias:** ninguna.
 
 **Archivos a borrar:**
+
 - `src/components/sections/BrandsStack.astro`
 - `src/components/sections/BentoDifferentiators.astro`
 - `src/components/sections/CapabilitiesMarquee.astro`
@@ -137,15 +144,18 @@
 - `public/logos/wabbi-logo.png`
 
 **Archivos a modificar:**
+
 - `src/pages/index.astro` — remover imports + uso de las secciones eliminadas
 - `package.json` — desinstalar `@astro-community/astro-embed-youtube`
 
 **Pasos:**
+
 1. Eliminar los archivos listados con `rm`.
 2. Editar `src/pages/index.astro` y dejar solo `Hero` (las nuevas secciones se agregan en tickets siguientes).
 3. `npm uninstall @astro-community/astro-embed-youtube`.
 
 **AC:**
+
 - [ ] `npm run check` pasa con 0 errores.
 - [ ] `npm run build` pasa sin warnings de imports muertos.
 - [ ] El sitio aún levanta (solo Hero visible).
@@ -153,6 +163,7 @@
 ---
 
 ## V2-T2
+
 ### Actualizar `site.ts` con nuevo posicionamiento + copy + socials placeholder
 
 **Objetivo:** Re-escribir toda la data del sitio para reflejar la nueva marca única + copy filoso.
@@ -160,6 +171,7 @@
 **Dependencias:** V2-T1.
 
 **Archivos a modificar:**
+
 - `src/content/site.ts`
 
 **Pasos:** crear estructura nueva (mantén `meta`, `contact`, `hero.rotatingTitles` con copy revisado; agrega `services`, `cases`, `about`, `footer.manifesto`, `socials`):
@@ -188,16 +200,15 @@ export const site = {
     phoneTel: '+525541433545',
     whatsapp: {
       number: '5215541433545',
-      prefilledMessage:
-        '¡Hola Gibran! Vi tu sitio y quiero hablar sobre un proyecto.',
+      prefilledMessage: '¡Hola Gibran! Vi tu sitio y quiero hablar sobre un proyecto.',
     },
     calendly: 'https://calendly.com/REPLACE_ME', // PLACEHOLDER
   },
 
   socials: {
     linkedin: 'https://linkedin.com/in/REPLACE_ME', // PLACEHOLDER
-    twitter: 'https://x.com/REPLACE_ME',           // PLACEHOLDER
-    github: 'https://github.com/REPLACE_ME',       // PLACEHOLDER
+    twitter: 'https://x.com/REPLACE_ME', // PLACEHOLDER
+    github: 'https://github.com/REPLACE_ME', // PLACEHOLDER
     email: 'gibran.villarreal@cleverum.com',
   },
 
@@ -224,7 +235,7 @@ export const site = {
     submitLabel: 'Analizar',
     // Límites de input (validar en frontend Y backend)
     maxInputLength: 500, // caracteres
-    minInputLength: 10,  // evita "hola" o submissions vacíos
+    minInputLength: 10, // evita "hola" o submissions vacíos
     tip: {
       title: 'Cómo darle mejor contexto al auditor',
       hints: [
@@ -354,11 +365,13 @@ export type Case = (typeof site.cases.items)[number];
 ```
 
 **AC:**
+
 - [ ] `npm run check` pasa sin errores.
 - [ ] `whatsapp.ts` sigue funcionando con la nueva estructura.
 - [ ] Cualquier componente que importaba `site.brands` ya no rompe (ya fueron eliminados en V2-T1).
 
 **Notas:**
+
 - Pricing es **anchor conservador** — fácil ajustar luego.
 - Los `REPLACE_ME` se quedan como placeholders hasta que pase URLs reales.
 - `manifesto` va al footer como frase final.
@@ -366,6 +379,7 @@ export type Case = (typeof site.cases.items)[number];
 ---
 
 ## V2-T3
+
 ### Hero rewrite (copy nuevo, hooks para AI Audit)
 
 **Objetivo:** Reescribir `Hero.astro` para integrar el AI Audit Tool y mantener los rotating titles. Quitar el chevron (ya no apunta a manifesto). Agregar dos CTAs (WhatsApp + Calendly) además del input del audit.
@@ -373,45 +387,48 @@ export type Case = (typeof site.cases.items)[number];
 **Dependencias:** V2-T2.
 
 **Archivos a modificar:**
+
 - `src/components/sections/Hero.astro`
 
 **Estructura visual:**
 
 ```
 [Navbar]
-                                                                      
+
        [Eyebrow opcional con dot pulsante]
-                                                                      
+
        SOLUCIONES INTELIGENTES                  ← rotating titles
        PARA NEGOCIOS QUE                          (cambiar por copy de site.audit)
-       EVOLUCIONAN.                                                    
-                                                                      
-       ┌────────────────────────────────────────────────────────┐    
-       │  ✦ AUDIT GRATIS CON IA · 30 SEGUNDOS                   │    
-       │                                                          │    
-       │  Crucé 50+ workflows…  ▸  3 oportunidades + ROI         │    
-       │                                                          │    
-       │  ┌──────────────────────────────────┬──────────────┐   │    
-       │  │ Tu URL o tu negocio en 1 línea   │  Analizar →  │   │    
-       │  └──────────────────────────────────┴──────────────┘   │    
-       │                                                          │    
-       │  💡 Cómo darle mejor contexto                            │    
-       │     • Pega tu URL si la tienes…                          │    
-       │     • Menciona industria + equipo…                        │    
-       │                                                          │    
-       │  Ejemplos rápidos:                                       │    
-       │    [Ecommerce…] [SaaS B2B…] [Restaurante…]              │    
-       │                                                          │    
-       └────────────────────────────────────────────────────────┘    
-                                                                      
-       [Hablemos por WhatsApp]   [Agenda 20 min gratis]              
+       EVOLUCIONAN.
+
+       ┌────────────────────────────────────────────────────────┐
+       │  ✦ AUDIT GRATIS CON IA · 30 SEGUNDOS                   │
+       │                                                          │
+       │  Crucé 50+ workflows…  ▸  3 oportunidades + ROI         │
+       │                                                          │
+       │  ┌──────────────────────────────────┬──────────────┐   │
+       │  │ Tu URL o tu negocio en 1 línea   │  Analizar →  │   │
+       │  └──────────────────────────────────┴──────────────┘   │
+       │                                                          │
+       │  💡 Cómo darle mejor contexto                            │
+       │     • Pega tu URL si la tienes…                          │
+       │     • Menciona industria + equipo…                        │
+       │                                                          │
+       │  Ejemplos rápidos:                                       │
+       │    [Ecommerce…] [SaaS B2B…] [Restaurante…]              │
+       │                                                          │
+       └────────────────────────────────────────────────────────┘
+
+       [Hablemos por WhatsApp]   [Agenda 20 min gratis]
 ```
 
 **Componentes:**
+
 - `<AiAuditTool client:visible>` (V2-T18 — placeholder en este ticket; renderiza UI básica que no hace nada hasta que la API esté lista)
 - Botones secundarios: WhatsAppButton (green) y un link/button a Calendly
 
 **Pasos:**
+
 1. Mantener rotating titles con animación 3D actual.
 2. Bajar el tamaño del título ~10% (más sitio para el AI Audit).
 3. Insertar el slot del AI Audit Tool entre rotating titles y los CTAs.
@@ -419,6 +436,7 @@ export type Case = (typeof site.cases.items)[number];
 5. Eliminar el chevron animado del fondo.
 
 **AC:**
+
 - [ ] Hero usa solo data de `site.audit` + `site.hero` + `site.contact`.
 - [ ] `AiAuditTool` se importa como isla `client:visible`.
 - [ ] Dos CTAs visibles en desktop, stack en mobile.
@@ -427,6 +445,7 @@ export type Case = (typeof site.cases.items)[number];
 ---
 
 ## V2-T4
+
 ### Navbar update + Footer manifesto
 
 **Objetivo:** Navbar muestra "Cleverum · by Gibran" y solo 3 links (Casos · Servicios · Contacto). Footer muestra frase-manifiesto + socials.
@@ -434,10 +453,12 @@ export type Case = (typeof site.cases.items)[number];
 **Dependencias:** V2-T2.
 
 **Archivos a modificar:**
+
 - `src/components/ui/Navbar.astro`
 - `src/components/sections/Footer.astro`
 
 **Pasos:**
+
 1. Navbar:
    - Logo Cleverum (igual) + **bajada "by Gibran"** en texto pequeño debajo del nombre
    - Links: `Casos` (#cases), `Servicios` (#services), `Contacto` (#contacto)
@@ -448,6 +469,7 @@ export type Case = (typeof site.cases.items)[number];
    - Línea horizontal sutil + copy "© 2026 Cleverum · Hecho en México"
 
 **AC:**
+
 - [ ] Navbar tiene 3 links + WhatsApp.
 - [ ] Footer tiene la frase del manifiesto destacada como título.
 - [ ] Socials linkean a los placeholders (`REPLACE_ME`).
@@ -458,6 +480,7 @@ export type Case = (typeof site.cases.items)[number];
 # Fase 2 — Contenido real
 
 ## V2-T5
+
 ### Sección `Cases.astro` (3 cards problem-first)
 
 **Objetivo:** Mostrar los 3 casos reales del portafolio (panel chatbot, web, app móvil) con copy problem-first, stack visible, y placeholders proporcionales para los assets que va a pasar el cliente.
@@ -465,6 +488,7 @@ export type Case = (typeof site.cases.items)[number];
 **Dependencias:** V2-T2.
 
 **Archivos a crear:**
+
 - `src/components/sections/Cases.astro`
 - `src/components/ui/CaseCard.astro`
 
@@ -497,6 +521,7 @@ Capturas reales — no mockups, no stock.
 ```
 
 **Diseño placeholder (mientras llegan assets reales):**
+
 - En vez de borde dasheado (anti-premium), usar:
   - Gradient mesh con el accent color de cada caso
   - Un icono representativo centrado (chat / monitor / phone)
@@ -504,6 +529,7 @@ Capturas reales — no mockups, no stock.
   - Aspect ratio 16:10 fijo para mantener layout estable
 
 **Pasos:**
+
 1. `CaseCard.astro` recibe `case` como prop.
 2. Si `mediaSrc` existe: renderiza `<img>` / `<video>` con `object-fit: cover`.
 3. Si `mediaSrc` es null: gradient mesh + icono.
@@ -511,6 +537,7 @@ Capturas reales — no mockups, no stock.
 5. Cards se apilan verticalmente con animación de entrada por scroll (similar a HowWeWork — translateY + fade con `animation-timeline: view()`).
 
 **AC:**
+
 - [ ] Los 3 cards se renderizan con la data de `site.cases.items`.
 - [ ] Sin `mediaSrc`, el placeholder es elegante (no dasheado).
 - [ ] Reveal al scroll funciona en Chrome/Edge; estático en otros.
@@ -519,6 +546,7 @@ Capturas reales — no mockups, no stock.
 ---
 
 ## V2-T6
+
 ### Sección `Services.astro` (3 sprints con pricing público)
 
 **Objetivo:** Mostrar los 3 sprints productizados con precio "desde" público, duración, scope, y CTA WhatsApp por servicio.
@@ -526,6 +554,7 @@ Capturas reales — no mockups, no stock.
 **Dependencias:** V2-T2.
 
 **Archivos a crear:**
+
 - `src/components/sections/Services.astro`
 
 **Estructura:**
@@ -551,12 +580,14 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 ```
 
 **Pasos:**
+
 1. Grid 3 columnas en desktop (`grid-cols-3`), 1 columna en mobile.
 2. Cada card: accent color border-top sutil, header con título y subtítulo, bullets, footer con duration + price.
 3. CTA por card pre-llena el mensaje WhatsApp (ej. "¡Hola Gibran! Me interesa el Sprint {{title}}").
 4. Hover: leve translateY + glow del accent.
 
 **AC:**
+
 - [ ] 3 cards con data de `site.services.items`.
 - [ ] Pricing visible como "desde $X MXN".
 - [ ] CTA por servicio dirige a WhatsApp con mensaje custom.
@@ -564,6 +595,7 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 ---
 
 ## V2-T7
+
 ### Sección `AboutGibran.astro` (foto + bio filosa + socials)
 
 **Objetivo:** Sección humana con foto (placeholder por ahora), bio en 4 párrafos cortos, y links a socials.
@@ -571,6 +603,7 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 **Dependencias:** V2-T2.
 
 **Archivos a crear:**
+
 - `src/components/sections/AboutGibran.astro`
 - `public/photos/gibran-placeholder.png` (placeholder cuadrado generado vía script o subido por user)
 
@@ -600,12 +633,14 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 **Placeholder de foto:** generar via script (sharp) un PNG cuadrado de 800×800 con un gradient mesh + el monograma "GV" tipográfico grande en el centro. Cuando el cliente pase la foto real, swap simple en `/public/photos/gibran.png`.
 
 **Pasos:**
+
 1. Grid 2 columnas en desktop, stack en mobile.
 2. Foto con `border-radius: 24px` y sombra sutil.
 3. Bio párrafos con `font-display` ligero, line-height generoso.
 4. Socials como iconos lineales (LinkedIn, X, GitHub, Mail) con hover.
 
 **AC:**
+
 - [ ] Sección renderiza data de `site.about`.
 - [ ] Foto placeholder visible (proporcional, no dasheado).
 - [ ] Socials linkean a `site.socials.*`.
@@ -613,6 +648,7 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 ---
 
 ## V2-T8
+
 ### `ContactCTA.astro` actualizado (Calendly + WhatsApp)
 
 **Objetivo:** CTA final que ofrece 2 carriles de fricción (Calendly + WhatsApp), sin la tarjeta de contacto previa.
@@ -620,31 +656,34 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 **Dependencias:** V2-T2.
 
 **Archivos a modificar:**
+
 - `src/components/sections/ContactCTA.astro`
 
 **Estructura:**
 
 ```
-                                                                
-       ¿Listo para automatizar tu negocio?                       
-                                                                
-       Empieza con un audit gratis de IA o                        
-       agenda 20 min conmigo.                                     
-                                                                
-       ┌──────────────────────┐  ┌──────────────────────┐         
-       │ Hablemos por WhatsApp│  │ Agenda 20 min gratis │         
-       └──────────────────────┘  └──────────────────────┘         
-       (green primary)            (outline / minimal)             
-                                                                
+
+       ¿Listo para automatizar tu negocio?
+
+       Empieza con un audit gratis de IA o
+       agenda 20 min conmigo.
+
+       ┌──────────────────────┐  ┌──────────────────────┐
+       │ Hablemos por WhatsApp│  │ Agenda 20 min gratis │
+       └──────────────────────┘  └──────────────────────┘
+       (green primary)            (outline / minimal)
+
 ```
 
 **Pasos:**
+
 1. Heading + sub.
 2. Dos botones lado a lado en desktop, stack en mobile.
 3. WhatsApp button = `variant="secondary"` (green).
 4. Calendly button = `variant="minimal"` apuntando a `site.contact.calendly`.
 
 **AC:**
+
 - [ ] Dos CTAs, ambos accesibles.
 - [ ] Calendly abre en nueva pestaña.
 
@@ -653,6 +692,7 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 # Fase 3 — AI-readable site
 
 ## V2-T9
+
 ### `/llms.txt` y `/llms-full.txt`
 
 **Objetivo:** Crear los archivos estandar para que los LLMs ingieran el sitio con contexto curado.
@@ -660,6 +700,7 @@ Sprints productizados. Scope fijo. Sin sorpresas.
 **Dependencias:** V2-T2.
 
 **Archivos a crear:**
+
 - `public/llms.txt` (resumen corto)
 - `public/llms-full.txt` (versión markdown completa)
 
@@ -708,12 +749,14 @@ Supabase, React Native
 **Contenido de `llms-full.txt`:** versión markdown extensa de cada sección.
 
 **AC:**
+
 - [ ] Ambos archivos servidos en root.
 - [ ] Headers `Content-Type: text/plain; charset=utf-8` (configurar en `_headers`).
 
 ---
 
 ## V2-T10
+
 ### JSON-LD expandido (Service ×3 con Offer/Price, FAQPage)
 
 **Objetivo:** Enriquecer el JSON-LD para que Google y LLMs entiendan los servicios + precios + FAQ.
@@ -721,15 +764,18 @@ Supabase, React Native
 **Dependencias:** V2-T2.
 
 **Archivos a modificar:**
+
 - `src/lib/jsonld.ts`
 
 **Agregar:**
+
 - `Service` × 3 con `provider`, `serviceType`, `offers` (con `priceSpecification`)
 - `FAQPage` con 5-8 preguntas frecuentes y respuestas
 - `Person` enriquecido con `jobTitle`, `worksFor`, `sameAs` (socials)
 - `WebSite` con `potentialAction: SearchAction`
 
 **Preguntas para FAQPage (sugerencia):**
+
 1. ¿Cuánto cuesta un chatbot de WhatsApp?
 2. ¿Trabajas con clientes fuera de México?
 3. ¿Cuánto tarda implementar una automatización?
@@ -739,17 +785,20 @@ Supabase, React Native
 7. ¿Tienen contrato o NDA?
 
 **AC:**
+
 - [ ] [Rich Results Test](https://search.google.com/test/rich-results) valida sin errores.
 - [ ] FAQPage aparece en resultados.
 
 ---
 
 ## V2-T11
+
 ### `robots.txt` enriquecido (allow AI bots)
 
 **Objetivo:** Permitir explícitamente a bots de IA legítimos rastrear el sitio (es marketing — si Cleverum aparece en respuestas de Claude / ChatGPT / Perplexity, gana).
 
 **Archivos a modificar:**
+
 - `public/robots.txt`
 
 **Contenido:**
@@ -787,16 +836,19 @@ Sitemap: https://cleverum.org/sitemap-index.xml
 ```
 
 **AC:**
+
 - [ ] Archivo accesible en `/robots.txt`.
 
 ---
 
 ## V2-T12
+
 ### Endpoint `/api/info.json` (structured site info)
 
 **Objetivo:** Endpoint JSON que cualquier agente / herramienta puede consultar para conocer Cleverum.
 
 **Archivos a crear:**
+
 - `functions/api/info.json.ts` (Cloudflare Pages Function)
 
 **Output ejemplo:**
@@ -818,11 +870,13 @@ Sitemap: https://cleverum.org/sitemap-index.xml
 ```
 
 **Pasos:**
+
 1. Crear la Pages Function que retorna JSON estático.
 2. Headers: `Content-Type: application/json`, `Cache-Control: public, max-age=3600`.
 3. CORS headers permisivos (`Access-Control-Allow-Origin: *`) — es info pública.
 
 **AC:**
+
 - [ ] `curl https://cleverum.org/api/info.json` retorna JSON válido.
 
 ---
@@ -830,6 +884,7 @@ Sitemap: https://cleverum.org/sitemap-index.xml
 # Fase 4 — AI Audit Tool multi-agent
 
 ## V2-T13
+
 ### Setup Cloudflare Pages Functions + Turnstile + KV bindings
 
 **Objetivo:** Preparar la infra serverless: directorio `functions/`, env vars, KV namespace, Turnstile site key.
@@ -837,11 +892,13 @@ Sitemap: https://cleverum.org/sitemap-index.xml
 **Dependencias:** V2-T1.
 
 **Archivos a crear:**
+
 - `functions/_middleware.ts` (CORS + rate limit helper)
 - `functions/types.ts` (Env types)
 - `.dev.vars.example` (template para env locales)
 
 **Cloudflare Dashboard setup:**
+
 1. Pages > tu proyecto > Settings > Functions
 2. Crear KV namespace `CLEVERUM_KV`:
    - Settings > Functions > KV namespace bindings > Add binding
@@ -870,23 +927,27 @@ export interface Env {
 **`functions/_middleware.ts`:** CORS preflight + log helper.
 
 **AC:**
+
 - [ ] KV namespace bindeado.
 - [ ] Env vars configuradas (con valores reales).
 - [ ] Turnstile site key disponible en frontend.
 - [ ] `npm run dev` no rompe (Wrangler local + Pages dev funciona).
 
 **Notas:**
+
 - Para dev local: instalar `wrangler` y usar `wrangler pages dev dist --kv KV`.
 - `.dev.vars` (no en git) contiene las env locales.
 
 ---
 
 ## V2-T14
+
 ### `src/lib/audit/patterns.ts` (los 15 patrones — librería interna)
 
 **Objetivo:** Crear la "biblioteca" de patrones que inyectamos al prompt del Senior Analyst. Esto es la IP de Cleverum.
 
 **Archivos a crear:**
+
 - `src/lib/audit/patterns.ts`
 
 **Estructura:**
@@ -909,7 +970,8 @@ export const PATTERNS: Pattern[] = [
   {
     id: 'PATRON_01',
     name: 'WhatsApp + IA para FAQs y ventas',
-    description: 'Chatbot con IA que responde preguntas frecuentes, captura leads y recupera carritos abandonados.',
+    description:
+      'Chatbot con IA que responde preguntas frecuentes, captura leads y recupera carritos abandonados.',
     stack: ['n8n', 'Anthropic Claude Haiku', 'Twilio / WhatsApp Cloud API', 'Supabase'],
     cases: ['ecommerce', 'restaurantes', 'servicios profesionales'],
     roi: '25-40 hrs/mes ahorradas en soporte + conversión +12-18% en abandono',
@@ -923,6 +985,7 @@ export const PATTERNS: Pattern[] = [
 ```
 
 **Los 15 patrones a redactar (yo los redacto en bruto, tú los apruebas/ajustas):**
+
 1. WhatsApp + IA para FAQs y ventas
 2. Sync automático entre 3+ herramientas (Shopify ↔ inventario ↔ contabilidad)
 3. Dashboard de KPIs en tiempo real
@@ -940,17 +1003,20 @@ export const PATTERNS: Pattern[] = [
 15. Workflow de aprobaciones internas
 
 **AC:**
+
 - [ ] 15 patrones exportados con la interface tipada.
 - [ ] Cada uno tiene stack real + ROI cuantificable + sprint recomendado.
 
 ---
 
 ## V2-T15
+
 ### `src/lib/audit/prompts.ts` (los 3 system prompts)
 
 **Objetivo:** Definir los prompts de los 3 agentes (classifier, analyst, critic) con todo el rigor.
 
 **Archivos a crear:**
+
 - `src/lib/audit/prompts.ts`
 - `src/lib/audit/types.ts`
 
@@ -1002,12 +1068,14 @@ export const CRITIC_PROMPT = `...`;
 ```
 
 **AC:**
+
 - [ ] Types completos.
 - [ ] Prompts redactados con disciplina (en español MX, filosos, schema JSON estricto).
 
 ---
 
 ## V2-T16
+
 ### Endpoint `functions/api/audit.ts` (pipeline multi-agente + streaming SSE)
 
 **Objetivo:** El corazón del feature. Cloudflare Pages Function que orquesta los 3 agentes y stream-ea SSE al cliente.
@@ -1015,6 +1083,7 @@ export const CRITIC_PROMPT = `...`;
 **Dependencias:** V2-T13, V2-T14, V2-T15.
 
 **Archivos a crear:**
+
 - `functions/api/audit.ts`
 - `functions/api/_audit-utils.ts` (helpers compartidos)
 
@@ -1023,10 +1092,10 @@ export const CRITIC_PROMPT = `...`;
 ```ts
 export async function onRequestPost(context: EventContext<Env>) {
   const { request, env } = context;
-  
+
   // 1) Parse body
   const { input, extra, turnstileToken } = await request.json();
-  
+
   // 1.5) Validar largo del input (hard limit server-side)
   //      Frontend ya limita pero NO confiar en el cliente.
   const MAX_LEN = 500;
@@ -1042,53 +1111,54 @@ export async function onRequestPost(context: EventContext<Env>) {
       }
     }
   }
-  
+
   // 2) Verify Turnstile
   await verifyTurnstile(turnstileToken, env.TURNSTILE_SECRET_KEY, request);
-  
+
   // 3) Rate limit per IP
   const ip = request.headers.get('CF-Connecting-IP');
   await checkRateLimit(env.KV, ip);
-  
+
   // 4) Daily cap
   await checkDailyCap(env.KV, env.DAILY_AUDIT_CAP);
-  
+
   // 5) If input is URL, fetch HTML
   const htmlContext = isUrl(input) ? await fetchHtml(input) : null;
-  
+
   // 6) Stream response (SSE)
   return new Response(
     new ReadableStream({
       async start(controller) {
         const send = (event: string, data: any) =>
           controller.enqueue(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
-        
+
         // AGENTE 1
         send('status', { stage: 'classifying' });
         const industry = await classifyIndustry(env.ANTHROPIC_API_KEY, input, htmlContext);
         send('industry', industry);
-        
+
         // AGENTE 2 (con thinking visible streamed)
         send('status', { stage: 'analyzing' });
         const auditDraft = await senorAnalyst(
           env.ANTHROPIC_API_KEY,
-          input, extra, htmlContext, industry,
-          { onThinking: (delta) => send('thinking', { delta }) }
+          input,
+          extra,
+          htmlContext,
+          industry,
+          { onThinking: (delta) => send('thinking', { delta }) },
         );
         send('opportunities_draft', auditDraft);
-        
+
         // AGENTE 3
         send('status', { stage: 'critiquing' });
-        const auditFinal = await criticAndPolish(
-          env.ANTHROPIC_API_KEY, auditDraft
-        );
-        
+        const auditFinal = await criticAndPolish(env.ANTHROPIC_API_KEY, auditDraft);
+
         // Save to KV
         const auditId = crypto.randomUUID();
         await env.KV.put(`audit:${auditId}`, JSON.stringify(auditFinal), {
           expirationTtl: 60 * 60 * 24 * 7, // 7 días
         });
-        
+
         send('done', { audit_id: auditId, audit: auditFinal });
         controller.close();
       },
@@ -1099,12 +1169,13 @@ export async function onRequestPost(context: EventContext<Env>) {
         'Cache-Control': 'no-store',
         'X-Accel-Buffering': 'no',
       },
-    }
+    },
   );
 }
 ```
 
 **Helpers:**
+
 - `verifyTurnstile(token, secret, request)` — POST a siteverify
 - `checkRateLimit(kv, ip)` — KV key `rate:{ip}` con TTL 24h, throw 429 si existe
 - `checkDailyCap(kv, cap)` — KV key `audit:count:{YYYY-MM-DD}`, increment + check
@@ -1115,16 +1186,18 @@ export async function onRequestPost(context: EventContext<Env>) {
 - `criticAndPolish(key, draft)` — call Anthropic con `CRITIC_PROMPT`, regenerate oportunidades con score bajo
 
 **AC:**
+
 - [ ] Endpoint accesible en `/api/audit` (POST).
 - [ ] Turnstile valida; sin token → 401.
 - [ ] Rate limit 1/IP/24h funciona.
-- [ ] SSE stream entrega eventos en orden: status → industry → thinking* → opportunities_draft → done.
+- [ ] SSE stream entrega eventos en orden: status → industry → thinking\* → opportunities_draft → done.
 - [ ] El JSON final tiene shape de `AuditResult`.
 - [ ] Errores manejados con códigos correctos (429, 500).
 
 ---
 
 ## V2-T17
+
 ### Endpoint `functions/api/lead.ts` (validación + Resend + KV store)
 
 **Objetivo:** Capturar email + nombre + audit_id después del audit. Disparar email con la propuesta detallada. Guardar lead.
@@ -1132,6 +1205,7 @@ export async function onRequestPost(context: EventContext<Env>) {
 **Dependencias:** V2-T16.
 
 **Archivos a crear:**
+
 - `functions/api/lead.ts`
 
 **Flujo:**
@@ -1140,37 +1214,38 @@ export async function onRequestPost(context: EventContext<Env>) {
 export async function onRequestPost(context: EventContext<Env>) {
   const { request, env } = context;
   const { email, nombre, audit_id, comoMeEncontraste } = await request.json();
-  
+
   // 1) Validar email (regex + dominio no temporal)
   if (!isValidEmail(email)) return jsonError(400, 'email_invalid');
   if (isDisposableEmail(email)) return jsonError(400, 'email_disposable');
-  
+
   // 2) Cargar audit del KV
   const auditRaw = await env.KV.get(`audit:${audit_id}`);
   if (!auditRaw) return jsonError(404, 'audit_not_found');
   const audit = JSON.parse(auditRaw);
-  
+
   // 3) Guardar lead
   await env.KV.put(
     `lead:${audit_id}`,
-    JSON.stringify({ email, nombre, audit_id, comoMeEncontraste, created_at: Date.now() })
+    JSON.stringify({ email, nombre, audit_id, comoMeEncontraste, created_at: Date.now() }),
   );
-  
+
   // 4) Disparar email vía Resend
   await sendEmail(env.RESEND_API_KEY, {
     to: email,
     name: nombre,
     audit,
   });
-  
+
   // 5) Notificación a Gibran
   await sendNotificationToGibran(env.RESEND_API_KEY, { lead: { email, nombre }, audit });
-  
+
   return jsonOk({ status: 'sent' });
 }
 ```
 
 **AC:**
+
 - [ ] Endpoint POST `/api/lead`.
 - [ ] Validación email + bloqueo de dominios tipo `tempmail.com`.
 - [ ] Email entregado en ambos lados (usuario + Gibran).
@@ -1178,6 +1253,7 @@ export async function onRequestPost(context: EventContext<Env>) {
 ---
 
 ## V2-T18
+
 ### `AiAuditTool.tsx` (UI del input + tip section + ejemplos clickables)
 
 **Objetivo:** La isla React principal del AI Audit Tool — input, tip section, examples chips, manejo del SSE.
@@ -1185,6 +1261,7 @@ export async function onRequestPost(context: EventContext<Env>) {
 **Dependencias:** V2-T13.
 
 **Archivos a crear:**
+
 - `src/components/react/AiAuditTool.tsx`
 - `src/components/react/audit/AuditInput.tsx`
 - `src/components/react/audit/AuditTipBox.tsx`
@@ -1205,12 +1282,13 @@ export async function onRequestPost(context: EventContext<Env>) {
   <AuditExamplesChips        // 4 ejemplos clickables que populan el input
     onPick={...}
   />
-  
+
   {isRunning && <AuditResult ... />}  // sub-componente que renderiza el stream
 </AiAuditTool>
 ```
 
 **Detalles del input:**
+
 - Textarea autoexpansible (1-3 líneas)
 - `maxLength={500}` nativo de HTML — bloquea typing más allá
 - Contador de caracteres visible abajo a la derecha: `"342 / 500"`
@@ -1224,13 +1302,16 @@ export async function onRequestPost(context: EventContext<Env>) {
 - Si el server responde 400 `input_too_long` (no debería pasar, pero por si acaso): mostrar error inline "El texto es demasiado largo. Sé más conciso."
 
 **Tip box:**
+
 - Colapsada por default; "💡 Cómo darle mejor contexto" como trigger
 - Al expandir: 4 bullets + 4 chips de ejemplo
 
 **Examples chips:**
+
 - Clickeable → setea el valor del input + scrollIntoView del input
 
 **AC:**
+
 - [ ] Input funcional, accesible.
 - [ ] Turnstile carga.
 - [ ] Chips populan input al click.
@@ -1239,6 +1320,7 @@ export async function onRequestPost(context: EventContext<Env>) {
 ---
 
 ## V2-T19
+
 ### `AuditResult.tsx` (renderer del resultado streamed)
 
 **Objetivo:** Renderizar progresivamente el SSE: status, industry, thinking (typewriter), oportunidades (reveal cards), maturity score, email gate.
@@ -1246,6 +1328,7 @@ export async function onRequestPost(context: EventContext<Env>) {
 **Dependencias:** V2-T18.
 
 **Archivos a crear:**
+
 - `src/components/react/audit/AuditResult.tsx`
 - `src/components/react/audit/ThinkingStream.tsx`
 - `src/components/react/audit/OpportunityCard.tsx`
@@ -1268,6 +1351,7 @@ export async function onRequestPost(context: EventContext<Env>) {
 ```
 
 **OpportunityCard:**
+
 - Badge (Quick Win / Strategic Bet)
 - Titulo + porque
 - Stack chips
@@ -1276,12 +1360,14 @@ export async function onRequestPost(context: EventContext<Env>) {
 - Recomendación prioritaria → glow extra en la #1
 
 **EmailGate:**
+
 - Email + Nombre + (opcional) "¿cómo me encontraste?"
 - Botón "Recibir propuesta detallada"
 - Submit → POST a `/api/lead`
 - Success → confirmación + CTA a Calendly
 
 **AC:**
+
 - [ ] SSE eventos manejados en orden.
 - [ ] Thinking stream visible con typewriter (~30 chars/s).
 - [ ] Opportunities reveal con stagger.
@@ -1296,7 +1382,9 @@ export async function onRequestPost(context: EventContext<Env>) {
 ---
 
 ## V2-T19.5
+
 <a id="v2-t195"></a>
+
 ### Particle field evolution — audit-reactive + maturity score reveal
 
 **Objetivo:** Las partículas pasan de decoración a narrative. Reaccionan al estado del AI Audit con 4 modos visuales. Cuando llega el resultado, las partículas **forman el número del score de madurez** por unos segundos. En mobile (sin canvas), el `GradientMeshBackground` pulsa con cambio de tinte sincronizado.
@@ -1304,10 +1392,12 @@ export async function onRequestPost(context: EventContext<Env>) {
 **Dependencias:** V2-T18, V2-T19.
 
 **Archivos a crear:**
+
 - `src/lib/auditState.ts` — singleton observer (similar a `scrollProgress`)
 - `src/components/three/digitGeometry.ts` — helper para generar posiciones de partículas que formen un número
 
 **Archivos a modificar:**
+
 - `src/components/three/particleShader.ts` — nuevos uniforms + paths para los 4 estados
 - `src/components/react/ParticleField.tsx` — subscribe al auditState, lerp del mix, generación de digit positions on-demand
 - `src/components/react/audit/AuditResult.tsx` — dispatch de estados a lo largo del stream (ver V2-T19 AC)
@@ -1341,12 +1431,12 @@ export function subscribeAuditState(l: Listener): () => void {
 
 ### 2) Comportamiento por estado
 
-| Estado | Visual | Lógica de shader |
-|---|---|---|
-| `idle` | Cycling con scroll (estado actual) | `uAuditState=0`, scroll-driven `uProgress` |
-| `processing` | Convergen al centro en vórtice. Rotación ×3. Tinte iris dominante. | `uAuditState=1`, `pos = mix(pos, center, 0.7)`, mayor swirl |
-| `revealing` | Burst hacia afuera. Tinte verde. Expansión radial. | `uAuditState=2`, `pos *= 1.5` con easing |
-| `done` | Las partículas **forman temporalmente el número del score** (ej. "4.2") por ~2.5s, luego desvanecen a idle. | `uAuditState=3`, `pos = mix(pos, digitPosition, uAuditMix)` |
+| Estado       | Visual                                                                                                      | Lógica de shader                                            |
+| ------------ | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `idle`       | Cycling con scroll (estado actual)                                                                          | `uAuditState=0`, scroll-driven `uProgress`                  |
+| `processing` | Convergen al centro en vórtice. Rotación ×3. Tinte iris dominante.                                          | `uAuditState=1`, `pos = mix(pos, center, 0.7)`, mayor swirl |
+| `revealing`  | Burst hacia afuera. Tinte verde. Expansión radial.                                                          | `uAuditState=2`, `pos *= 1.5` con easing                    |
+| `done`       | Las partículas **forman temporalmente el número del score** (ej. "4.2") por ~2.5s, luego desvanecen a idle. | `uAuditState=3`, `pos = mix(pos, digitPosition, uAuditMix)` |
 
 ### 3) Generación del número con partículas
 
@@ -1369,6 +1459,7 @@ export function generateDigitPositions(
 ```
 
 Implementación:
+
 1. Crear canvas 2D off-screen (ej. 512×256)
 2. Render del número con la font display, color blanco, grueso
 3. `getImageData()` y filtrar pixels con `alpha > 128`
@@ -1438,30 +1529,55 @@ Agregar al `.astro`:
 CSS:
 
 ```css
-.gradient-mesh[data-audit-state='processing'] { animation: mesh-pulse-iris 1.4s ease-in-out infinite; }
-.gradient-mesh[data-audit-state='revealing']  { animation: mesh-pulse-green 1.2s ease-in-out infinite; }
-.gradient-mesh[data-audit-state='done']       { animation: mesh-flash 0.8s ease-out; }
+.gradient-mesh[data-audit-state='processing'] {
+  animation: mesh-pulse-iris 1.4s ease-in-out infinite;
+}
+.gradient-mesh[data-audit-state='revealing'] {
+  animation: mesh-pulse-green 1.2s ease-in-out infinite;
+}
+.gradient-mesh[data-audit-state='done'] {
+  animation: mesh-flash 0.8s ease-out;
+}
 
 @keyframes mesh-pulse-iris {
-  0%, 100% { filter: hue-rotate(0deg) brightness(1); }
-  50% { filter: hue-rotate(-15deg) brightness(1.2); }
+  0%,
+  100% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  50% {
+    filter: hue-rotate(-15deg) brightness(1.2);
+  }
 }
 @keyframes mesh-pulse-green {
-  0%, 100% { filter: hue-rotate(0deg) brightness(1); }
-  50% { filter: hue-rotate(60deg) brightness(1.3); }
+  0%,
+  100% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  50% {
+    filter: hue-rotate(60deg) brightness(1.3);
+  }
 }
 @keyframes mesh-flash {
-  0% { filter: brightness(1); }
-  30% { filter: brightness(1.5); }
-  100% { filter: brightness(1); }
+  0% {
+    filter: brightness(1);
+  }
+  30% {
+    filter: brightness(1.5);
+  }
+  100% {
+    filter: brightness(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gradient-mesh[data-audit-state] { animation: none !important; }
+  .gradient-mesh[data-audit-state] {
+    animation: none !important;
+  }
 }
 ```
 
 **AC:**
+
 - [ ] `idle` → `processing` al hacer submit del audit (transición ~0.6s)
 - [ ] Durante `processing` las partículas convergen visiblemente al centro, mantienen energía
 - [ ] `revealing` al recibir primera oportunidad — burst de expansión
@@ -1473,6 +1589,7 @@ CSS:
 - [ ] Si el usuario cierra el audit antes de recibir, particles vuelven a idle limpiamente
 
 **Notas técnicas:**
+
 - El digit map se genera **una sola vez por audit** (no en cada frame).
 - `aDigit` se actualiza con `geometry.attributes.aDigit.needsUpdate = true`.
 - Si el score es `null` o inválido, skip el efecto `done` y va directo a `idle`.
@@ -1481,11 +1598,13 @@ CSS:
 ---
 
 ## V2-T20
+
 ### Email template del reporte detallado (HTML inline)
 
 **Objetivo:** Email HTML que recibe el usuario después del audit, con la propuesta detallada + bonus prometido.
 
 **Archivos a crear:**
+
 - `functions/api/_email-template.ts`
 
 **Template HTML estilo "newsletter clean":**
@@ -1495,7 +1614,7 @@ CSS:
 
 Hola {{nombre}},
 
-Aquí está el análisis completo que te prometí. 
+Aquí está el análisis completo que te prometí.
 Tu negocio: {{negocio_detectado}}.
 Tu score actual de madurez de automatización: {{score}}/10.
 
@@ -1517,7 +1636,7 @@ TU REGALO
 
 → Una sesión de 20 minutos conmigo, gratis.
   Agenda aquí: [Calendly link]
-  
+
 → Si arrancamos en los próximos 14 días:
   10% off en tu primer sprint.
 
@@ -1531,11 +1650,13 @@ TU REGALO
 ```
 
 **Pasos:**
+
 1. Template HTML inline (sin CSS externo — emails no lo soportan bien).
 2. Función `buildEmailHtml(audit, nombre, calendlyUrl)`.
 3. Subject: `Tu audit de IA — 3 ideas para automatizar tu negocio`.
 
 **AC:**
+
 - [ ] Email se ve OK en Gmail / Outlook / Apple Mail.
 - [ ] Links funcionan.
 - [ ] Imágenes inline o hospedadas en cleverum.org.
@@ -1545,11 +1666,13 @@ TU REGALO
 # Fase 5 — Polish + deploy
 
 ## V2-T21
+
 ### Responsive review + animaciones polish
 
 **Objetivo:** Validar 5 viewports + ajustar lo que necesite. Animaciones sin jitter.
 
 **AC:**
+
 - [ ] 375 / 768 / 1024 / 1440 / 1920 sin scroll horizontal.
 - [ ] AI Audit Tool funcional en mobile.
 - [ ] Tap targets ≥ 44px en mobile.
@@ -1557,16 +1680,19 @@ TU REGALO
 ---
 
 ## V2-T22
+
 ### Lighthouse pass + sitemap update
 
 **Objetivo:** 95+ Performance / 100 SEO / 100 A11y / 100 BP.
 
 **Pasos:**
+
 - `npm run build && npm run preview`
 - Lighthouse en incógnito mobile
 - Iterar lo que falte
 
 **AC:**
+
 - [ ] Performance ≥ 95
 - [ ] SEO = 100
 - [ ] A11y = 100
@@ -1575,9 +1701,11 @@ TU REGALO
 ---
 
 ## V2-T23
+
 ### Deploy a Cloudflare Pages + dominio cleverum.org + env vars
 
 **Pasos:**
+
 1. Push del branch → CF Pages preview.
 2. Configurar env vars en CF Dashboard (ver V2-T13).
 3. Configurar KV binding.
@@ -1586,6 +1714,7 @@ TU REGALO
 6. Smoke test end-to-end del audit en prod.
 
 **AC:**
+
 - [ ] `https://cleverum.org` sirve la landing v2.
 - [ ] AI Audit Tool funciona end-to-end en prod.
 - [ ] Emails llegan vía Resend.

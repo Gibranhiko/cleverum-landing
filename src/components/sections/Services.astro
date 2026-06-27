@@ -72,16 +72,11 @@ const accentVar: Record<string, string> = {
                   </svg>
                   <span>{s.duration}</span>
                 </div>
-                <div
-                  class="service-inversion"
-                  aria-label={`Inversión: ${s.inversion} de 3`}
-                >
+                <div class="service-inversion" aria-label={`Inversión: ${s.inversion} de 3`}>
                   <span class="service-inversion-label">Inversión</span>
                   <span class="service-inversion-dots" aria-hidden="true">
                     {[1, 2, 3].map((n) => (
-                      <span
-                        class={`service-inversion-dot${n <= s.inversion ? ' is-on' : ''}`}
-                      />
+                      <span class={`service-inversion-dot${n <= s.inversion ? 'is-on' : ''}`} />
                     ))}
                   </span>
                 </div>
@@ -259,7 +254,9 @@ const accentVar: Record<string, string> = {
     border-radius: 50%;
     background: color-mix(in srgb, var(--color-text-3) 30%, transparent);
     border: 1px solid color-mix(in srgb, var(--color-text-3) 40%, transparent);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
   }
 
   .service-inversion-dot.is-on {

@@ -9,6 +9,7 @@ interface Props {
   message?: string;
   variant?: 'primary' | 'secondary' | 'minimal';
   size?: 'sm' | 'md' | 'lg';
+  iconOnly?: boolean;
   class?: string;
 }
 
@@ -17,6 +18,7 @@ const {
   message,
   variant = 'primary',
   size = 'md',
+  iconOnly = false,
   class: extraClass = '',
 } = Astro.props;
 
@@ -27,6 +29,9 @@ const sizeClasses: Record<'sm' | 'md' | 'lg', string> = {
   md: 'px-7 py-3.5 text-base',
   lg: 'px-9 py-4 text-lg',
 };
+
+// En iconOnly el botón es cuadrado (círculo con el pill radius), sin texto ni flecha.
+const padClass = iconOnly ? { sm: 'p-2.5', md: 'p-3', lg: 'p-3.5' }[size] : sizeClasses[size];
 
 const variantClass =
   variant === 'primary'
@@ -41,12 +46,18 @@ const variantClass =
   target="_blank"
   rel="noopener noreferrer"
   aria-label={`${label} (abre WhatsApp en una nueva ventana)`}
-  class={`wa-btn group ${variantClass} ${sizeClasses[size]} ${extraClass}`}
+  class={`wa-btn group ${variantClass} ${padClass} ${iconOnly ? 'wa-btn-icon-only' : ''} ${extraClass}`}
 >
   <span class="wa-btn-glow" aria-hidden="true"></span>
   <WhatsAppIcon size={20} class="wa-btn-wa-icon" />
-  <span class="wa-btn-label">{label}</span>
-  <ArrowRight size={18} class="wa-btn-arrow" />
+  {
+    !iconOnly && (
+      <>
+        <span class="wa-btn-label">{label}</span>
+        <ArrowRight size={18} class="wa-btn-arrow" />
+      </>
+    )
+  }
 </a>
 
 <style>
@@ -60,13 +71,21 @@ const variantClass =
     letter-spacing: -0.005em;
     overflow: hidden;
     isolation: isolate;
-    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo),
+    transition:
+      transform 0.4s var(--ease-out-expo),
+      box-shadow 0.4s var(--ease-out-expo),
       border-color 0.3s ease;
     white-space: nowrap;
   }
 
   .wa-btn:hover {
     transform: translateY(-1px);
+  }
+
+  /* Solo ícono: cuadrado → círculo (pill radius), sin gap. */
+  .wa-btn-icon-only {
+    gap: 0;
+    aspect-ratio: 1;
   }
 
   .wa-btn-arrow {

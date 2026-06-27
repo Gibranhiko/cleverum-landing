@@ -47,10 +47,7 @@ const WORD_STAGGER_MS = 55;
         phrases.map((p, phaseIdx) => (
           <p class="hero-phrase font-display" style={`--phase: ${phaseIdx};`}>
             {p.words.map((w) => (
-              <span
-                class={`hero-word ${w.accent ? 'is-accent' : ''}`}
-                style={`--i: ${w.index};`}
-              >
+              <span class={`hero-word ${w.accent ? 'is-accent' : ''}`} style={`--i: ${w.index};`}>
                 {w.accent ? <span class="gradient-text">{w.text}</span> : w.text}
               </span>
             ))}
@@ -182,14 +179,38 @@ const WORD_STAGGER_MS = 55;
     will-change: transform, opacity, filter;
   }
 
-  .hero-word.is-accent { position: relative; }
+  .hero-word.is-accent {
+    position: relative;
+  }
 
   @keyframes word-cycle {
-    0% { opacity: 0; transform: translateY(75%) translateZ(-120px) rotateX(45deg); filter: blur(22px); }
-    1.5% { opacity: 0.4; transform: translateY(40%) translateZ(-60px) rotateX(22deg); filter: blur(12px); }
-    3.5%, 16% { opacity: 1; transform: translateY(0) translateZ(0) rotateX(0); filter: blur(0); }
-    18% { opacity: 0.5; transform: translateY(-22%) translateZ(40px) rotateX(-12deg); filter: blur(10px); }
-    19.5%, 100% { opacity: 0; transform: translateY(-45%) translateZ(80px) rotateX(-22deg); filter: blur(20px); }
+    0% {
+      opacity: 0;
+      transform: translateY(75%) translateZ(-120px) rotateX(45deg);
+      filter: blur(22px);
+    }
+    1.5% {
+      opacity: 0.4;
+      transform: translateY(40%) translateZ(-60px) rotateX(22deg);
+      filter: blur(12px);
+    }
+    3.5%,
+    16% {
+      opacity: 1;
+      transform: translateY(0) translateZ(0) rotateX(0);
+      filter: blur(0);
+    }
+    18% {
+      opacity: 0.5;
+      transform: translateY(-22%) translateZ(40px) rotateX(-12deg);
+      filter: blur(10px);
+    }
+    19.5%,
+    100% {
+      opacity: 0;
+      transform: translateY(-45%) translateZ(80px) rotateX(-22deg);
+      filter: blur(20px);
+    }
   }
 
   .hero-subline {
@@ -239,8 +260,12 @@ const WORD_STAGGER_MS = 55;
       0 24px 60px -16px color-mix(in srgb, var(--color-brand-iris) 90%, transparent);
   }
 
-  .hero-cta svg { transition: transform 0.3s var(--ease-out-expo); }
-  .hero-cta:hover svg { transform: translateX(3px); }
+  .hero-cta svg {
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .hero-cta:hover svg {
+    transform: translateX(3px);
+  }
 
   .hero-scroll-hint {
     position: absolute;
@@ -261,7 +286,9 @@ const WORD_STAGGER_MS = 55;
     animation:
       hero-hint-fade 0.6s var(--ease-out-expo) 1.4s forwards,
       hero-hint-bob 2.6s ease-in-out 2.4s infinite;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease;
   }
 
   .hero-scroll-hint:hover {
@@ -269,11 +296,25 @@ const WORD_STAGGER_MS = 55;
     border-color: var(--color-border-strong);
   }
 
-  @keyframes hero-cta-rise { to { opacity: 1; transform: translateY(0); } }
-  @keyframes hero-hint-fade { to { opacity: 1; } }
+  @keyframes hero-cta-rise {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes hero-hint-fade {
+    to {
+      opacity: 1;
+    }
+  }
   @keyframes hero-hint-bob {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, 5px); }
+    0%,
+    100% {
+      transform: translate(-50%, 0);
+    }
+    50% {
+      transform: translate(-50%, 5px);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -283,9 +324,15 @@ const WORD_STAGGER_MS = 55;
       transform: none;
       filter: none;
     }
-    .hero-phrase:not(:first-child) { display: none; }
-    .hero-phrase { position: static; }
-    .hero-rotator { min-height: auto; }
+    .hero-phrase:not(:first-child) {
+      display: none;
+    }
+    .hero-phrase {
+      position: static;
+    }
+    .hero-rotator {
+      min-height: auto;
+    }
     .hero-cta-row {
       animation: none;
       opacity: 1;

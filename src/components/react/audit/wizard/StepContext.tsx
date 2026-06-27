@@ -27,9 +27,7 @@ export default function StepContext({
     <div className="wiz-step">
       <header className="wiz-step-header">
         <h3 className="wiz-step-title">¿Quieres darnos más contexto?</h3>
-        <p className="wiz-step-sub">
-          Opcional, pero mientras más sepamos, mejor el análisis.
-        </p>
+        <p className="wiz-step-sub">Opcional, pero mientras más sepamos, mejor el análisis.</p>
       </header>
 
       <div className="wiz-grid">

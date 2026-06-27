@@ -53,14 +53,11 @@ function validateStep(
     case 1:
       return true;
     case 2:
-      return (
-        values.nombre.trim().length >= 2 && values.empresa.trim().length >= 2
-      );
+      return values.nombre.trim().length >= 2 && values.empresa.trim().length >= 2;
     case 3: {
-      const emailOk =
-        values.email.trim() === '' || isValidEmailFormat(values.email);
-      const phoneOk =
-        values.telefono.trim() === '' || isValidPhoneFormat(values.telefono);
+      // Email obligatorio: así podemos enviarle el reporte aunque abandone.
+      const emailOk = isValidEmailFormat(values.email);
+      const phoneOk = values.telefono.trim() === '' || isValidPhoneFormat(values.telefono);
       return emailOk && phoneOk;
     }
     case 4:
@@ -100,15 +97,11 @@ export function useFormWizard(): UseFormWizardResult {
   );
 
   const canAdvance = useMemo(
-    () =>
-      validateStep(currentStep, values, audit.minInputLength, audit.maxInputLength),
+    () => validateStep(currentStep, values, audit.minInputLength, audit.maxInputLength),
     [currentStep, values, audit.minInputLength, audit.maxInputLength],
   );
 
-  const isStepOptional = useCallback(
-    (step: StepIndex): boolean => step === 1 || step === 3,
-    [],
-  );
+  const isStepOptional = useCallback((step: StepIndex): boolean => step === 1, []);
 
   const goNext = useCallback((): void => {
     setCurrentStep((curr) => {

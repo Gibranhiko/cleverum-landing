@@ -16,9 +16,7 @@ export const GET: APIRoute = () => {
     .filter((s) => isReal(s.url))
     .map((s) => `- ${s.name}: ${s.url}`);
 
-  const calendlyLine = isReal(contact.calendly)
-    ? `- Calendly: ${contact.calendly}`
-    : null;
+  const calendlyLine = isReal(contact.calendly) ? `- Calendly: ${contact.calendly}` : null;
 
   const serviceLines = services.items.map(
     (s) => `- ${s.title} — ${s.subtitle.toLowerCase()}, ${s.duration}`,
@@ -40,7 +38,7 @@ ${serviceLines.join('\n')}
 ${audit.heading} Available at ${meta.url}/#diagnostico. Submit your URL or business description and receive:
 
 - Industry classification with a maturity score
-- 2 specific automation opportunities
+- 1 high-impact automation opportunity
 - ROI estimates per opportunity
 - Recommended technology stack
 - Optional 20-minute free strategy session

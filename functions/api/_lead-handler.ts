@@ -100,7 +100,7 @@ export async function sendClientReport(
     await sendEmail(apiKey, {
       from: FROM_ADDRESS,
       to: contact.email,
-      subject: `Tu diagnóstico de IA — ${audit.oportunidades.length} ideas para automatizar tu negocio`,
+      subject: `Tu diagnóstico de IA — ${audit.oportunidades.length === 1 ? '1 idea' : `${audit.oportunidades.length} ideas`} para automatizar tu negocio`,
       html: buildClientEmailHtml(audit, contact.nombre),
       reply_to: GIBRAN_EMAIL,
     });

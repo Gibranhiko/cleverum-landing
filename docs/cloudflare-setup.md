@@ -73,6 +73,7 @@ Crea estas 3 cuentas antes de tocar Cloudflare. Te darán las API keys que vas a
 ### 2.3 Cloudflare (ya la deberías tener)
 
 Si no tienes cuenta:
+
 1. Ve a [dash.cloudflare.com](https://dash.cloudflare.com) y regístrate.
 2. Plan gratuito es suficiente para el alcance del sitio.
 
@@ -107,6 +108,7 @@ Si no tienes cuenta:
 ## 4. KV Namespace (storage)
 
 KV es la base de datos clave-valor de Cloudflare. La usa el AI Audit Tool para:
+
 - Guardar el resultado de cada audit (`audit:<uuid>`, TTL 7 días)
 - Guardar leads (`lead:<uuid>`, TTL 1 año)
 - Rate limit por IP (`rate:<ip>`, TTL 24h)
@@ -214,6 +216,7 @@ El código usa `from: 'Gibran de Cleverum <hello@cleverum.org>'` y `from: 'Cleve
 ### 7.3 (Opcional) Reverse forwarding
 
 Si quieres recibir replies al `hello@cleverum.org`:
+
 - Configura un email forwarding en Cloudflare Email Routing (gratis):
   - CF Dashboard → tu zona `cleverum.org` → **Email** → **Email Routing**.
   - Activa Email Routing.
@@ -228,15 +231,15 @@ Ya tienes todas las keys necesarias. Ahora las metes en Cloudflare Pages.
 
 ### 8.1 Lista completa de variables
 
-| Variable | Tipo | Dónde se usa | Valor |
-|---|---|---|---|
-| `ANTHROPIC_API_KEY` | **Encrypted** | Backend (`/api/audit`) | `sk-ant-api-...` (del paso 2.1) |
-| `TURNSTILE_SECRET_KEY` | **Encrypted** | Backend (validar token) | `0x4AAAAAAA...` secret (del paso 5) |
-| `TURNSTILE_SITE_KEY` | **Plain** | Backend (referencia) | `0x4AAAAAAA...` site (del paso 5) |
-| `PUBLIC_TURNSTILE_SITE_KEY` | **Plain** | Frontend build (Astro) | mismo site key que arriba |
-| `RESEND_API_KEY` | **Encrypted** | Backend (`/api/audit`, `/api/lead`) | `re_...` (del paso 2.2) |
-| `DAILY_AUDIT_CAP` | **Plain** | Backend (cost guard) | `100` (ajustable) |
-| `NODE_VERSION` | **Plain** | Build pipeline | `22` |
+| Variable                    | Tipo          | Dónde se usa                        | Valor                               |
+| --------------------------- | ------------- | ----------------------------------- | ----------------------------------- |
+| `ANTHROPIC_API_KEY`         | **Encrypted** | Backend (`/api/audit`)              | `sk-ant-api-...` (del paso 2.1)     |
+| `TURNSTILE_SECRET_KEY`      | **Encrypted** | Backend (validar token)             | `0x4AAAAAAA...` secret (del paso 5) |
+| `TURNSTILE_SITE_KEY`        | **Plain**     | Backend (referencia)                | `0x4AAAAAAA...` site (del paso 5)   |
+| `PUBLIC_TURNSTILE_SITE_KEY` | **Plain**     | Frontend build (Astro)              | mismo site key que arriba           |
+| `RESEND_API_KEY`            | **Encrypted** | Backend (`/api/audit`, `/api/lead`) | `re_...` (del paso 2.2)             |
+| `DAILY_AUDIT_CAP`           | **Plain**     | Backend (cost guard)                | `100` (ajustable)                   |
+| `NODE_VERSION`              | **Plain**     | Build pipeline                      | `22`                                |
 
 ### 8.2 Setear en CF Dashboard
 
@@ -315,6 +318,7 @@ Si `cleverum.org` está registrado en otro registrar (GoDaddy, Namecheap, etc.) 
 ### 10.2 Verificar el build
 
 El build debe pasar con:
+
 ```
 ✓ Built in ~10s
 ✓ Generating static routes... /index.html, /llms.txt, /llms-full.txt, /api/info.json
@@ -322,6 +326,7 @@ El build debe pasar con:
 ```
 
 Si falla:
+
 - Revisa los logs del deploy
 - Causas comunes: env var faltante, error de typecheck, dependencia faltando
 - Ver sección **Troubleshooting**
@@ -358,6 +363,7 @@ Esto valida que TODA la pipeline funciona: Turnstile + Anthropic + KV + Resend.
 ### 11.2 Verifica que llegan los emails
 
 Después de que termina el audit:
+
 - Tu email personal recibe: **"Tu diagnóstico de IA — 3 ideas para automatizar tu negocio"** en ~10 segundos.
 - `gibran.villarreal@cleverum.com` (o donde tengas el forwarding) recibe: **"Nuevo lead: Test Run · Test Company"** con todos los datos del lead.
 - Si NO llegan: revisa Resend → **Logs** tab → ve si los emails se enviaron y qué pasó. Suele ser un DNS no verificado o un rate limit.
@@ -430,6 +436,7 @@ wrangler pages dev dist --kv KV --compatibility-date=2026-01-01
 ```
 
 Esto:
+
 - Sirve el sitio en `http://localhost:8788`
 - Ejecuta las Functions en local
 - Bindea un KV namespace en memoria (no persiste entre reinicios)
@@ -443,6 +450,7 @@ npm run dev
 Y otra para wrangler funcionando contra el `dist/` actualizado.
 
 > 📌 Workflow recomendado:
+>
 > - Para frontend-only changes: usa `npm run dev` (Astro dev server con HMR).
 > - Para probar endpoints `/api/audit` o `/api/lead`: usa `wrangler pages dev dist`.
 
@@ -455,6 +463,7 @@ Y otra para wrangler funcionando contra el `dist/` actualizado.
 ✅ **HTTPS forzado** — Cloudflare emite cert SSL auto + redirect HTTP→HTTPS.
 
 ✅ **Security headers** (en `public/_headers`):
+
 - `X-Frame-Options: DENY` — previene clickjacking
 - `X-Content-Type-Options: nosniff` — previene MIME sniffing attacks
 - `Referrer-Policy: strict-origin-when-cross-origin` — limita info de referrer
@@ -462,20 +471,24 @@ Y otra para wrangler funcionando contra el `dist/` actualizado.
 - `Strict-Transport-Security` — fuerza HTTPS por 1 año (HSTS preload-ready)
 
 ✅ **Anti-bot**:
+
 - Turnstile en el form del audit (managed challenge)
 - Validación server-side del token en `/api/audit`
 
 ✅ **Rate limiting**:
+
 - 1 audit por IP cada 24 horas (KV `rate:<ip>` con TTL 86400)
 - Cap global diario configurable via `DAILY_AUDIT_CAP` (default 100)
 
 ✅ **Input validation**:
+
 - Largo mín/máx del input principal (10-500 chars)
 - Largo máx de campos extra (200 chars c/u)
 - Largo máx de nombre/empresa (100 chars), teléfono (25 chars)
 - Email format regex + blocklist de dominios disposables (tempmail, mailinator, etc.)
 
 ✅ **Secrets management**:
+
 - Todas las API keys encrypted en CF Dashboard
 - `.env`, `.dev.vars` en `.gitignore` — nunca se commitean
 - No hay secrets hardcoded en el código
@@ -520,6 +533,7 @@ CF Dashboard → **Security** → **Bots**.
 Actualmente no hay CSP. Para agregarla:
 
 Edita `public/_headers`:
+
 ```
 /*
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com;
@@ -540,6 +554,7 @@ Esto evita que spammers usen tu dominio para spoof.
 #### f) Rotation de API keys
 
 Cada 6 meses (o cuando sospechas leak):
+
 1. Genera nueva key en el servicio (Anthropic / Resend / Turnstile).
 2. Actualízala en CF env vars.
 3. Re-deploy.
@@ -631,12 +646,14 @@ lighthouse https://cleverum.org --view
 ```
 
 Targets:
+
 - **Performance**: ≥95
 - **Accessibility**: 100
 - **Best Practices**: 100
 - **SEO**: 100
 
 Si algo baja de 95 en Performance, revisar:
+
 - Chunk de three.js (731 KB) — ya está splitted y lazy-loaded via `client:media`.
 - Imágenes — convertir a AVIF/WebP via Astro `<Image>` cuando agregues fotos reales.
 
@@ -662,19 +679,20 @@ Si algo falla, ver `src/lib/jsonld.ts` y corregir.
 
 **Causas comunes**:
 
-| Error | Causa | Fix |
-|---|---|---|
-| `Cannot find name 'KVNamespace'` | Falta `@cloudflare/workers-types` | Verifica `package.json` lo tenga en devDependencies |
-| `Property 'X' does not exist on type 'Env'` | Env var no declarada en `functions/types.ts` | Agrégala al `interface Env` |
-| `import.meta.env.PUBLIC_TURNSTILE_SITE_KEY is undefined` | Falta env var en build | Agrega `PUBLIC_TURNSTILE_SITE_KEY` en CF env vars (Production + Preview) |
-| Build hangs | Node version incorrecta | Agrega `NODE_VERSION=22` en CF env vars |
-| `EBADENGINE sitemap requires node >=20.19.5` | Warning, no rompe | Ignora, es solo warning |
+| Error                                                    | Causa                                        | Fix                                                                      |
+| -------------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
+| `Cannot find name 'KVNamespace'`                         | Falta `@cloudflare/workers-types`            | Verifica `package.json` lo tenga en devDependencies                      |
+| `Property 'X' does not exist on type 'Env'`              | Env var no declarada en `functions/types.ts` | Agrégala al `interface Env`                                              |
+| `import.meta.env.PUBLIC_TURNSTILE_SITE_KEY is undefined` | Falta env var en build                       | Agrega `PUBLIC_TURNSTILE_SITE_KEY` en CF env vars (Production + Preview) |
+| Build hangs                                              | Node version incorrecta                      | Agrega `NODE_VERSION=22` en CF env vars                                  |
+| `EBADENGINE sitemap requires node >=20.19.5`             | Warning, no rompe                            | Ignora, es solo warning                                                  |
 
 ### Audit responde 401 turnstile_failed
 
 **Causa**: el `PUBLIC_TURNSTILE_SITE_KEY` (frontend) no matchea con el `TURNSTILE_SECRET_KEY` (backend), o el hostname no está allowed en el site de Turnstile.
 
 **Fix**:
+
 - Verifica que ambas keys son del mismo Turnstile site.
 - Verifica que `cleverum.org` está en el hostname management del site Turnstile.
 - En dev: usa los test keys (`1x00...AA`).
@@ -684,6 +702,7 @@ Si algo falla, ver `src/lib/jsonld.ts` y corregir.
 **Causa**: se alcanzó `DAILY_AUDIT_CAP` (default 100).
 
 **Fix**:
+
 - Si es legítimo y solo necesitas más: aumenta `DAILY_AUDIT_CAP` en CF env vars y re-deploy.
 - Si es spam: revisa logs, considera bajar el cap de IP individual (en código en `functions/api/_audit-utils.ts`).
 
@@ -692,6 +711,7 @@ Si algo falla, ver `src/lib/jsonld.ts` y corregir.
 **Causa**: tú mismo (u otro user) ya hizo un audit en esa IP en últimas 24h.
 
 **Fix**:
+
 - Esperar 24h.
 - O borrar la key `rate:<ip>` en KV namespace manualmente (CF Dashboard → KV → ver entrada → delete).
 
@@ -700,6 +720,7 @@ Si algo falla, ver `src/lib/jsonld.ts` y corregir.
 **Causa**: API key incorrecta o sin créditos.
 
 **Fix**:
+
 - Verifica el valor exacto de `ANTHROPIC_API_KEY` en CF env vars.
 - Ve a [console.anthropic.com/settings/billing](https://console.anthropic.com/settings/billing) y verifica que hay saldo.
 - Regenera la key si dudas.
@@ -709,6 +730,7 @@ Si algo falla, ver `src/lib/jsonld.ts` y corregir.
 **Causa**: `claude-haiku-4-5-20251001` no disponible en tu cuenta, o extended thinking no habilitado.
 
 **Fix**:
+
 - Edita `functions/api/_audit-utils.ts` línea 5: cambia `ANTHROPIC_MODEL` a `claude-sonnet-4-6`.
 - Push → CF auto-deploys.
 
@@ -717,6 +739,7 @@ Si algo falla, ver `src/lib/jsonld.ts` y corregir.
 **Causa**: dominio no verificado, o DNS records mal configurados.
 
 **Fix**:
+
 - Resend → **Domains** → `cleverum.org` → ver status. Debe decir "Verified".
 - Si dice "Pending", verifica que los DNS records están en CF DNS y con **Proxy status: DNS only** (no naranja).
 - Revisa Resend → **Logs** para ver el detalle del envío fallido.
@@ -740,6 +763,7 @@ Si algo falla, ver `src/lib/jsonld.ts` y corregir.
 Antes de anunciar el sitio o compartir el link:
 
 ### Functional
+
 - [ ] `https://cleverum.org/` carga sin errores en console
 - [ ] Hero → "Diagnostica mi negocio" hace smooth scroll a `#diagnostico`
 - [ ] Wizard del audit avanza sin bugs (probar los 5 pasos)
@@ -752,6 +776,7 @@ Antes de anunciar el sitio o compartir el link:
 - [ ] Mobile: todo el flujo funciona
 
 ### Security
+
 - [ ] HTTPS forzado (intenta `http://cleverum.org` → redirect a https)
 - [ ] Headers de seguridad activos (chequea con [securityheaders.com](https://securityheaders.com))
 - [ ] No secrets en repo (`git log -p | grep -i "sk-ant\|re_\|0x4A"` — no debe haber matches)
@@ -760,6 +785,7 @@ Antes de anunciar el sitio o compartir el link:
 - [ ] Daily cap funciona (configurar `DAILY_AUDIT_CAP=2`, hacer 3 audits desde IPs distintas → tercero falla)
 
 ### SEO
+
 - [ ] `robots.txt` accesible
 - [ ] `sitemap-index.xml` accesible
 - [ ] `llms.txt` y `llms-full.txt` accesibles
@@ -768,6 +794,7 @@ Antes de anunciar el sitio o compartir el link:
 - [ ] Lighthouse: 95+ Performance, 100 SEO/A11y/BP
 
 ### Operational
+
 - [ ] Web Analytics activo
 - [ ] Email forwarding hello@cleverum.org → tu inbox funciona
 - [ ] Anthropic billing alert configurado a $50/mes
@@ -775,6 +802,7 @@ Antes de anunciar el sitio o compartir el link:
 - [ ] Backup de todas las API keys en password manager
 
 ### Cosmetic / Content
+
 - [ ] Reemplazar `REPLACE_ME` en `src/content/site.ts`:
   - `contact.calendly`
   - `socials.linkedin`
@@ -812,46 +840,46 @@ Cada **6 meses**:
 
 ## Referencias rápidas
 
-| Recurso | URL |
-|---|---|
-| CF Dashboard | https://dash.cloudflare.com |
-| CF Pages docs | https://developers.cloudflare.com/pages/ |
-| CF Functions docs | https://developers.cloudflare.com/pages/functions/ |
-| CF KV docs | https://developers.cloudflare.com/kv/ |
-| Turnstile | https://dash.cloudflare.com/?to=/:account/turnstile |
-| Anthropic Console | https://console.anthropic.com |
-| Anthropic API docs | https://docs.anthropic.com |
-| Resend | https://resend.com |
-| Resend API docs | https://resend.com/docs |
-| Wrangler docs | https://developers.cloudflare.com/workers/wrangler/ |
-| Search Console | https://search.google.com/search-console |
-| Rich Results Test | https://search.google.com/test/rich-results |
-| Security Headers checker | https://securityheaders.com |
+| Recurso                  | URL                                                 |
+| ------------------------ | --------------------------------------------------- |
+| CF Dashboard             | https://dash.cloudflare.com                         |
+| CF Pages docs            | https://developers.cloudflare.com/pages/            |
+| CF Functions docs        | https://developers.cloudflare.com/pages/functions/  |
+| CF KV docs               | https://developers.cloudflare.com/kv/               |
+| Turnstile                | https://dash.cloudflare.com/?to=/:account/turnstile |
+| Anthropic Console        | https://console.anthropic.com                       |
+| Anthropic API docs       | https://docs.anthropic.com                          |
+| Resend                   | https://resend.com                                  |
+| Resend API docs          | https://resend.com/docs                             |
+| Wrangler docs            | https://developers.cloudflare.com/workers/wrangler/ |
+| Search Console           | https://search.google.com/search-console            |
+| Rich Results Test        | https://search.google.com/test/rich-results         |
+| Security Headers checker | https://securityheaders.com                         |
 
 ---
 
 ## Archivos clave del repo
 
-| Archivo | Para qué sirve |
-|---|---|
-| `functions/types.ts` | Define la interface `Env` con todas las env vars |
-| `functions/_middleware.ts` | CORS preflight |
-| `functions/api/audit.ts` | Pipeline AI Audit (3 agentes + SSE stream) |
-| `functions/api/lead.ts` | Endpoint mini-ask de email post-audit |
-| `functions/api/_audit-utils.ts` | Helpers: Turnstile verify, KV rate-limit, Anthropic API calls |
-| `functions/api/_lead-handler.ts` | Shared module: persist lead + send emails |
-| `functions/api/_email-template.ts` | Templates HTML del email al cliente y a Gibran |
-| `src/content/site.ts` | Single source of truth para todo el copy del sitio |
-| `src/lib/audit/patterns.ts` | 15 patrones de automatización (inyectados al prompt del analyst) |
-| `src/lib/audit/prompts.ts` | Los 3 system prompts del pipeline |
-| `src/lib/audit/types.ts` | Types compartidos backend/frontend |
-| `src/lib/jsonld.ts` | Builder del JSON-LD para SEO |
-| `public/_headers` | Security + cache headers para CF Pages |
-| `public/_redirects` | Reglas de redirect (vacío por ahora) |
-| `public/robots.txt` | Robots con AI bots explicit allow |
-| `astro.config.mjs` | Config Astro: output static, manualChunks, prefetch |
-| `.dev.vars.example` | Template de env vars para Functions (local) |
-| `.env.example` | Template de env vars para Astro frontend (local) |
+| Archivo                            | Para qué sirve                                                   |
+| ---------------------------------- | ---------------------------------------------------------------- |
+| `functions/types.ts`               | Define la interface `Env` con todas las env vars                 |
+| `functions/_middleware.ts`         | CORS preflight                                                   |
+| `functions/api/audit.ts`           | Pipeline AI Audit (3 agentes + SSE stream)                       |
+| `functions/api/lead.ts`            | Endpoint mini-ask de email post-audit                            |
+| `functions/api/_audit-utils.ts`    | Helpers: Turnstile verify, KV rate-limit, Anthropic API calls    |
+| `functions/api/_lead-handler.ts`   | Shared module: persist lead + send emails                        |
+| `functions/api/_email-template.ts` | Templates HTML del email al cliente y a Gibran                   |
+| `src/content/site.ts`              | Single source of truth para todo el copy del sitio               |
+| `src/lib/audit/patterns.ts`        | 15 patrones de automatización (inyectados al prompt del analyst) |
+| `src/lib/audit/prompts.ts`         | Los 3 system prompts del pipeline                                |
+| `src/lib/audit/types.ts`           | Types compartidos backend/frontend                               |
+| `src/lib/jsonld.ts`                | Builder del JSON-LD para SEO                                     |
+| `public/_headers`                  | Security + cache headers para CF Pages                           |
+| `public/_redirects`                | Reglas de redirect (vacío por ahora)                             |
+| `public/robots.txt`                | Robots con AI bots explicit allow                                |
+| `astro.config.mjs`                 | Config Astro: output static, manualChunks, prefetch              |
+| `.dev.vars.example`                | Template de env vars para Functions (local)                      |
+| `.env.example`                     | Template de env vars para Astro frontend (local)                 |
 
 ---
 

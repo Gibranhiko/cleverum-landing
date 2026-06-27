@@ -4,14 +4,27 @@ interface Props {
   href?: string;
   class?: string;
 }
-const { label = 'Desliza para descubrir', href = '#manifesto', class: extraClass = '' } = Astro.props;
+const {
+  label = 'Desliza para descubrir',
+  href = '#manifesto',
+  class: extraClass = '',
+} = Astro.props;
 ---
 
 <a href={href} class={`chevron group ${extraClass}`} aria-label={label}>
   <span class="chevron-label">{label}</span>
   <span class="chevron-arrow" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none"
-      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
       <path d="M6 9l6 6 6-6"></path>
     </svg>
   </span>
@@ -39,7 +52,9 @@ const { label = 'Desliza para descubrir', href = '#manifesto', class: extraClass
     justify-content: center;
     border-radius: 9999px;
     border: 1px solid var(--color-border);
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    transition:
+      border-color 0.3s ease,
+      transform 0.3s ease;
     animation: chevron-bob 2.6s ease-in-out infinite;
   }
   .chevron:hover .chevron-arrow {
@@ -48,11 +63,18 @@ const { label = 'Desliza para descubrir', href = '#manifesto', class: extraClass
   }
 
   @keyframes chevron-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(6px);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .chevron-arrow { animation: none; }
+    .chevron-arrow {
+      animation: none;
+    }
   }
 </style>

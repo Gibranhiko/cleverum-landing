@@ -46,6 +46,7 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 **Dependencias**: ninguna.
 
 **Archivos a crear/modificar**:
+
 - `package.json`
 - `astro.config.mjs`
 - `tsconfig.json`
@@ -77,6 +78,7 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 7. Verificar `npm run dev` y `npm run build` funcionan en placeholder.
 
 **Criterios de aceptación**:
+
 - [ ] `npm install` corre sin errores
 - [ ] `npm run dev` levanta servidor sin warnings
 - [ ] `npm run build` produce `dist/` con `index.html`
@@ -84,6 +86,7 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 - [ ] `.gitignore` incluye `node_modules`, `dist`, `.astro`, `.env*`
 
 **Notas técnicas**:
+
 - Tailwind v4 usa el plugin de Vite, **no** PostCSS. Es plug-and-play más rápido.
 - Mantener Node ≥ 20.
 
@@ -96,6 +99,7 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 **Dependencias**: T1.
 
 **Archivos a crear/modificar**:
+
 - `src/styles/global.css`
 - `src/styles/fluid.css`
 - `astro.config.mjs` (añadir `experimental.fonts` o usar self-hosted)
@@ -105,25 +109,27 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 
 1. Configurar `astro:fonts` (experimental en Astro 5.7+) o instalar `@fontsource-variable/inter` y `@fontsource-variable/geist`. Preferir self-hosted para LCP.
 2. En `src/styles/global.css` declarar `@import "tailwindcss";` y bajo `@theme` mapear tokens:
+
    ```css
    @theme {
-     --color-bg-base: #08080B;
+     --color-bg-base: #08080b;
      --color-bg-elev: #111114;
-     --color-brand-blue: #4F8AF7;
-     --color-brand-iris: #7C5CFF;
-     --color-brand-grape: #A855F7;
-     --color-accent-go: #22C55E;
-     --color-text-1: #FFFFFF;
-     --color-text-2: #B4B4BF;
-     --color-border: rgba(255,255,255,0.08);
+     --color-brand-blue: #4f8af7;
+     --color-brand-iris: #7c5cff;
+     --color-brand-grape: #a855f7;
+     --color-accent-go: #22c55e;
+     --color-text-1: #ffffff;
+     --color-text-2: #b4b4bf;
+     --color-border: rgba(255, 255, 255, 0.08);
 
-     --font-display: "Geist Variable", system-ui, sans-serif;
-     --font-body: "Inter Variable", system-ui, sans-serif;
+     --font-display: 'Geist Variable', system-ui, sans-serif;
+     --font-body: 'Inter Variable', system-ui, sans-serif;
 
      --radius-card: 1.5rem;
      --radius-pill: 9999px;
    }
    ```
+
 3. En `fluid.css` definir `clamp()` para escalas tipográficas:
    ```css
    :root {
@@ -138,12 +144,14 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 5. Aplicar `font-family: var(--font-body)` al `<body>` y `background: var(--color-bg-base)`.
 
 **Criterios de aceptación**:
+
 - [ ] Tokens accesibles vía clases Tailwind (`bg-bg-base`, `text-brand-iris`, etc.)
 - [ ] Fuentes cargan con `font-display: swap` y subset latino
 - [ ] No hay FOIT/FOUT visible al recargar
 - [ ] Lighthouse no marca fuentes como render-blocking
 
 **Notas técnicas**:
+
 - Tailwind v4 lee tokens directamente del `@theme` — no requiere `tailwind.config.ts` para colores básicos.
 - Preload de la fuente display en `<head>`.
 
@@ -156,6 +164,7 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 **Dependencias**: T2.
 
 **Archivos a crear/modificar**:
+
 - `src/layouts/BaseLayout.astro`
 - `src/lib/seo.ts`
 
@@ -177,12 +186,14 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 5. `src/lib/seo.ts` exporta defaults y helpers para componer metadatos por sección.
 
 **Criterios de aceptación**:
+
 - [ ] `<html lang="es">` correcto
 - [ ] Open Graph completo en build (`view-source:` muestra todos los meta)
 - [ ] View transitions activas (transición suave al recargar)
 - [ ] Validar OG con [opengraph.xyz](https://www.opengraph.xyz/) tras T20
 
 **Notas técnicas**:
+
 - Astro inyecta `<ClientRouter />` que es ligero (~3KB) — vale la pena para la sensación premium.
 
 ---
@@ -194,6 +205,7 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 **Dependencias**: T1.
 
 **Archivos a crear/modificar**:
+
 - `src/content/site.ts`
 - `src/lib/whatsapp.ts`
 
@@ -205,7 +217,8 @@ Plan de implementación ticket por ticket. Cada ticket es ejecutable de forma ai
 export const site = {
   meta: {
     title: 'Cleverum — Automatización e innovación para tu negocio',
-    description: 'Soluciones inteligentes para negocios que evolucionan. Desarrollo web, IA y chatbots de WhatsApp.',
+    description:
+      'Soluciones inteligentes para negocios que evolucionan. Desarrollo web, IA y chatbots de WhatsApp.',
     url: 'https://cleverum.org',
     locale: 'es_MX',
   },
@@ -221,7 +234,8 @@ export const site = {
   hero: {
     eyebrow: 'AUTOMATIZACIÓN E INNOVACIÓN',
     title: ['Soluciones inteligentes', 'para negocios que', 'evolucionan'],
-    subtitle: 'Tres marcas, una visión: tecnología que conecta, automatiza y transforma tu negocio.',
+    subtitle:
+      'Tres marcas, una visión: tecnología que conecta, automatiza y transforma tu negocio.',
     ctaLabel: 'Hablemos por WhatsApp',
   },
   manifesto: {
@@ -233,7 +247,8 @@ export const site = {
       id: 'devindry',
       name: 'Devindry',
       tagline: 'Desarrollo web y mobile',
-      description: 'Páginas, e-commerce y apps que convierten. Diseño moderno, performance impecable y campañas que escalan.',
+      description:
+        'Páginas, e-commerce y apps que convierten. Diseño moderno, performance impecable y campañas que escalan.',
       accent: 'blue',
       youtubeId: null,
       videoPlaceholder: 'Próximamente: demo de un caso de desarrollo mobile',
@@ -247,7 +262,8 @@ export const site = {
       id: 'cleverum',
       name: 'Cleverum',
       tagline: 'Automatización con IA para negocios',
-      description: 'Diagnosticamos procesos, los automatizamos con IA y conectamos tus herramientas. Menos burocracia, más resultados.',
+      description:
+        'Diagnosticamos procesos, los automatizamos con IA y conectamos tus herramientas. Menos burocracia, más resultados.',
       accent: 'iris',
       youtubeId: null,
       videoPlaceholder: 'Próximamente: caso real de automatización',
@@ -261,7 +277,8 @@ export const site = {
       id: 'wabbi',
       name: 'Wabbi',
       tagline: 'Chatbots inteligentes para WhatsApp',
-      description: 'Atención 24/7, segmentación y conversiones reales. Tu canal de mayor engagement, ahora automático.',
+      description:
+        'Atención 24/7, segmentación y conversiones reales. Tu canal de mayor engagement, ahora automático.',
       accent: 'green',
       youtubeId: null,
       videoPlaceholder: 'Próximamente: demo de chatbot WhatsApp',
@@ -273,20 +290,45 @@ export const site = {
     },
   ],
   howWeWork: [
-    { step: '01', title: 'Descubrimiento', body: 'Entendemos tu negocio, procesos y métricas reales.' },
-    { step: '02', title: 'Diseño', body: 'Diseñamos la solución a medida y validamos contigo antes de construir.' },
-    { step: '03', title: 'Implementación', body: 'Construimos, integramos y entrenamos a tu equipo.' },
+    {
+      step: '01',
+      title: 'Descubrimiento',
+      body: 'Entendemos tu negocio, procesos y métricas reales.',
+    },
+    {
+      step: '02',
+      title: 'Diseño',
+      body: 'Diseñamos la solución a medida y validamos contigo antes de construir.',
+    },
+    {
+      step: '03',
+      title: 'Implementación',
+      body: 'Construimos, integramos y entrenamos a tu equipo.',
+    },
     { step: '04', title: 'Resultados', body: 'Medimos, iteramos y escalamos lo que funciona.' },
   ],
   differentiators: [
     { title: 'Soluciones a la medida', body: 'Cada cliente, cada flujo. Nada de plantillas.' },
-    { title: 'Tecnología de vanguardia', body: 'IA, automatización y WebGL — lo que hay de bueno, lo usamos.' },
+    {
+      title: 'Tecnología de vanguardia',
+      body: 'IA, automatización y WebGL — lo que hay de bueno, lo usamos.',
+    },
     { title: '100% enfocados en resultados', body: 'KPIs claros, ROI medible, deadlines reales.' },
     { title: 'Innovación sin límites', body: 'Si no existe la herramienta, la construimos.' },
   ],
   capabilities: [
-    'IA generativa', 'Automatización', 'Chatbots WhatsApp', 'E-commerce', 'Apps iOS', 'Apps Android',
-    'Google Ads', 'Redes sociales', 'UI/UX', 'Integraciones API', 'Dashboards', 'Reportes en tiempo real',
+    'IA generativa',
+    'Automatización',
+    'Chatbots WhatsApp',
+    'E-commerce',
+    'Apps iOS',
+    'Apps Android',
+    'Google Ads',
+    'Redes sociales',
+    'UI/UX',
+    'Integraciones API',
+    'Dashboards',
+    'Reportes en tiempo real',
   ],
   footer: {
     rights: '© 2026 Cleverum. Todos los derechos reservados.',
@@ -310,11 +352,13 @@ export function whatsappLink(message?: string): string {
 ```
 
 **Criterios de aceptación**:
+
 - [ ] `site.ts` tipa todo como `as const` y exporta tipos
 - [ ] `whatsappLink()` genera URL válida con encoding correcto
 - [ ] Ningún componente futuro hardcodea texto que ya esté en `site.ts`
 
 **Notas técnicas**:
+
 - El número WhatsApp `5215541433545` es formato wa.me: `52` (México) + `1` (móvil) + 10 dígitos.
 
 ---
@@ -326,6 +370,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T1.
 
 **Archivos a crear/modificar**:
+
 - `wrangler.toml` (opcional, solo si se quiere CLI deploy)
 - `public/_headers`
 - `public/_redirects`
@@ -334,6 +379,7 @@ export function whatsappLink(message?: string): string {
 **Pasos**:
 
 1. Crear `public/_headers` con cache headers correctos:
+
    ```
    /*
      X-Frame-Options: DENY
@@ -347,6 +393,7 @@ export function whatsappLink(message?: string): string {
    /fonts/*
      Cache-Control: public, max-age=31536000, immutable
    ```
+
 2. Crear `public/_redirects` vacío inicialmente.
 3. Documentar en README rápido los pasos manuales en dashboard CF Pages:
    - Conectar repo
@@ -357,11 +404,13 @@ export function whatsappLink(message?: string): string {
    - Custom domain: `cleverum.org`
 
 **Criterios de aceptación**:
+
 - [ ] `public/_headers` presente con security headers
 - [ ] Build local (`npm run build`) produce `dist/` deployable
 - [ ] El primer push a `main` se puede vincular a CF Pages sin cambios extra
 
 **Notas técnicas**:
+
 - No usar adapter `@astrojs/cloudflare` — es para SSR. Para SSG basta `output: 'static'`.
 
 ---
@@ -375,6 +424,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T2.
 
 **Archivos a crear/modificar**:
+
 - `src/components/react/ScrollProgressProvider.tsx`
 - `src/components/react/ScrollProgressBar.tsx`
 - `src/components/react/useScrollProgress.ts`
@@ -393,12 +443,14 @@ export function whatsappLink(message?: string): string {
 4. En `BaseLayout.astro`, montar `<ScrollProgressProvider client:idle>` envolviendo el slot, y `<ScrollProgressBar client:idle>`.
 
 **Criterios de aceptación**:
+
 - [ ] Barra se llena suavemente al hacer scroll
 - [ ] No causa CLS al cargar
 - [ ] No re-renderiza más de 60 veces/s (throttle con rAF)
 - [ ] Funciona con view transitions (re-suscribe al cambiar de page si hubiera)
 
 **Notas técnicas**:
+
 - Como Astro hidrata islas independientemente, el Provider y Bar deben compartir el mismo árbol React. Solución: que Provider wrappee TODA la página y Bar viva dentro.
 - Alternativa más simple si no se logra: que Bar tenga su propio listener (duplicar es OK aquí, es cheap).
 
@@ -411,6 +463,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T6.
 
 **Archivos a crear/modificar**:
+
 - `src/components/react/ParticleField.tsx`
 - `src/components/three/particleGeometry.ts`
 
@@ -432,12 +485,14 @@ export function whatsappLink(message?: string): string {
 4. Montar en `BaseLayout` con `client:visible`.
 
 **Criterios de aceptación**:
+
 - [ ] Canvas se monta solo cuando entra en viewport (no en SSR)
 - [ ] 60fps en MacBook Air M1 con 8000 partículas
 - [ ] No hay overflow del canvas hacia el contenido (z-index correcto)
 - [ ] `pointer-events: none` deja pasar clicks al contenido
 
 **Notas técnicas**:
+
 - `client:visible` evita penalizar LCP del hero.
 - Si la fuente del hero pinta más rápido y el canvas aparece después, está OK — incluso es deseable como reveal.
 
@@ -450,6 +505,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T7.
 
 **Archivos a crear/modificar**:
+
 - `src/components/three/shaders/particles.vert.glsl`
 - `src/components/three/shaders/particles.frag.glsl`
 - `src/components/react/ParticleField.tsx` (refactor)
@@ -461,6 +517,7 @@ export function whatsappLink(message?: string): string {
    - `targetA`: red 3D ordenada (grid o nodes de grafo)
    - `targetB`: constelación final (más dispersa, con clusters)
 2. Vertex shader (`particles.vert.glsl`):
+
    ```glsl
    uniform float uProgress;
    uniform float uTime;
@@ -485,7 +542,9 @@ export function whatsappLink(message?: string): string {
      vAlpha = 0.7 + uProgress * 0.3;
    }
    ```
+
 3. Fragment shader (`particles.frag.glsl`):
+
    ```glsl
    uniform vec3 uColorA;
    uniform vec3 uColorB;
@@ -501,6 +560,7 @@ export function whatsappLink(message?: string): string {
      gl_FragColor = vec4(color, a);
    }
    ```
+
 4. En `ParticleField.tsx`, usar `shaderMaterial` (drei) o `THREE.ShaderMaterial` con uniforms:
    - `uProgress: { value: 0 }`
    - `uTime: { value: 0 }`
@@ -509,12 +569,14 @@ export function whatsappLink(message?: string): string {
 5. En `useFrame`, incrementar `uTime`. `uProgress` se actualizará en T9.
 
 **Criterios de aceptación**:
+
 - [ ] Al cambiar manualmente `uProgress` (devtools), las partículas se reorganizan suavemente
 - [ ] El color transiciona blue → iris → grape
 - [ ] No hay parpadeos / artefactos
 - [ ] Compila sin warnings de shader
 
 **Notas técnicas**:
+
 - Usar `glsl` template literals importados con vite plugin `vite-plugin-glsl` si se prefiere, o pegar strings inline.
 
 ---
@@ -526,6 +588,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T6, T8.
 
 **Archivos a crear/modificar**:
+
 - `src/components/react/ParticleField.tsx`
 
 **Pasos**:
@@ -545,12 +608,14 @@ export function whatsappLink(message?: string): string {
    - `ScrollTrigger.create({ start: 0, end: 'max', scrub: 0.8, onUpdate: ({ progress }) => uniforms.uProgress.value = progress })`
 
 **Criterios de aceptación**:
+
 - [ ] Al hacer scroll, las partículas pasan de nube → red → constelación
 - [ ] La interpolación es suave (no salta)
 - [ ] No drops de FPS al hacer scroll rápido
 - [ ] Funciona al recargar a mitad de página (estado inicial coherente)
 
 **Notas técnicas**:
+
 - `dt * 5` da una respuesta crítica ~0.2s; ajustar al gusto.
 
 ---
@@ -562,6 +627,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T7.
 
 **Archivos a crear/modificar**:
+
 - `src/components/react/ParticleField.tsx`
 - `src/components/ui/GradientMeshBackground.astro`
 - `src/layouts/BaseLayout.astro`
@@ -577,12 +643,14 @@ export function whatsappLink(message?: string): string {
 3. Dentro de `ParticleField`, además, escuchar `matchMedia('(prefers-reduced-motion: reduce)')` y si cambia → desuscribir scroll → uniform y dejar partículas en estado estático (`uProgress = 0`).
 
 **Criterios de aceptación**:
+
 - [ ] En iPhone (Safari) no se monta Canvas
 - [ ] Con DevTools forzando `prefers-reduced-motion: reduce`, no se monta Canvas
 - [ ] El fondo CSS gradient mesh queda visualmente atractivo como fallback
 - [ ] No FOUC entre fondo y canvas
 
 **Notas técnicas**:
+
 - `client:media` evalúa en el cliente; si no matchea, la isla nunca se hidrata → cero costo.
 
 ---
@@ -598,6 +666,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T4, T7.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/Hero.astro`
 - `src/components/ui/WhatsAppButton.astro`
 - `src/components/ui/Chevron.astro`
@@ -615,12 +684,14 @@ export function whatsappLink(message?: string): string {
 3. `Chevron.astro` — SVG con CSS animation bounce, respeta `prefers-reduced-motion`.
 
 **Criterios de aceptación**:
+
 - [ ] El hero ocupa 100vh sin scroll forzado
 - [ ] El título es legible sobre el campo de partículas (sombra sutil o backdrop si hace falta)
 - [ ] CTA es focusable y tiene `aria-label` descriptivo
 - [ ] Chevron al click hace `scrollIntoView` a la siguiente sección
 
 **Notas técnicas**:
+
 - El gradient-text del título debe respetar contraste; si en algún viewport queda ilegible, subir opacidad.
 
 ---
@@ -632,6 +703,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T11.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/Manifesto.astro`
 - `src/styles/manifesto.css`
 
@@ -651,22 +723,29 @@ export function whatsappLink(message?: string): string {
        animation-range: entry 30% cover 50%;
      }
      @keyframes word-reveal {
-       to { opacity: 1; font-weight: 700; }
+       to {
+         opacity: 1;
+         font-weight: 700;
+       }
      }
    }
    @supports not (animation-timeline: view()) {
-     .manifesto-word { opacity: 1; }
+     .manifesto-word {
+       opacity: 1;
+     }
    }
    ```
 3. Asegurar reduced-motion: dentro de `@media (prefers-reduced-motion: reduce)`, `opacity: 1; animation: none;`.
 
 **Criterios de aceptación**:
+
 - [ ] Cada palabra se ilumina y se hace bold al entrar al viewport
 - [ ] En navegadores sin soporte, se ven todas las palabras claras
 - [ ] Cero JS para esta sección
 - [ ] La animación es suave y cinematográfica
 
 **Notas técnicas**:
+
 - `animation-timeline` ya está en Chrome/Edge estable y Firefox 142+. Safari aún no — el fallback es aceptable.
 
 ---
@@ -678,6 +757,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T4, T14.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/BrandsStack.astro`
 - `src/components/ui/BrandCard.astro`
 
@@ -687,13 +767,18 @@ export function whatsappLink(message?: string): string {
    - `<section id="brands" class="brands-stack">`
    - Itera `site.brands` y para cada marca:
      ```astro
-     <article class="brand-card" style={`--accent: var(--color-brand-${brand.accent}); top: ${10 + i * 4}vh; z-index: ${i + 1};`}>
+     <article
+       class="brand-card"
+       style={`--accent: var(--color-brand-${brand.accent}); top: ${10 + i * 4}vh; z-index: ${i + 1};`}
+     >
        <BrandCard brand={brand} index={i} />
      </article>
      ```
 2. CSS:
    ```css
-   .brands-stack { padding: 8vh 0; }
+   .brands-stack {
+     padding: 8vh 0;
+   }
    .brand-card {
      position: sticky;
      min-height: 80vh;
@@ -701,7 +786,11 @@ export function whatsappLink(message?: string): string {
      max-width: 1100px;
      padding: 4rem;
      border-radius: var(--radius-card);
-     background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 8%, var(--color-bg-elev)), var(--color-bg-elev));
+     background: linear-gradient(
+       180deg,
+       color-mix(in srgb, var(--accent) 8%, var(--color-bg-elev)),
+       var(--color-bg-elev)
+     );
      border: 1px solid var(--color-border);
      box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--accent) 40%, transparent);
    }
@@ -716,12 +805,14 @@ export function whatsappLink(message?: string): string {
 4. Cada card debe tener una altura tal que se vea la siguiente "asomar" antes de que ésta deje de ser sticky → no cap rígido, dejar que `min-height: 80vh` y siguiente se monte arriba.
 
 **Criterios de aceptación**:
+
 - [ ] Las 3 cards se apilan visualmente al hacer scroll (la nueva cubre la anterior)
 - [ ] Cada card respira en mobile (stack vertical natural)
 - [ ] El acento de color de cada marca es claramente distinto
 - [ ] El video YouTube se ve correctamente integrado, sin overflow
 
 **Notas técnicas**:
+
 - El truco del stack sticky es que cada `<article>` sea `position: sticky` con `top` incrementando ligeramente para que se vea el "borde" de las anteriores debajo.
 - En mobile (< 768px), apagar el sticky para que sea scroll normal.
 
@@ -734,6 +825,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T1.
 
 **Archivos a crear/modificar**:
+
 - `src/components/ui/YouTubeLite.astro`
 
 **Pasos**:
@@ -748,25 +840,30 @@ export function whatsappLink(message?: string): string {
    import { YouTube } from '@astro-community/astro-embed-youtube';
    const { id, title, placeholderText } = Astro.props;
    ---
-   {id ? (
-     <YouTube id={id} title={title} class="rounded-2xl overflow-hidden" />
-   ) : (
-     <div class="aspect-video rounded-2xl border border-border bg-bg-elev flex items-center justify-center p-8">
-       <div class="text-center">
-         <div class="text-text-2 text-sm uppercase tracking-widest mb-2">Próximamente</div>
-         <div class="text-text-1 text-lg">{placeholderText}</div>
+
+   {
+     id ? (
+       <YouTube id={id} title={title} class="overflow-hidden rounded-2xl" />
+     ) : (
+       <div class="border-border bg-bg-elev flex aspect-video items-center justify-center rounded-2xl border p-8">
+         <div class="text-center">
+           <div class="text-text-2 mb-2 text-sm tracking-widest uppercase">Próximamente</div>
+           <div class="text-text-1 text-lg">{placeholderText}</div>
+         </div>
        </div>
-     </div>
-   )}
+     )
+   }
    ```
 
 **Criterios de aceptación**:
+
 - [ ] Con `id={null}` muestra placeholder estilizado
 - [ ] Con id real muestra preview thumbnail y solo carga iframe al click
 - [ ] Cero JS extra cuando es placeholder
 - [ ] Mantiene aspect ratio 16:9 sin CLS
 
 **Notas técnicas**:
+
 - `@astro-community/astro-embed-youtube` usa `lite-youtube` web component — ~3KB.
 
 ---
@@ -778,6 +875,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T4.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/HowWeWork.astro`
 
 **Pasos**:
@@ -793,16 +891,26 @@ export function whatsappLink(message?: string): string {
      content: '';
      position: absolute;
      inset: 0;
-     background: linear-gradient(90deg, var(--color-brand-blue), var(--color-brand-iris), var(--color-accent-go));
+     background: linear-gradient(
+       90deg,
+       var(--color-brand-blue),
+       var(--color-brand-iris),
+       var(--color-accent-go)
+     );
      transform-origin: left;
      transform: scaleX(0);
      animation: fill-line linear both;
      animation-timeline: view();
    }
-   @keyframes fill-line { to { transform: scaleX(1); } }
+   @keyframes fill-line {
+     to {
+       transform: scaleX(1);
+     }
+   }
    ```
 
 **Criterios de aceptación**:
+
 - [ ] En desktop: 4 pasos horizontales con línea progresando
 - [ ] En mobile: stack vertical, línea vertical o ausente
 - [ ] Sin JS
@@ -816,6 +924,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T4.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/BentoDifferentiators.astro`
 
 **Pasos**:
@@ -828,12 +937,26 @@ export function whatsappLink(message?: string): string {
      grid-template-columns: repeat(6, 1fr);
      grid-auto-rows: minmax(180px, auto);
    }
-   .bento > :nth-child(1) { grid-column: span 3; grid-row: span 2; }
-   .bento > :nth-child(2) { grid-column: span 3; }
-   .bento > :nth-child(3) { grid-column: span 2; }
-   .bento > :nth-child(4) { grid-column: span 4; }
-   .bento > :nth-child(5) { grid-column: span 4; grid-row: span 2; }
-   .bento > :nth-child(6) { grid-column: span 2; }
+   .bento > :nth-child(1) {
+     grid-column: span 3;
+     grid-row: span 2;
+   }
+   .bento > :nth-child(2) {
+     grid-column: span 3;
+   }
+   .bento > :nth-child(3) {
+     grid-column: span 2;
+   }
+   .bento > :nth-child(4) {
+     grid-column: span 4;
+   }
+   .bento > :nth-child(5) {
+     grid-column: span 4;
+     grid-row: span 2;
+   }
+   .bento > :nth-child(6) {
+     grid-column: span 2;
+   }
    ```
 2. Contenido:
    - Cuadros 1, 2, 4, 6: los 4 `site.differentiators`
@@ -842,6 +965,7 @@ export function whatsappLink(message?: string): string {
 3. En mobile, columnas 1 sola y `grid-row: auto` para todos.
 
 **Criterios de aceptación**:
+
 - [ ] Layout asimétrico atractivo desktop
 - [ ] Layout cuadros apilados mobile sin overflow
 - [ ] Cada cuadro tiene microhover (translate-y -2px + glow)
@@ -855,6 +979,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T4.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/CapabilitiesMarquee.astro`
 
 **Pasos**:
@@ -862,15 +987,34 @@ export function whatsappLink(message?: string): string {
 1. Duplicar el array `site.capabilities` y renderizar 2 copias seguidas dentro de un track de `width: max-content`.
 2. CSS:
    ```css
-   .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-   .marquee-track { display: flex; gap: 1rem; width: max-content; animation: marquee 40s linear infinite; }
-   @keyframes marquee { to { transform: translateX(-50%); } }
-   .marquee-track:hover { animation-play-state: paused; }
-   @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+   .marquee {
+     overflow: hidden;
+     mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+   }
+   .marquee-track {
+     display: flex;
+     gap: 1rem;
+     width: max-content;
+     animation: marquee 40s linear infinite;
+   }
+   @keyframes marquee {
+     to {
+       transform: translateX(-50%);
+     }
+   }
+   .marquee-track:hover {
+     animation-play-state: paused;
+   }
+   @media (prefers-reduced-motion: reduce) {
+     .marquee-track {
+       animation: none;
+     }
+   }
    ```
 3. Cada tag: pill con borde sutil, texto `text-2`.
 
 **Criterios de aceptación**:
+
 - [ ] Loop continuo sin saltos
 - [ ] Pausa al hover
 - [ ] Sin scrollbar horizontal
@@ -885,6 +1029,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T4.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/ContactCTA.astro`
 
 **Pasos**:
@@ -896,6 +1041,7 @@ export function whatsappLink(message?: string): string {
 5. Opcional: QR generado al build con `qrcode` package apuntando al `whatsappLink()`
 
 **Criterios de aceptación**:
+
 - [ ] CTA es lo primero visible al entrar a la sección
 - [ ] Datos copiables (selectable text)
 - [ ] Email es `mailto:` y teléfono `tel:`
@@ -909,6 +1055,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T4.
 
 **Archivos a crear/modificar**:
+
 - `src/components/sections/Footer.astro`
 
 **Pasos**:
@@ -918,6 +1065,7 @@ export function whatsappLink(message?: string): string {
 3. `© 2026 Cleverum...` + redes (si las hay en `site.footer.socials`)
 
 **Criterios de aceptación**:
+
 - [ ] Footer es semantic `<footer role="contentinfo">`
 - [ ] Año generado dinámicamente: `new Date().getFullYear()`
 
@@ -932,6 +1080,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T3.
 
 **Archivos a crear/modificar**:
+
 - `src/pages/og.png.ts`
 - `public/favicons/*` (8 sizes + apple-touch-icon)
 - `public/site.webmanifest`
@@ -944,6 +1093,7 @@ export function whatsappLink(message?: string): string {
 4. Actualizar `BaseLayout.astro` con todos los `<link>` correctos.
 
 **Criterios de aceptación**:
+
 - [ ] Compartir el link en WhatsApp/Slack/Twitter muestra OG card correcta
 - [ ] Lighthouse no marca falta de favicons
 - [ ] PWA installable check pasa (no es PWA, pero el manifest válido ayuda en algunos browsers)
@@ -957,6 +1107,7 @@ export function whatsappLink(message?: string): string {
 **Dependencias**: T3, T4.
 
 **Archivos a crear/modificar**:
+
 - `src/lib/jsonld.ts`
 - `src/layouts/BaseLayout.astro`
 
@@ -972,6 +1123,7 @@ export function whatsappLink(message?: string): string {
 2. En `BaseLayout`, inyectar todos con `<script type="application/ld+json" set:html={JSON.stringify(...)}></script>`.
 
 **Criterios de aceptación**:
+
 - [ ] [Rich Results Test](https://search.google.com/test/rich-results) valida sin errores
 - [ ] [Schema validator](https://validator.schema.org/) sin errores
 - [ ] Cuando se agrega un `youtubeId`, el `VideoObject` correspondiente aparece automáticamente
@@ -998,6 +1150,7 @@ export function whatsappLink(message?: string): string {
 3. Documentar cualquier breakpoint custom necesario en `tailwind.config.ts`.
 
 **Criterios de aceptación**:
+
 - [ ] Cero scroll horizontal en ningún viewport
 - [ ] Tap targets ≥ 44×44px en mobile
 - [ ] Texto no se trunca
@@ -1022,6 +1175,7 @@ export function whatsappLink(message?: string): string {
 3. Verificar que el build no incluye React en páginas donde no hay islas (Astro lo hace bien por default; verificar `dist/_astro/` no infla).
 
 **Criterios de aceptación**:
+
 - [ ] Performance ≥ 95 mobile y desktop
 - [ ] SEO = 100
 - [ ] A11y = 100
@@ -1052,6 +1206,7 @@ export function whatsappLink(message?: string): string {
 6. Test final en producción: Lighthouse + share OG + mobile real.
 
 **Criterios de aceptación**:
+
 - [ ] `https://cleverum.org` sirve la landing con SSL válido
 - [ ] OG card funciona al compartir
 - [ ] Web Analytics empieza a recibir datos

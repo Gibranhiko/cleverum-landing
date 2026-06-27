@@ -41,13 +41,17 @@ export default function AiAuditTool(): React.ReactElement {
 
   const resultRef = useRef<HTMLDivElement>(null);
 
-  const { containerRef: tsContainerRef, execute: tsExecute, reset: tsReset, error: tsError } =
-    useTurnstile(SITE_KEY, (token) => {
-      if (pending) {
-        void run(pending, token);
-        setPending(null);
-      }
-    });
+  const {
+    containerRef: tsContainerRef,
+    execute: tsExecute,
+    reset: tsReset,
+    error: tsError,
+  } = useTurnstile(SITE_KEY, (token) => {
+    if (pending) {
+      void run(pending, token);
+      setPending(null);
+    }
+  });
 
   const handleWizardSubmit = (values: WizardValues): void => {
     if (!SITE_KEY) {
@@ -81,10 +85,7 @@ export default function AiAuditTool(): React.ReactElement {
     tsExecute();
   };
 
-  const run = async (
-    sub: PendingSubmit,
-    turnstileToken: string,
-  ): Promise<void> => {
+  const run = async (sub: PendingSubmit, turnstileToken: string): Promise<void> => {
     try {
       await streamAudit(
         {
@@ -140,9 +141,7 @@ export default function AiAuditTool(): React.ReactElement {
   // inicio de la sección de diagnóstico (respeta su scroll-margin del navbar).
   useEffect(() => {
     if (!auditStarted) return;
-    document
-      .getElementById('diagnostico')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('diagnostico')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [auditStarted]);
 
   const emailProvidedUpfront = Boolean(submitted?.email.trim());
@@ -177,12 +176,10 @@ export default function AiAuditTool(): React.ReactElement {
 
   return (
     <div
-      className={`audit-card${running ? ' is-processing' : ''}`}
+      className={`audit-card${running ? 'is-processing' : ''}`}
       aria-label="Diagnóstico inteligente"
     >
-      {showWizard && (
-        <Wizard onSubmit={handleWizardSubmit} disabled={running} />
-      )}
+      {showWizard && <Wizard onSubmit={handleWizardSubmit} disabled={running} />}
 
       {!showWizard && submitted && (
         <div className="audit-summary" role="status">
@@ -197,9 +194,7 @@ export default function AiAuditTool(): React.ReactElement {
             </strong>
             {submitted.input && (
               <span className="audit-summary-business">
-                {submitted.input.length > 90
-                  ? `${submitted.input.slice(0, 90)}…`
-                  : submitted.input}
+                {submitted.input.length > 90 ? `${submitted.input.slice(0, 90)}…` : submitted.input}
               </span>
             )}
           </div>

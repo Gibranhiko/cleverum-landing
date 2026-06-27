@@ -8,11 +8,7 @@ interface Props {
   onChange: (field: 'email' | 'telefono', value: string) => void;
 }
 
-export default function StepContact({
-  email,
-  telefono,
-  onChange,
-}: Props): React.ReactElement {
+export default function StepContact({ email, telefono, onChange }: Props): React.ReactElement {
   const firstRef = useRef<HTMLInputElement>(null);
   const { audit } = site;
 
@@ -26,15 +22,17 @@ export default function StepContact({
   return (
     <div className="wiz-step">
       <header className="wiz-step-header">
-        <h3 className="wiz-step-title">¿Cómo te enviamos el reporte detallado?</h3>
+        <h3 className="wiz-step-title">¿A qué correo te enviamos el reporte?</h3>
         <p className="wiz-step-sub">
-          Si nos dejas tu email, te lo enviamos al terminar. Si no, lo ves aquí mismo.
+          Te lo mandamos al terminar — aunque cierres la pestaña, te llega.
         </p>
       </header>
 
       <div className="wiz-grid">
         <label className="wiz-field">
-          <span>{audit.fields.email}</span>
+          <span>
+            {audit.fields.email} <i className="wiz-required">*</i>
+          </span>
           <input
             ref={firstRef}
             type="email"
@@ -45,9 +43,7 @@ export default function StepContact({
             autoComplete="email"
             aria-invalid={emailError}
           />
-          {emailError && (
-            <span className="wiz-field-error">Email no parece válido.</span>
-          )}
+          {emailError && <span className="wiz-field-error">Email no parece válido.</span>}
         </label>
         <label className="wiz-field">
           <span>{audit.fields.telefono}</span>
@@ -60,11 +56,7 @@ export default function StepContact({
             autoComplete="tel"
             aria-invalid={phoneError}
           />
-          {phoneError && (
-            <span className="wiz-field-error">
-              Solo números, mínimo 7 dígitos.
-            </span>
-          )}
+          {phoneError && <span className="wiz-field-error">Solo números, mínimo 7 dígitos.</span>}
         </label>
       </div>
     </div>

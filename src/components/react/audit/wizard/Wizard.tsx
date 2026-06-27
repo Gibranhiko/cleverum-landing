@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 import './Wizard.css';
-import {
-  useFormWizard,
-  type StepIndex,
-  type WizardValues,
-} from './useFormWizard';
+import { useFormWizard, type StepIndex, type WizardValues } from './useFormWizard';
 import ProgressDots from './ProgressDots';
 import StepBusiness from './StepBusiness';
 import StepContext from './StepContext';
@@ -48,12 +44,7 @@ export default function Wizard({ onSubmit, disabled }: Props): React.ReactElemen
   const renderStep = (): React.ReactElement => {
     switch (wiz.currentStep) {
       case 0:
-        return (
-          <StepBusiness
-            value={wiz.values.input}
-            onChange={(v) => wiz.setValue('input', v)}
-          />
-        );
+        return <StepBusiness value={wiz.values.input} onChange={(v) => wiz.setValue('input', v)} />;
       case 1:
         return (
           <StepContext
@@ -87,7 +78,7 @@ export default function Wizard({ onSubmit, disabled }: Props): React.ReactElemen
 
   return (
     <form
-      className={`wiz${disabled ? ' is-disabled' : ''}`}
+      className={`wiz${disabled ? 'is-disabled' : ''}`}
       onSubmit={(e) => {
         e.preventDefault();
         handleFormSubmit();
@@ -101,10 +92,7 @@ export default function Wizard({ onSubmit, disabled }: Props): React.ReactElemen
       />
 
       <div className="wiz-stage">
-        <div
-          key={wiz.currentStep}
-          className={`wiz-step-wrapper is-${wiz.direction}`}
-        >
+        <div key={wiz.currentStep} className={`wiz-step-wrapper is-${wiz.direction}`}>
           {renderStep()}
         </div>
       </div>
@@ -139,12 +127,7 @@ export default function Wizard({ onSubmit, disabled }: Props): React.ReactElemen
 
         <div className="wiz-footer-right">
           {isOptional && !isLast && (
-            <button
-              type="button"
-              className="wiz-btn-link"
-              onClick={wiz.goNext}
-              disabled={disabled}
-            >
+            <button type="button" className="wiz-btn-link" onClick={wiz.goNext} disabled={disabled}>
               Saltar
             </button>
           )}

@@ -68,8 +68,13 @@
 }
 
 @keyframes wiz-dot-breath {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.65; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
 }
 
 .wiz-progress-label {
@@ -98,13 +103,25 @@
 }
 
 @keyframes wiz-slide-in {
-  from { opacity: 0; transform: translateX(32px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes wiz-slide-in-back {
-  from { opacity: 0; transform: translateX(-32px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* ============================================================
@@ -190,8 +207,12 @@
   pointer-events: none;
 }
 
-.wiz-counter.is-warn { color: #fbbf24; }
-.wiz-counter.is-error { color: #ef4444; }
+.wiz-counter.is-warn {
+  color: #fbbf24;
+}
+.wiz-counter.is-error {
+  color: #ef4444;
+}
 
 .wiz-examples {
   display: flex;
@@ -305,8 +326,14 @@
 }
 
 @keyframes wiz-error-in {
-  from { opacity: 0; transform: translateY(-3px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ============================================================
@@ -360,7 +387,9 @@
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
   font: inherit;
   font-size: 0.72rem;
 }
@@ -518,7 +547,9 @@
   font-size: 0.85rem;
   cursor: pointer;
   border-radius: 9999px;
-  transition: color 0.2s ease, background-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .wiz-btn-link:hover:not(:disabled) {
@@ -538,13 +569,19 @@
   .wiz-step-wrapper.is-backward {
     animation: none;
   }
-  .wiz-dot.is-active { animation: none; }
-  .wiz-dot.is-completed:hover { transform: none; }
+  .wiz-dot.is-active {
+    animation: none;
+  }
+  .wiz-dot.is-completed:hover {
+    transform: none;
+  }
   .wiz-btn-primary:hover:not(:disabled),
   .wiz-btn-primary:hover:not(:disabled) svg,
   .wiz-btn-ghost:hover:not(:disabled) svg,
   .wiz-recap-edit:hover svg {
     transform: none;
   }
-  .wiz-textarea::placeholder { transition: none; }
+  .wiz-textarea::placeholder {
+    transition: none;
+  }
 }
