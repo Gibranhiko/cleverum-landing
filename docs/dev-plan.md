@@ -835,6 +835,7 @@ export function whatsappLink(message?: string): string {
    npm install @astro-community/astro-embed-youtube
    ```
 2. `YouTubeLite.astro`:
+
    ```astro
    ---
    import { YouTube } from '@astro-community/astro-embed-youtube';

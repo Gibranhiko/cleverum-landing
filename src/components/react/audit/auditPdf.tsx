@@ -354,8 +354,8 @@ function AuditDoc({ audit, client }: { audit: AuditResult; client?: ClientInfo }
           <Text style={s.sectionLabel}>¿Hablamos?</Text>
           <Text style={s.contact}>
             Escríbenos a <Text style={s.contactStrong}>{site.contact.email}</Text> o al{' '}
-            <Text style={s.contactStrong}>{site.contact.phoneDisplay}</Text> (WhatsApp). Te
-            ayudamos a aterrizar esta oportunidad.
+            <Text style={s.contactStrong}>{site.contact.phoneDisplay}</Text> (WhatsApp). Te ayudamos
+            a aterrizar esta oportunidad.
           </Text>
         </View>
 

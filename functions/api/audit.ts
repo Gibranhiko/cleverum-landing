@@ -19,6 +19,7 @@ import {
   verifyTurnstile,
   checkAndConsumeRateLimit,
   checkAndIncrementDailyCap,
+  checkAndIncrementHourlyCap,
   isIpAllowlisted,
   callAnthropic,
   callAnthropicWithThinking,
@@ -133,6 +134,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       );
     }
 
+    // Cap global por hora (~1/4 del diario) — frena ráfagas y ataques distribuidos.
+    const dailyCap = Math.max(1, parseInt(env.DAILY_AUDIT_CAP, 10) || 100);
+    const hourlyCap = Math.max(10, Math.ceil(dailyCap / 4));
+    if (!(await checkAndIncrementHourlyCap(env.KV, hourlyCap))) {
+      return jsonError(
+        429,
+        'hourly_cap_reached',
+        'Hay muchos diagnósticos en este momento. Intenta de nuevo en un rato o escríbeme por WhatsApp.',
+      );
+    }
+
     const cap = await checkAndIncrementDailyCap(env.KV, env.DAILY_AUDIT_CAP);
     if (!cap.allowed) {
       return jsonError(
@@ -177,7 +189,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         user: analystUser,
         maxTokens: 2000,
         thinkingBudget: 1100,
-        onThinking: (delta) => send('thinking', { delta }),
+        // El razonamiento interno NO se transmite al cliente: un prompt
+        // malicioso podría hacer que el modelo recite los patrones (IP) en su
+        // thinking. La UI muestra el stepper + tips, no el thinking crudo.
+        onThinking: () => {},
       });
       const draft = parseJsonFromLlm<AnalystDraft>(analystText);
       send('opportunities_draft', draft);
@@ -262,8 +277,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         ...(sent ? {} : { reason: normalizedContact.email ? 'send_failed' : 'no_email' }),
       });
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'unknown';
-      send('error', { code: 'pipeline_failed', message });
+      // El detalle real (que puede incluir cuerpos de error de la API) va al
+      // log del servidor; al cliente solo un mensaje genérico.
+      console.error('[audit] pipeline_failed:', err);
+      send('error', {
+        code: 'pipeline_failed',
+        message: 'No pudimos completar el diagnóstico. Intenta de nuevo en un momento.',
+      });
     } finally {
       await writer.close().catch(() => {});
     }

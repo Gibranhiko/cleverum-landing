@@ -45,12 +45,52 @@ export function isUrl(input: string): boolean {
   }
 }
 
+// Defensa SSRF: hosts internos/privados que NUNCA debemos fetchear.
+function isBlockedFetchHost(hostname: string): boolean {
+  const h = hostname.toLowerCase().replace(/^\[|\]$/g, '');
+  if (
+    h === 'localhost' ||
+    h.endsWith('.localhost') ||
+    h.endsWith('.local') ||
+    h.endsWith('.internal') ||
+    h === '::1' ||
+    h === '0.0.0.0'
+  ) {
+    return true;
+  }
+  // IPv4 loopback / privados / link-local (metadata cloud 169.254.169.254)
+  if (
+    /^127\./.test(h) ||
+    /^10\./.test(h) ||
+    /^192\.168\./.test(h) ||
+    /^169\.254\./.test(h) ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(h)
+  ) {
+    return true;
+  }
+  // Debe parecer un dominio público (tener un punto).
+  return !h.includes('.');
+}
+
+// Tope de lectura: nunca cargamos más de esto en memoria (anti respuesta gigante).
+const MAX_FETCH_BYTES = 512 * 1024;
+
 export async function fetchHtml(input: string, maxChars = 3000): Promise<string | null> {
-  const target = input.startsWith('http') ? input : `https://${input}`;
+  const raw = input.startsWith('http') ? input : `https://${input}`;
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return null;
+  }
+  // Solo http/https y hosts públicos (anti-SSRF).
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+  if (isBlockedFetchHost(url.hostname)) return null;
+
   try {
     const ac = new AbortController();
     const timer = setTimeout(() => ac.abort(), 5000);
-    const r = await fetch(target, {
+    const r = await fetch(url.toString(), {
       signal: ac.signal,
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; CleverumAuditBot/1.0; +https://cleverum.org)',
@@ -59,8 +99,27 @@ export async function fetchHtml(input: string, maxChars = 3000): Promise<string 
       redirect: 'follow',
     });
     clearTimeout(timer);
-    if (!r.ok) return null;
-    const text = await r.text();
+    if (!r.ok || !r.body) return null;
+
+    // Lectura acotada por bytes (no usamos r.text() porque cargaría todo el body).
+    const reader = r.body.getReader();
+    const decoder = new TextDecoder();
+    let text = '';
+    let bytes = 0;
+    while (bytes < MAX_FETCH_BYTES) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      bytes += value.byteLength;
+      text += decoder.decode(value, { stream: true });
+      // Con ~maxChars*8 de HTML crudo basta para limpiar a maxChars.
+      if (text.length > maxChars * 8) break;
+    }
+    try {
+      await reader.cancel();
+    } catch {
+      /* noop */
+    }
+
     const cleaned = text
       .replace(/<script[\s\S]*?<\/script>/gi, '')
       .replace(/<style[\s\S]*?<\/style>/gi, '')
@@ -154,6 +213,23 @@ export async function checkAndIncrementDailyCap(
   if (current >= cap) return { allowed: false, remaining: 0 };
   await kv.put(key, String(current + 1), { expirationTtl: 60 * 60 * 48 });
   return { allowed: true, remaining: cap - current - 1 };
+}
+
+/**
+ * Cap GLOBAL por hora (además del diario). Suaviza ráfagas y ataques
+ * distribuidos (muchas IPs en poco tiempo) que el rate-limit por IP no frena.
+ */
+export async function checkAndIncrementHourlyCap(
+  kv: KVNamespace,
+  hourlyCap: number,
+): Promise<boolean> {
+  const hour = new Date().toISOString().slice(0, 13); // YYYY-MM-DDTHH
+  const key = `audit:count:hour:${hour}`;
+  const currentStr = await kv.get(key);
+  const current = currentStr ? parseInt(currentStr, 10) : 0;
+  if (current >= hourlyCap) return false;
+  await kv.put(key, String(current + 1), { expirationTtl: 60 * 60 * 2 });
+  return true;
 }
 
 /* ============================================================

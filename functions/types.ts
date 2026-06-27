@@ -11,8 +11,11 @@ export interface Env {
   AUDIT_IP_ALLOWLIST?: string;
 }
 
+// El form llama a /api desde el MISMO origen (no necesita CORS). Restringimos
+// el Allow-Origin al dominio de producción para bloquear llamadas cross-origin
+// desde browsers de otros sitios. (curl ignora CORS — ahí el gate es Turnstile.)
 export const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': 'https://cleverum.org',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 } as const;
