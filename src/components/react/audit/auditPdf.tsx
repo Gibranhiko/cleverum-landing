@@ -31,7 +31,7 @@ const SERVICE_NAME: Record<string, string> = {
 const s = StyleSheet.create({
   page: {
     paddingTop: 0,
-    paddingBottom: 54,
+    paddingBottom: 46,
     paddingHorizontal: 0,
     fontSize: 10,
     color: C.body,
@@ -48,7 +48,7 @@ const s = StyleSheet.create({
     paddingBottom: 18,
     borderBottomWidth: 1,
     borderBottomColor: C.line,
-    marginBottom: 22,
+    marginBottom: 14,
   },
   brand: { fontSize: 18, fontFamily: 'Helvetica-Bold', color: C.ink, letterSpacing: -0.5 },
   brandSub: { fontSize: 8, color: C.muted, marginTop: 2 },
@@ -69,7 +69,7 @@ const s = StyleSheet.create({
     letterSpacing: -0.6,
     marginBottom: 6,
   },
-  lead: { fontSize: 10.5, color: C.body, lineHeight: 1.5, marginBottom: 18 },
+  lead: { fontSize: 10.5, color: C.body, lineHeight: 1.45, marginBottom: 12 },
   leadStrong: { fontFamily: 'Helvetica-Bold', color: C.ink },
 
   sectionLabel: {
@@ -173,6 +173,9 @@ const s = StyleSheet.create({
     marginTop: 6,
   },
   recoText: { fontSize: 10, color: C.ink, lineHeight: 1.5 },
+
+  contact: { fontSize: 10, color: C.ink, lineHeight: 1.45, marginTop: 2 },
+  contactStrong: { fontFamily: 'Helvetica-Bold', color: C.iris },
 
   footer: {
     position: 'absolute',
@@ -281,7 +284,7 @@ function AuditDoc({ audit, client }: { audit: AuditResult; client?: ClientInfo }
       title={`Diagnóstico Cleverum${client?.empresa ? ` — ${client.empresa}` : ''}`}
       author={site.brand.name}
     >
-      <Page size="A4" style={s.page}>
+      <Page size="A4" style={s.page} wrap={false}>
         <View style={s.accentBar} fixed>
           <View style={{ flex: 1, backgroundColor: C.blue }} />
           <View style={{ flex: 1, backgroundColor: C.iris }} />
@@ -347,18 +350,21 @@ function AuditDoc({ audit, client }: { audit: AuditResult; client?: ClientInfo }
               </View>
             </>
           )}
+
+          <Text style={s.sectionLabel}>¿Hablamos?</Text>
+          <Text style={s.contact}>
+            Escríbenos a <Text style={s.contactStrong}>{site.contact.email}</Text> o al{' '}
+            <Text style={s.contactStrong}>{site.contact.phoneDisplay}</Text> (WhatsApp). Te
+            ayudamos a aterrizar esta oportunidad.
+          </Text>
         </View>
 
         <View style={s.footer} fixed>
           <Text style={s.footerText}>
-            {site.meta.url.replace('https://', '')} · WhatsApp {site.contact.phoneDisplay}
+            {site.meta.url.replace('https://', '')} · {site.contact.email} ·{' '}
+            {site.contact.phoneDisplay}
           </Text>
-          <Text
-            style={s.footerBrand}
-            render={({ pageNumber, totalPages }) =>
-              `${site.brand.name} · ${pageNumber}/${totalPages}`
-            }
-          />
+          <Text style={s.footerBrand}>{site.brand.name}</Text>
         </View>
       </Page>
     </Document>
