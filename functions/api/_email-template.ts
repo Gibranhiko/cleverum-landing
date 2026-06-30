@@ -6,9 +6,8 @@ const BRAND_NAME = site.brand.name;
 const BRAND_TAGLINE = site.brand.bajada;
 const URL = site.meta.url;
 const WHATSAPP_URL = `https://wa.me/${site.contact.whatsapp.number}`;
-const CALENDLY_URL = site.contact.calendly.includes('REPLACE_ME')
-  ? WHATSAPP_URL
-  : site.contact.calendly;
+const HAS_CALENDLY = !site.contact.calendly.includes('REPLACE_ME');
+const CALENDLY_URL = HAS_CALENDLY ? site.contact.calendly : WHATSAPP_URL;
 const GIBRAN_EMAIL = site.contact.email;
 const MANIFESTO = site.footer.manifesto;
 
@@ -69,6 +68,7 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
   <tr><td align="center" style="padding:40px 20px;">
     <table cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;">
       <tr><td style="padding:0 0 32px;">
+        <img src="${URL}/logos/cleverum-logo.png" alt="${BRAND_NAME}" width="44" height="44" style="display:block;margin:0 0 12px;border:0;outline:none;text-decoration:none;" />
         <div style="font-size:26px;font-weight:600;letter-spacing:-0.025em;color:#ffffff;">${BRAND_NAME}</div>
         <div style="font-size:13px;color:#8A8A96;margin-top:2px;letter-spacing:-0.005em;">${BRAND_TAGLINE}</div>
       </td></tr>
@@ -120,8 +120,9 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
           Agendamos. Te explicamos cómo aterrizar la oportunidad #1. Resolvemos dudas. Sin venta forzada.<br>
           <strong style="color:#ffffff;">Bonus extra:</strong> si arrancamos en los próximos 14 días, <strong>10% off</strong> en tu primer proyecto.
         </p>
-        <table cellpadding="0" cellspacing="0" border="0">
-          <tr>
+        ${
+          HAS_CALENDLY
+            ? `<table cellpadding="0" cellspacing="0" border="0"><tr>
             <td style="padding:0 12px 12px 0;">
               <a href="${CALENDLY_URL}" style="display:inline-block;padding:14px 28px;background:#22C55E;color:#04130b;text-decoration:none;border-radius:9999px;font-weight:600;font-size:15px;">
                 Agenda 20 min gratis →
@@ -132,8 +133,11 @@ export function buildClientEmailHtml(audit: AuditResult, nombre: string): string
                 WhatsApp directo
               </a>
             </td>
-          </tr>
-        </table>
+          </tr></table>`
+            : `<a href="${WHATSAPP_URL}" style="display:inline-block;padding:14px 28px;background:#22C55E;color:#04130b;text-decoration:none;border-radius:9999px;font-weight:600;font-size:15px;">
+                Hablemos por WhatsApp →
+              </a>`
+        }
       </td></tr>
 
       <tr><td style="padding:48px 0 0;border-top:1px solid #1f1f24;">

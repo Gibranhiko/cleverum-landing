@@ -176,7 +176,7 @@ export default function AiAuditTool(): React.ReactElement {
 
   return (
     <div
-      className={`audit-card${running ? 'is-processing' : ''}`}
+      className={`audit-card${running ? ' is-processing' : ''}`}
       aria-label="Diagnóstico inteligente"
     >
       {showWizard && <Wizard onSubmit={handleWizardSubmit} disabled={running} />}
