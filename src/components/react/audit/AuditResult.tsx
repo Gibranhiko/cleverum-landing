@@ -91,7 +91,7 @@ export default function AuditResult(props: Props): React.ReactElement {
 
   return (
     <div className="audit-result" aria-live="polite">
-      {!finalAudit && <ProcessingPanel stage={stage} industry={industry} />}
+      {!finalAudit && <ProcessingPanel stage={stage} industry={industry} emailUsed={emailUsed} />}
 
       {industry && (
         <div className="audit-result-industry">
@@ -252,9 +252,11 @@ function buildTips(industria?: string): string[] {
 function ProcessingPanel({
   stage,
   industry,
+  emailUsed,
 }: {
   stage: string;
   industry: IndustryClassification | null;
+  emailUsed: string;
 }): React.ReactElement {
   const tips = useMemo(() => buildTips(industry?.industria), [industry?.industria]);
   const [tipIdx, setTipIdx] = useState(0);
@@ -301,9 +303,34 @@ function ProcessingPanel({
         })}
       </ol>
 
-      <p className="audit-wait-note">
-        Tarda ~1 minuto. ¿Sin tiempo? Puedes cerrar la pestaña — el resultado te llega a tu correo.
-      </p>
+      <div className="audit-leave-banner" role="note">
+        <svg
+          className="audit-leave-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect width="20" height="16" x="2" y="4" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+        <p className="audit-leave-text">
+          {emailUsed ? (
+            <>
+              ¿Sin tiempo? Cierra la pestaña — el resultado llega a <strong>{emailUsed}</strong> al
+              terminar.
+            </>
+          ) : (
+            <>¿Sin tiempo? Cierra la pestaña — el resultado llega a tu correo al terminar.</>
+          )}
+        </p>
+      </div>
     </div>
   );
 }

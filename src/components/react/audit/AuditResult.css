@@ -959,11 +959,35 @@
   }
 }
 
-.audit-wait-note {
+.audit-leave-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  background: color-mix(in srgb, var(--color-brand-iris) 10%, var(--color-bg-base));
+  border: 1px solid color-mix(in srgb, var(--color-brand-iris) 30%, transparent);
+  border-left: 3px solid var(--color-brand-iris);
+  border-radius: 10px;
+  margin-top: 0.25rem;
+}
+
+.audit-leave-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-brand-iris);
+  opacity: 0.9;
+}
+
+.audit-leave-text {
   margin: 0;
-  font-size: 0.8rem;
-  color: var(--color-text-3);
+  font-size: 0.82rem;
+  color: var(--color-text-2);
   line-height: 1.5;
+}
+
+.audit-leave-text strong {
+  color: var(--color-text-1);
+  font-weight: 600;
 }
 
 @media (prefers-reduced-motion: reduce) {
