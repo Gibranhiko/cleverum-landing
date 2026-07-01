@@ -10,7 +10,7 @@ Landing única `cleverum.org`. Portafolio con **3 marcas equitativas**:
 
 Mercado: México/LATAM. **Solo español**. CTA único: WhatsApp directo.
 
-Owner: Gibran Villarreal · `gibran.villarreal@cleverum.com` · `+52 55 4143 3545`.
+Owner: Gibran Villarreal · `gibran.villarreal@cleverum.org` · `+52 55 4143 3545`.
 
 ## 2. Filosofía
 

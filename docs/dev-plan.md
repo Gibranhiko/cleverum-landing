@@ -224,7 +224,7 @@ export const site = {
   },
   contact: {
     name: 'Gibran Villarreal',
-    email: 'gibran.villarreal@cleverum.com',
+    email: 'gibran.villarreal@cleverum.org',
     phone: '+52 55 4143 3545',
     whatsapp: {
       number: '5215541433545',

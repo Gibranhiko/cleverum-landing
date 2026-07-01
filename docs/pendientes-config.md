@@ -33,7 +33,7 @@ Sin esto, el diagnóstico funciona pero **no llega ningún correo** (ni al clien
 aunque la UI lo prometa.
 
 - El código manda **desde `hello@cleverum.org`** → el dominio a verificar en Resend es **`cleverum.org`**.
-- Te notifica a ti en **`gibran.villarreal@cleverum.com`** (reply-to, no necesita verificación).
+- Te notifica a ti en **`gibran.villarreal@cleverum.org`** (reply-to, no necesita verificación).
 - **El DNS de `cleverum.org` vive en Cloudflare** (nameservers `tim/priscilla.ns.cloudflare.com`).
   Namecheap es solo el registrador → **los registros van en Cloudflare, NO en Namecheap.**
 
@@ -110,7 +110,7 @@ Ya lo configuraste; solo confirma que quedó bien:
 
 1. Abre el sitio → "Diagnostica mi negocio" → llena el wizard con **tu email real**.
 2. Debe correr el análisis (~1 min) y mostrar 1 oportunidad.
-3. Te debe llegar: el **reporte** a tu email + la **notificación de lead** a `gibran.villarreal@cleverum.com`.
+3. Te debe llegar: el **reporte** a tu email + la **notificación de lead** a `gibran.villarreal@cleverum.org`.
 4. (Abuso) Corre 4+ audits seguidos desde la misma IP → al 4º debe responder _rate_limited_ (429).
 5. Revisa **Cloudflare → Storage & Databases → KV → cleverum-kv** → deben aparecer `audit:*`, `lead:*`,
    `rate:*`, `audit:count:*`.

@@ -21,7 +21,7 @@ export const site = {
 
   contact: {
     name: 'Gibran Villarreal',
-    email: 'gibran.villarreal@cleverum.com',
+    email: 'gibran.villarreal@cleverum.org',
     phoneDisplay: '+52 55 4143 3545',
     phoneTel: '+525541433545',
     whatsapp: {
@@ -35,7 +35,7 @@ export const site = {
     linkedin: 'https://linkedin.com/in/REPLACE_ME',
     twitter: 'https://x.com/REPLACE_ME',
     github: 'https://github.com/REPLACE_ME',
-    email: 'gibran.villarreal@cleverum.com',
+    email: 'gibran.villarreal@cleverum.org',
   },
 
   hero: {
