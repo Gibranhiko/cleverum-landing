@@ -1,0 +1,786 @@
+/* ============================================================
+ * Proposal pages — /cotizaciones/*
+ * Dark, branded, animated. Mobile-first.
+ * ============================================================ */
+
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource-variable/geist/index.css';
+
+/* ── Base ─────────────────────────────────────────────────── */
+
+.proposal-body {
+  background: #08080b;
+  color: #ffffff;
+  font-family: 'Inter Variable', system-ui, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.proposal-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ── Scroll reveal ────────────────────────────────────────── */
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Top bar ──────────────────────────────────────────────── */
+
+.proposal-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(8, 8, 11, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.proposal-topbar-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.proposal-topbar-logo {
+  height: 22px;
+  width: auto;
+}
+
+.proposal-topbar-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.proposal-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7c5cff;
+  background: color-mix(in srgb, #7c5cff 12%, transparent);
+  border: 1px solid color-mix(in srgb, #7c5cff 30%, transparent);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+}
+
+.proposal-validity {
+  font-size: 0.78rem;
+  color: #a8a8b4;
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+
+.proposal-hero {
+  position: relative;
+  padding: 5rem 0 4rem;
+  overflow: hidden;
+}
+
+.proposal-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -10%, color-mix(in srgb, #7c5cff 18%, transparent), transparent),
+    radial-gradient(ellipse 50% 40% at 80% 60%, color-mix(in srgb, #1b4f72 15%, transparent), transparent);
+  pointer-events: none;
+}
+
+.proposal-hero .proposal-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+}
+
+.proposal-client-logo {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 28px rgba(27, 79, 114, 0.4));
+}
+
+.proposal-label {
+  font-size: 0.85rem;
+  color: #a8a8b4;
+  margin: 0 0 0.5rem;
+}
+
+.proposal-label strong {
+  color: #ffffff;
+}
+
+.proposal-hero-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.proposal-hero-accent {
+  background: linear-gradient(135deg, #7c5cff, #4f8af7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.proposal-hero-sub {
+  font-size: 1.05rem;
+  color: #b4b4bf;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0;
+}
+
+.proposal-hero-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.proposal-hero-note {
+  font-size: 0.8rem;
+  color: #a8a8b4;
+  margin: 0;
+}
+
+.proposal-hero-scroll {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.4;
+  animation: proposal-bob 2s ease-in-out infinite;
+}
+
+@keyframes proposal-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.proposal-scroll-line {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.5));
+}
+
+.proposal-scroll-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a8a8b4;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+
+.proposal-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #22c55e;
+  color: #04130b;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  animation: proposal-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes proposal-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+}
+
+.proposal-btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 28px rgba(34, 197, 94, 0.35);
+  animation: none;
+}
+
+.proposal-btn-lg {
+  font-size: 1.05rem;
+  padding: 1rem 2rem;
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+
+.proposal-section {
+  padding: 4rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.proposal-section-dark {
+  background: #0d0d10;
+}
+
+.proposal-section-flow {
+  background: linear-gradient(180deg, rgba(124, 92, 255, 0.04) 0%, transparent 100%);
+}
+
+.proposal-section-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+}
+
+/* ── Problem ──────────────────────────────────────────────── */
+
+.proposal-problem {
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.08), rgba(79, 138, 247, 0.06));
+  border: 1px solid rgba(124, 92, 255, 0.2);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+}
+
+.proposal-problem-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7c5cff;
+  margin: 0 0 1rem;
+}
+
+.proposal-problem-quote {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  border: none;
+  padding: 0;
+}
+
+.proposal-problem-quote strong {
+  color: #7c5cff;
+}
+
+.proposal-problem-body {
+  color: #b4b4bf;
+  line-height: 1.65;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* ── Flow ─────────────────────────────────────────────────── */
+
+.proposal-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.proposal-flow::before {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  left: calc(12.5% + 1rem);
+  right: calc(12.5% + 1rem);
+  height: 2px;
+  background: linear-gradient(90deg, #7c5cff, rgba(255,255,255,0.1));
+  pointer-events: none;
+}
+
+.proposal-flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 0.5rem;
+  position: relative;
+}
+
+.proposal-flow-num {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: #16161a;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #a8a8b4;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.proposal-flow-step.is-active .proposal-flow-num {
+  background: #7c5cff;
+  border-color: #7c5cff;
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(124, 92, 255, 0.5);
+}
+
+.proposal-flow-arrow {
+  display: none;
+}
+
+.proposal-flow-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.proposal-flow-step.is-active .proposal-flow-label {
+  color: #7c5cff;
+}
+
+.proposal-flow-sub {
+  font-size: 0.72rem;
+  color: #a8a8b4;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .proposal-flow {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .proposal-flow::before { display: none; }
+  .proposal-flow-step {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .proposal-flow-step:last-child { border-bottom: none; }
+  .proposal-flow-num { margin-bottom: 0; flex-shrink: 0; }
+  .proposal-flow-arrow { display: none; }
+}
+
+/* ── Modules ──────────────────────────────────────────────── */
+
+.proposal-module {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  margin-bottom: 1.25rem;
+  transition: transform 0.25s ease;
+}
+
+.proposal-module:hover {
+  transform: translateY(-2px);
+}
+
+.proposal-module.is-selected {
+  border-color: rgba(124, 92, 255, 0.4);
+  background: linear-gradient(160deg, rgba(124, 92, 255, 0.07), rgba(79, 138, 247, 0.04));
+  box-shadow: 0 0 0 1px rgba(124, 92, 255, 0.15), 0 20px 60px -20px rgba(124, 92, 255, 0.2);
+}
+
+.proposal-module.is-optional {
+  background: #0d0d10;
+}
+
+.proposal-module-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.proposal-module-num {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  background: #7c5cff;
+  color: #ffffff;
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.proposal-module-num-opt {
+  background: rgba(255,255,255,0.06);
+  color: #a8a8b4;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.proposal-module-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.proposal-module-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7c5cff;
+  margin: 0 0 0.3rem;
+}
+
+.proposal-module-tag-opt {
+  color: #a8a8b4;
+}
+
+.proposal-module-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem;
+  letter-spacing: -0.015em;
+}
+
+.proposal-module-sub {
+  font-size: 0.85rem;
+  color: #a8a8b4;
+  margin: 0;
+}
+
+.proposal-module-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.proposal-price-amount {
+  display: block;
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.proposal-price-currency {
+  display: block;
+  font-size: 0.75rem;
+  color: #a8a8b4;
+  font-weight: 500;
+}
+
+.proposal-price-type {
+  display: block;
+  font-size: 0.72rem;
+  color: #a8a8b4;
+  margin-top: 0.2rem;
+}
+
+.proposal-module-list {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.proposal-module-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: #d4d4dc;
+  line-height: 1.5;
+}
+
+.proposal-check {
+  color: #7c5cff;
+  font-size: 0.65rem;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.proposal-check-opt {
+  color: #a8a8b4;
+}
+
+.proposal-module-note {
+  font-size: 0.8rem;
+  color: #a8a8b4;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── Branding preview ─────────────────────────────────────── */
+
+.proposal-branding-preview {
+  margin: 0 -2rem 1.5rem;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.proposal-branding-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  max-height: 360px;
+  opacity: 0.92;
+  transition: opacity 0.3s ease;
+}
+
+.proposal-branding-preview:hover .proposal-branding-img {
+  opacity: 1;
+}
+
+/* ── Investment ───────────────────────────────────────────── */
+
+.proposal-invest-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 520px) {
+  .proposal-invest-cards { grid-template-columns: 1fr; }
+}
+
+.proposal-invest-card {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: #111114;
+}
+
+.proposal-invest-card.is-highlight {
+  border-color: rgba(124, 92, 255, 0.35);
+  background: linear-gradient(160deg, rgba(124, 92, 255, 0.1), rgba(79, 138, 247, 0.05));
+}
+
+.proposal-invest-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a8a8b4;
+  margin: 0 0 0.75rem;
+}
+
+.proposal-invest-price {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 0 0 0.4rem;
+  line-height: 1;
+}
+
+.proposal-invest-price span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #a8a8b4;
+}
+
+.proposal-invest-desc {
+  font-size: 0.8rem;
+  color: #a8a8b4;
+  margin: 0;
+}
+
+.proposal-invest-note {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  color: #b4b4bf;
+  line-height: 1.6;
+}
+
+.proposal-invest-note strong {
+  color: #ffffff;
+}
+
+/* ── Steps ────────────────────────────────────────────────── */
+
+.proposal-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.proposal-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.proposal-step:last-child {
+  border-bottom: none;
+}
+
+.proposal-step-num {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: #7c5cff;
+  color: #ffffff;
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.proposal-step-text {
+  font-size: 0.95rem;
+  color: #d4d4dc;
+  line-height: 1.6;
+  margin: 0;
+  padding-top: 0.25rem;
+}
+
+/* ── CTA Final ────────────────────────────────────────────── */
+
+.proposal-section-cta {
+  border-top: none;
+  padding: 3rem 0 5rem;
+}
+
+.proposal-cta-box {
+  position: relative;
+  text-align: center;
+  padding: 3.5rem 2rem;
+  border: 1px solid rgba(124, 92, 255, 0.25);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(124, 92, 255, 0.08), transparent);
+}
+
+.proposal-cta-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(124, 92, 255, 0.18), transparent);
+  pointer-events: none;
+}
+
+.proposal-cta-logo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.proposal-cta-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.75rem;
+}
+
+.proposal-cta-body {
+  font-size: 1rem;
+  color: #b4b4bf;
+  margin: 0 0 2rem;
+}
+
+.proposal-cta-fine {
+  margin: 1.25rem 0 0;
+  font-size: 0.82rem;
+  color: #a8a8b4;
+}
+
+.proposal-cta-email {
+  color: #7c5cff;
+  text-decoration: none;
+}
+
+.proposal-cta-email:hover {
+  text-decoration: underline;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+
+.proposal-footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 2.5rem 0;
+  text-align: center;
+}
+
+.proposal-footer-logo {
+  height: 18px;
+  width: auto;
+  opacity: 0.5;
+  margin-bottom: 0.75rem;
+}
+
+.proposal-footer-copy {
+  font-size: 0.8rem;
+  color: #a8a8b4;
+  margin: 0 0 0.4rem;
+}
+
+.proposal-footer-legal {
+  font-size: 0.72rem;
+  color: #6b6b78;
+  margin: 0;
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .proposal-hero-scroll,
+  .proposal-btn-primary {
+    animation: none;
+  }
+}
