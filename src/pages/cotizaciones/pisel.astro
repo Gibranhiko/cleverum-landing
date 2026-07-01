@@ -41,7 +41,8 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     <header class="proposal-topbar">
       <div class="proposal-topbar-inner">
         <div class="proposal-topbar-brand">
-          <img src="/logos/cleverum-logo.png" alt="Cleverum" class="proposal-topbar-logo" />
+          <img src="/logos/cleverum-logo.png" alt="" class="proposal-topbar-logo" aria-hidden="true" />
+          <span class="proposal-topbar-name">Cleverum</span>
         </div>
         <div class="proposal-topbar-meta">
           <span class="proposal-badge">Propuesta personalizada</span>
@@ -267,7 +268,10 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     <!-- ── FOOTER ─────────────────────────────────────────── -->
     <footer class="proposal-footer">
       <div class="proposal-container">
-        <img src="/logos/cleverum-logo.png" alt="Cleverum" class="proposal-footer-logo" />
+        <div class="proposal-footer-brand">
+          <img src="/logos/cleverum-logo.png" alt="" class="proposal-footer-logo" aria-hidden="true" />
+          <span class="proposal-footer-name">Cleverum</span>
+        </div>
         <p class="proposal-footer-copy">cleverum.org · gibran.villarreal@cleverum.org · +52 55 4143 3545</p>
         <p class="proposal-footer-legal">Propuesta confidencial preparada exclusivamente para {client.company}. Válida hasta {validUntil}.</p>
       </div>

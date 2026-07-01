@@ -60,9 +60,23 @@
   gap: 1rem;
 }
 
+.proposal-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .proposal-topbar-logo {
-  height: 22px;
+  height: 24px;
   width: auto;
+}
+
+.proposal-topbar-name {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 .proposal-topbar-meta {
@@ -752,11 +766,26 @@
   text-align: center;
 }
 
-.proposal-footer-logo {
-  height: 18px;
-  width: auto;
-  opacity: 0.5;
+.proposal-footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   margin-bottom: 0.75rem;
+}
+
+.proposal-footer-logo {
+  height: 20px;
+  width: auto;
+  opacity: 0.55;
+}
+
+.proposal-footer-name {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .proposal-footer-copy {
