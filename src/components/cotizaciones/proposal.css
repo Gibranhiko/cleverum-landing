@@ -61,7 +61,7 @@
 }
 
 .proposal-topbar-logo {
-  height: 22px;
+  height: 28px;
   width: auto;
 }
 
@@ -753,9 +753,9 @@
 }
 
 .proposal-footer-logo {
-  height: 18px;
+  height: 24px;
   width: auto;
-  opacity: 0.5;
+  opacity: 0.6;
   margin-bottom: 0.75rem;
 }
 
