@@ -365,7 +365,7 @@ Esto valida que TODA la pipeline funciona: Turnstile + Anthropic + KV + Resend.
 Después de que termina el audit:
 
 - Tu email personal recibe: **"Tu diagnóstico de IA — 3 ideas para automatizar tu negocio"** en ~10 segundos.
-- `gibran.villarreal@cleverum.com` (o donde tengas el forwarding) recibe: **"Nuevo lead: Test Run · Test Company"** con todos los datos del lead.
+- `gibran.villarreal@cleverum.org` (o donde tengas el forwarding) recibe: **"Nuevo lead: Test Run · Test Company"** con todos los datos del lead.
 - Si NO llegan: revisa Resend → **Logs** tab → ve si los emails se enviaron y qué pasó. Suele ser un DNS no verificado o un rate limit.
 
 ### 11.3 Verifica KV

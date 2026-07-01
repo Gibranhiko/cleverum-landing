@@ -195,7 +195,7 @@ export const site = {
 
   contact: {
     name: 'Gibran Villarreal',
-    email: 'gibran.villarreal@cleverum.com',
+    email: 'gibran.villarreal@cleverum.org',
     phoneDisplay: '+52 55 4143 3545',
     phoneTel: '+525541433545',
     whatsapp: {
@@ -209,7 +209,7 @@ export const site = {
     linkedin: 'https://linkedin.com/in/REPLACE_ME', // PLACEHOLDER
     twitter: 'https://x.com/REPLACE_ME', // PLACEHOLDER
     github: 'https://github.com/REPLACE_ME', // PLACEHOLDER
-    email: 'gibran.villarreal@cleverum.com',
+    email: 'gibran.villarreal@cleverum.org',
   },
 
   hero: {
@@ -736,7 +736,7 @@ Supabase, React Native
 ## Contact
 
 - WhatsApp: +52 55 4143 3545
-- Email: gibran.villarreal@cleverum.com
+- Email: gibran.villarreal@cleverum.org
 - LinkedIn: REPLACE_ME
 - GitHub: REPLACE_ME
 
@@ -1644,7 +1644,7 @@ TU REGALO
 
 — Gibran Villarreal
    Cleverum · single war machine
-   gibran.villarreal@cleverum.com
+   gibran.villarreal@cleverum.org
 
 [Footer con manifiesto + socials]
 ```
