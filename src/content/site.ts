@@ -32,9 +32,9 @@ export const site = {
   },
 
   socials: {
-    linkedin: 'https://linkedin.com/in/REPLACE_ME',
-    twitter: 'https://x.com/REPLACE_ME',
-    github: 'https://github.com/REPLACE_ME',
+    linkedin: 'https://www.linkedin.com/in/gibranvillarreal/',
+    twitter: 'https://x.com/billhiko',
+    github: 'https://github.com/Gibranhiko/',
     email: 'gibran.villarreal@cleverum.org',
   },
 
