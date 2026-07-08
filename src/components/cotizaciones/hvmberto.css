@@ -1,0 +1,810 @@
+/* ============================================================
+ * Hvmberto Garza proposal — horror ecommerce theme
+ * ============================================================ */
+
+/* ── Base ─────────────────────────────────────────────────── */
+
+.hv-body {
+  background: #080608;
+  color: #f0ead6;
+  font-family: 'Inter Variable', system-ui, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+.hv-body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── Topbar overrides ──────────────────────────────────────── */
+
+.hv-topbar {
+  border-bottom-color: rgba(196, 30, 30, 0.2);
+}
+
+.hv-badge {
+  background: color-mix(in srgb, #c41e1e 15%, transparent) !important;
+  border-color: color-mix(in srgb, #c41e1e 35%, transparent) !important;
+  color: #e05555 !important;
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+
+.hv-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hv-hero-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.hv-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.6) brightness(0.55);
+}
+
+.hv-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8,6,8,0.3) 0%, rgba(8,6,8,0.7) 60%, #080608 100%),
+    linear-gradient(to right, rgba(8,6,8,0.6) 0%, transparent 60%);
+}
+
+.hv-hero-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.75rem;
+  max-width: 640px;
+}
+
+.hv-logo-wrap {
+  width: 100%;
+}
+
+.hv-logo {
+  width: min(480px, 90vw);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 24px rgba(196,30,30,0.3));
+}
+
+.hv-hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: rgba(240, 234, 214, 0.85);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 480px;
+}
+
+.hv-price-banner {
+  display: inline-flex;
+  flex-direction: column;
+  background: #c41e1e;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  gap: 0.15rem;
+  box-shadow: 0 0 40px rgba(196,30,30,0.4);
+}
+
+.hv-price-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+}
+
+.hv-price-amount {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.hv-price-amount span {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.hv-price-type {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.75);
+}
+
+.hv-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #22c55e;
+  color: #04130b;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9rem 1.8rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: hv-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes hv-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
+}
+
+.hv-cta-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 28px rgba(34,197,94,0.35);
+  animation: none;
+}
+
+.hv-hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.35;
+  animation: proposal-bob 2s ease-in-out infinite;
+}
+
+.hv-scroll-text {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f0ead6;
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+
+.hv-section {
+  padding: 5rem 0;
+}
+
+.hv-section-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+  color: #f0ead6;
+}
+
+.hv-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c41e1e;
+  margin: 0 0 0.75rem;
+}
+
+.hv-red { color: #c41e1e; }
+
+/* ── Intro ────────────────────────────────────────────────── */
+
+.hv-intro {
+  max-width: 560px;
+}
+
+.hv-intro-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 1rem;
+  color: #f0ead6;
+}
+
+.hv-intro-body {
+  font-size: 1.05rem;
+  color: rgba(240,234,214,0.7);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Mock store ───────────────────────────────────────────── */
+
+.hv-store {
+  background: #0e0b0e;
+  border-top: 1px solid rgba(196,30,30,0.15);
+  border-bottom: 1px solid rgba(196,30,30,0.15);
+  padding: 0 0 3rem;
+}
+
+/* Store navbar */
+.hv-store-nav {
+  background: rgba(8,6,8,0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0.85rem 0;
+  position: sticky;
+  top: 56px;
+  z-index: 10;
+}
+
+.hv-store-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hv-store-nav-logo {
+  height: 28px;
+  width: auto;
+}
+
+.hv-store-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: rgba(240,234,214,0.5);
+}
+
+.hv-store-nav-links span {
+  cursor: default;
+}
+
+.hv-store-nav-cart {
+  position: relative;
+  color: rgba(240,234,214,0.6);
+  cursor: default;
+}
+
+.hv-cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #c41e1e;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hv-store-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(240,234,214,0.35);
+  margin: 0 0 1.5rem;
+  padding-top: 2.5rem;
+}
+
+/* Featured product */
+.hv-featured {
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.hv-featured-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .hv-featured-card { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+.hv-featured-img-wrap {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #1a141a;
+}
+
+.hv-featured-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 1;
+  transition: transform 0.4s ease;
+}
+
+.hv-featured-img-wrap:hover .hv-featured-img {
+  transform: scale(1.03);
+}
+
+.hv-featured-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: #c41e1e;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.hv-featured-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 0.5rem;
+}
+
+.hv-product-category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c41e1e;
+  margin: 0;
+}
+
+.hv-product-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.hv-product-desc {
+  font-size: 0.92rem;
+  color: rgba(240,234,214,0.65);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hv-product-meta {
+  font-size: 0.8rem;
+}
+
+.hv-product-stock {
+  color: #4ade80;
+  font-weight: 500;
+}
+
+.hv-product-buy {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hv-product-price {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #f0ead6;
+}
+
+.hv-product-price span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(240,234,214,0.5);
+}
+
+.hv-btn-cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #c41e1e;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.75rem 1.4rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: default;
+  opacity: 0.8;
+}
+
+.hv-demo-note {
+  font-size: 0.72rem;
+  color: rgba(240,234,214,0.3);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Product grid */
+.hv-grid {
+  padding-top: 0;
+  padding-bottom: 1rem;
+}
+
+.hv-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 700px) {
+  .hv-product-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .hv-product-grid { grid-template-columns: 1fr; }
+}
+
+.hv-product-card {
+  background: #120e12;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.hv-product-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(196,30,30,0.3);
+}
+
+.hv-card-img-wrap {
+  position: relative;
+  overflow: hidden;
+  background: #1a141a;
+}
+
+.hv-card-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.hv-product-card:hover .hv-card-img {
+  transform: scale(1.04);
+}
+
+.hv-card-tag {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.hv-tag-limited { background: #e8650a; color: #fff; }
+.hv-tag-event { background: #7c5cff; color: #fff; }
+
+.hv-card-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hv-card-category {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,234,214,0.35);
+  margin: 0;
+}
+
+.hv-card-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.hv-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+}
+
+.hv-card-price {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #f0ead6;
+}
+
+.hv-card-price span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.5;
+}
+
+.hv-card-btn {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(196,30,30,0.15);
+  border: 1px solid rgba(196,30,30,0.3);
+  color: #e05555;
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  cursor: default;
+}
+
+/* Eventos */
+.hv-events {
+  padding: 3rem 0 1rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: 2rem;
+}
+
+.hv-events-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .hv-events-inner { grid-template-columns: 1fr; }
+}
+
+.hv-events-img-wrap {
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.hv-events-img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 3/4;
+}
+
+.hv-events-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f0ead6;
+  margin: 0 0 0.75rem;
+  line-height: 1.25;
+}
+
+.hv-events-body {
+  font-size: 0.92rem;
+  color: rgba(240,234,214,0.65);
+  line-height: 1.65;
+  margin: 0 0 1.25rem;
+}
+
+.hv-events-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hv-chip {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(196,30,30,0.35);
+  color: rgba(240,234,214,0.7);
+  background: rgba(196,30,30,0.06);
+}
+
+/* ── Includes ─────────────────────────────────────────────── */
+
+.hv-section-includes {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.hv-includes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .hv-includes-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 400px) {
+  .hv-includes-grid { grid-template-columns: 1fr; }
+}
+
+.hv-include-card {
+  background: #0e0b0e;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.hv-include-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.hv-include-title {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: #f0ead6;
+  margin: 0 0 0.25rem;
+}
+
+.hv-include-desc {
+  font-size: 0.78rem;
+  color: rgba(240,234,214,0.5);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Price section ────────────────────────────────────────── */
+
+.hv-section-price {
+  border-top: 1px solid rgba(196,30,30,0.2);
+  text-align: center;
+}
+
+.hv-price-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hv-price-big {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.hv-price-big-amount {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(3.5rem, 12vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #c41e1e;
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(196,30,30,0.4);
+}
+
+.hv-price-big-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 0.75rem;
+}
+
+.hv-price-big-currency {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgba(240,234,214,0.6);
+}
+
+.hv-price-big-type {
+  font-size: 0.78rem;
+  color: rgba(240,234,214,0.4);
+  line-height: 1.4;
+}
+
+.hv-price-note {
+  font-size: 0.82rem;
+  color: rgba(240,234,214,0.4);
+  margin: 0;
+}
+
+/* ── CTA Final ────────────────────────────────────────────── */
+
+.hv-section-cta {
+  padding-bottom: 6rem;
+}
+
+.hv-cta-box {
+  position: relative;
+  text-align: center;
+  padding: 4rem 2rem;
+  border: 1px solid rgba(196,30,30,0.25);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.hv-cta-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(196,30,30,0.2), transparent);
+  pointer-events: none;
+}
+
+.hv-cta-logo {
+  width: min(360px, 80vw);
+  height: auto;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.hv-cta-title {
+  font-family: 'Geist Variable', system-ui, sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.75rem;
+  color: #f0ead6;
+  position: relative;
+}
+
+.hv-cta-body {
+  font-size: 1rem;
+  color: rgba(240,234,214,0.6);
+  margin: 0 0 2rem;
+  position: relative;
+}
+
+.hv-cta-btn-lg {
+  font-size: 1.1rem;
+  padding: 1.1rem 2.2rem;
+  position: relative;
+}
+
+.hv-cta-fine {
+  margin: 1.25rem 0 0;
+  font-size: 0.82rem;
+  color: rgba(240,234,214,0.4);
+  position: relative;
+}
+
+.hv-cta-email {
+  color: #c41e1e;
+  text-decoration: none;
+}
+
+.hv-cta-email:hover { text-decoration: underline; }
+
+/* ── Footer ───────────────────────────────────────────────── */
+
+.hv-footer {
+  border-top-color: rgba(196,30,30,0.15);
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .hv-cta-btn, .hv-hero-scroll { animation: none; }
+}

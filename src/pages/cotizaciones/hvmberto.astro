@@ -1,0 +1,302 @@
+---
+import '~/styles/global.css';
+import '~/components/cotizaciones/proposal.css';
+import '~/components/cotizaciones/hvmberto.css';
+import { ClientRouter } from 'astro:transitions';
+
+const whatsappMsg = encodeURIComponent(
+  '¡Hola Cleverum! Soy Hvmberto Garza. Vi la propuesta y me interesa arrancar con mi tienda online de horror.',
+);
+const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
+const validUntil = '8 de agosto de 2026';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Propuesta Hvmberto Garza · Cleverum</title>
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <ClientRouter />
+  </head>
+
+  <body class="hv-body">
+
+    <!-- ── TOPBAR ─────────────────────────────────────────── -->
+    <header class="proposal-topbar hv-topbar">
+      <div class="proposal-topbar-inner">
+        <div class="proposal-topbar-brand">
+          <img src="/logos/cleverum-logo.png" alt="" class="proposal-topbar-logo" aria-hidden="true" />
+          <span class="proposal-topbar-name">Cleverum</span>
+        </div>
+        <div class="proposal-topbar-meta">
+          <span class="proposal-badge hv-badge">Propuesta personalizada</span>
+          <span class="proposal-validity">Válida hasta {validUntil}</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- ── HERO ──────────────────────────────────────────── -->
+      <section class="hv-hero">
+        <div class="hv-hero-bg">
+          <img src="/cotizaciones/hvmberto/horror-fest-2.jpg" alt="" aria-hidden="true" class="hv-hero-img" />
+          <div class="hv-hero-overlay"></div>
+        </div>
+        <div class="hv-hero-content proposal-container">
+          <div class="hv-logo-wrap reveal-up">
+            <img src="/cotizaciones/hvmberto/humbertologo-2.png" alt="The Art of Hvmberto Garza" class="hv-logo" />
+          </div>
+          <p class="hv-hero-sub reveal-up" style="animation-delay:.1s">
+            20 años ilustrando terror. Ya es hora de que tu arte genere ingresos mientras duermes.
+          </p>
+          <div class="hv-price-banner reveal-up" style="animation-delay:.18s">
+            <span class="hv-price-label">Tu tienda online de horror</span>
+            <span class="hv-price-amount">$14,999 <span>MXN</span></span>
+            <span class="hv-price-type">pago único</span>
+          </div>
+          <div class="reveal-up" style="animation-delay:.26s">
+            <a href={whatsappUrl} target="_blank" rel="noopener" class="hv-cta-btn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+              Quiero mi tienda
+            </a>
+          </div>
+        </div>
+        <div class="hv-hero-scroll" aria-hidden="true">
+          <span class="proposal-scroll-line"></span>
+          <span class="hv-scroll-text">DESLIZA PARA VER EL DEMO</span>
+        </div>
+      </section>
+
+      <!-- ── INTRO STORE ────────────────────────────────────── -->
+      <section class="hv-section">
+        <div class="proposal-container">
+          <div class="hv-intro reveal-up">
+            <p class="hv-eyebrow">El concepto</p>
+            <h2 class="hv-intro-title">Así se vería<br /><span class="hv-red">tu tienda.</span></h2>
+            <p class="hv-intro-body">
+              Todo lo que ves abajo es el demo real de tu ecommerce — con tus productos, tu estética y tu marca. Lo que falta es el botón de pago.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── MOCK STORE ─────────────────────────────────────── -->
+      <div class="hv-store">
+
+        <!-- Store navbar mock -->
+        <div class="hv-store-nav">
+          <div class="proposal-container">
+            <div class="hv-store-nav-inner">
+              <img src="/cotizaciones/hvmberto/humbertologo-2.png" alt="Hvmberto Garza" class="hv-store-nav-logo" />
+              <nav class="hv-store-nav-links" aria-label="Tienda mock">
+                <span>Tienda</span>
+                <span>Libros</span>
+                <span>Prints</span>
+                <span>Expos</span>
+              </nav>
+              <div class="hv-store-nav-cart">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span class="hv-cart-count">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured product -->
+        <div class="hv-featured proposal-container">
+          <p class="hv-store-section-label reveal-up">Producto destacado</p>
+          <div class="hv-featured-card reveal-up" style="animation-delay:.08s">
+            <div class="hv-featured-img-wrap">
+              <img src="/cotizaciones/hvmberto/libro-1.jpg" alt="Monsters Creatures & Ghouls III" class="hv-featured-img" loading="lazy" />
+              <span class="hv-featured-badge">Nuevo</span>
+            </div>
+            <div class="hv-featured-info">
+              <p class="hv-product-category">Libros de horror</p>
+              <h3 class="hv-product-title">Monsters, Creatures & Ghouls III</h3>
+              <p class="hv-product-desc">La tercera entrega de la saga más oscura de la ilustración mexicana de horror. Historias que no te dejarán dormir.</p>
+              <div class="hv-product-meta">
+                <span class="hv-product-stock">✦ En stock · Envío nacional</span>
+              </div>
+              <div class="hv-product-buy">
+                <span class="hv-product-price">$350 <span>MXN</span></span>
+                <button class="hv-btn-cart" disabled aria-label="Demo — no funcional">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  Agregar al carrito
+                </button>
+              </div>
+              <p class="hv-demo-note">* Demo visual — en tu tienda real este botón funciona</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product grid -->
+        <div class="hv-grid proposal-container">
+          <p class="hv-store-section-label reveal-up">Todo el catálogo</p>
+          <div class="hv-product-grid">
+
+            <div class="hv-product-card reveal-up" style="animation-delay:.05s">
+              <div class="hv-card-img-wrap">
+                <img src="/cotizaciones/hvmberto/libro-3.jpg" alt="Bundle Monsters + Sketch" class="hv-card-img" loading="lazy" />
+                <span class="hv-card-tag hv-tag-limited">Limitado</span>
+              </div>
+              <div class="hv-card-info">
+                <p class="hv-card-category">Bundle exclusivo</p>
+                <p class="hv-card-title">Libro + Sketch original + Envío</p>
+                <div class="hv-card-footer">
+                  <span class="hv-card-price">$500 <span>MXN</span></span>
+                  <button class="hv-card-btn" disabled>+ Carrito</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hv-product-card reveal-up" style="animation-delay:.1s">
+              <div class="hv-card-img-wrap">
+                <img src="/cotizaciones/hvmberto/libro-2.jpg" alt="Monstruología de México" class="hv-card-img" loading="lazy" />
+              </div>
+              <div class="hv-card-info">
+                <p class="hv-card-category">Libros de horror</p>
+                <p class="hv-card-title">Monstruología de México</p>
+                <div class="hv-card-footer">
+                  <span class="hv-card-price">$320 <span>MXN</span></span>
+                  <button class="hv-card-btn" disabled>+ Carrito</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="hv-product-card reveal-up" style="animation-delay:.15s">
+              <div class="hv-card-img-wrap">
+                <img src="/cotizaciones/hvmberto/horror-fest-1.jpg" alt="Horror Fest — Entrada" class="hv-card-img" loading="lazy" />
+                <span class="hv-card-tag hv-tag-event">Evento</span>
+              </div>
+              <div class="hv-card-info">
+                <p class="hv-card-category">Entradas · Horror Fest</p>
+                <p class="hv-card-title">Horror Fest · 3 y 4 Oct · Cintermex</p>
+                <div class="hv-card-footer">
+                  <span class="hv-card-price">$280 <span>MXN</span></span>
+                  <button class="hv-card-btn" disabled>+ Carrito</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Eventos section -->
+        <div class="hv-events">
+          <div class="proposal-container">
+            <div class="hv-events-inner reveal-up">
+              <div class="hv-events-img-wrap">
+                <img src="/cotizaciones/hvmberto/conferencia.jpg" alt="Conferencia The Art of Hvmberto Garza" class="hv-events-img" loading="lazy" />
+              </div>
+              <div class="hv-events-content">
+                <p class="hv-eyebrow">Más que libros</p>
+                <h3 class="hv-events-title">Vende entradas a tus eventos y conferencias desde la misma tienda.</h3>
+                <p class="hv-events-body">Horror Fest, conferencias en universidades, expos de arte — todo en un solo lugar. El cliente compra, tú recibes el pago. Sin intermediarios.</p>
+                <div class="hv-events-chips">
+                  <span class="hv-chip">Horror Fest</span>
+                  <span class="hv-chip">Conferencias</span>
+                  <span class="hv-chip">Expos de arte</span>
+                  <span class="hv-chip">Talleres</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /mock store -->
+
+      <!-- ── QUÉ INCLUYE ─────────────────────────────────────── -->
+      <section class="hv-section hv-section-includes">
+        <div class="proposal-container">
+          <h2 class="hv-section-title reveal-up">Qué construimos para ti</h2>
+          <div class="hv-includes-grid">
+            {[
+              { icon: '🛒', title: 'Carrito y checkout', desc: 'Proceso de compra completo, limpio y rápido.' },
+              { icon: '💳', title: 'Mercado Pago + Stripe', desc: 'Tarjeta, OXXO, transferencia. Donde tu cliente quiera pagar.' },
+              { icon: '📦', title: 'Gestión de inventario', desc: 'Controlas stock, variantes y productos agotados.' },
+              { icon: '🎟', title: 'Venta de entradas', desc: 'Eventos y expos con cupo limitado y fechas.' },
+              { icon: '📱', title: '100% móvil', desc: 'Tu tienda se ve igual de chida en cel que en desktop.' },
+              { icon: '📧', title: 'Emails automáticos', desc: 'Confirmación de pedido, seguimiento de envío.' },
+            ].map((item, i) => (
+              <div class="hv-include-card reveal-up" style={`animation-delay:${i * 0.06}s`}>
+                <span class="hv-include-icon" aria-hidden="true">{item.icon}</span>
+                <div>
+                  <p class="hv-include-title">{item.title}</p>
+                  <p class="hv-include-desc">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ── INVERSIÓN ──────────────────────────────────────── -->
+      <section class="hv-section hv-section-price">
+        <div class="proposal-container">
+          <div class="hv-price-block reveal-up">
+            <p class="hv-eyebrow">La inversión</p>
+            <div class="hv-price-big">
+              <span class="hv-price-big-amount">$14,999</span>
+              <div class="hv-price-big-meta">
+                <span class="hv-price-big-currency">MXN</span>
+                <span class="hv-price-big-type">pago único<br />sin mensualidades</span>
+              </div>
+            </div>
+            <p class="hv-price-note">Sin contratos de permanencia. Propuesta válida 30 días.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CTA FINAL ──────────────────────────────────────── -->
+      <section class="hv-section hv-section-cta">
+        <div class="proposal-container">
+          <div class="hv-cta-box reveal-up">
+            <div class="hv-cta-glow" aria-hidden="true"></div>
+            <img src="/cotizaciones/hvmberto/humbertologo-2.png" alt="Hvmberto Garza" class="hv-cta-logo" />
+            <h2 class="hv-cta-title">¿Arrancamos, Hvmberto?</h2>
+            <p class="hv-cta-body">Un mensaje y empezamos la siguiente semana.</p>
+            <a href={whatsappUrl} target="_blank" rel="noopener" class="hv-cta-btn hv-cta-btn-lg">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+              Quiero mi tienda online
+            </a>
+            <p class="hv-cta-fine">O escríbenos a <a href="mailto:gibran.villarreal@cleverum.org" class="hv-cta-email">gibran.villarreal@cleverum.org</a></p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── FOOTER ─────────────────────────────────────────── -->
+    <footer class="proposal-footer hv-footer">
+      <div class="proposal-container">
+        <div class="proposal-footer-brand">
+          <img src="/logos/cleverum-logo.png" alt="" class="proposal-footer-logo" aria-hidden="true" />
+          <span class="proposal-footer-name">Cleverum</span>
+        </div>
+        <p class="proposal-footer-copy">cleverum.org · gibran.villarreal@cleverum.org · +52 55 4143 3545</p>
+        <p class="proposal-footer-legal">Propuesta confidencial preparada exclusivamente para Hvmberto Garza. Válida hasta {validUntil}.</p>
+      </div>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              (e.target as HTMLElement).classList.add('is-visible');
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
