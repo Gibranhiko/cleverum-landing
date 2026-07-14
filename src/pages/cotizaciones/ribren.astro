@@ -1,0 +1,357 @@
+---
+import '~/styles/global.css';
+import '~/components/cotizaciones/proposal.css';
+import '~/components/cotizaciones/ribren.css';
+import { ClientRouter } from 'astro:transitions';
+
+const validUntil = '8 de agosto de 2026';
+const whatsappMsg = encodeURIComponent(
+  '¡Hola Cleverum! Soy de Grupo Ribren. Vi la propuesta y me interesa arrancar con el nuevo sitio web.',
+);
+const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Propuesta Grupo Ribren · Cleverum</title>
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <ClientRouter />
+  </head>
+
+  <body class="rb-body">
+
+    <!-- ── TOPBAR ─────────────────────────────────────────── -->
+    <header class="proposal-topbar rb-topbar">
+      <div class="proposal-topbar-inner">
+        <div class="proposal-topbar-brand">
+          <img src="/logos/cleverum-logo.png" alt="" class="proposal-topbar-logo" aria-hidden="true" />
+          <span class="proposal-topbar-name">Cleverum</span>
+        </div>
+        <div class="proposal-topbar-meta">
+          <span class="proposal-badge rb-badge">Propuesta personalizada</span>
+          <span class="proposal-validity">Válida hasta {validUntil}</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- ── HERO ──────────────────────────────────────────── -->
+      <section class="rb-hero">
+        <div class="rb-hero-bg">
+          <img src="/cotizaciones/ribren/ribren-logo-web.png" alt="" aria-hidden="true" class="rb-hero-img" />
+          <div class="rb-hero-overlay"></div>
+        </div>
+        <div class="rb-hero-content proposal-container">
+          <p class="rb-hero-label reveal-up">Propuesta de Modernización Digital</p>
+          <h1 class="rb-hero-title reveal-up" style="animation-delay:.08s">
+            Grupo<br /><span class="rb-orange">Ribren</span>
+          </h1>
+          <p class="rb-hero-sub reveal-up" style="animation-delay:.14s">
+            Tu sitio actual es una tarjeta de presentación. Esta propuesta lo convierte en una máquina que genera y organiza cotizaciones.
+          </p>
+          <div class="rb-price-banner reveal-up" style="animation-delay:.2s">
+            <span class="rb-price-label">Sitio web industrial + sistema de cotizaciones</span>
+            <div class="rb-price-row">
+              <span class="rb-price-amount">$14,900 <span>MXN</span></span>
+              <span class="rb-price-type">pago único</span>
+            </div>
+          </div>
+          <a href={whatsappUrl} target="_blank" rel="noopener" class="rb-cta-btn reveal-up" style="animation-delay:.28s">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+            Quiero arrancar
+          </a>
+        </div>
+        <div class="rb-hero-scroll" aria-hidden="true">
+          <span class="proposal-scroll-line"></span>
+          <span class="rb-scroll-text">DESLIZA PARA VER EL DEMO</span>
+        </div>
+      </section>
+
+      <!-- ── INTRO DEMO ─────────────────────────────────────── -->
+      <section class="rb-section">
+        <div class="proposal-container">
+          <div class="rb-intro reveal-up">
+            <p class="rb-eyebrow">El concepto</p>
+            <h2 class="rb-intro-title">Así se vería<br /><span class="rb-orange">tu nuevo sitio.</span></h2>
+            <p class="rb-intro-body">
+              Todo lo que ves abajo es el demo real de tu sitio — con tu maquinaria, tu branding y tu formulario de cotización. Lo que falta es publicarlo.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── MOCK LANDING ───────────────────────────────────── -->
+      <div class="rb-mock">
+
+        <!-- Mock navbar -->
+        <div class="rb-mock-nav">
+          <div class="proposal-container">
+            <div class="rb-mock-nav-inner">
+              <img src="/cotizaciones/ribren/ribren-logo-web.png" alt="Grupo Ribren" class="rb-mock-nav-logo" />
+              <nav class="rb-mock-nav-links" aria-label="Sitio mock">
+                <span>Inicio</span>
+                <span>Servicios</span>
+                <span>Nosotros</span>
+                <span>Cotizar</span>
+              </nav>
+              <span class="rb-mock-nav-cta">Solicitar cotización</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mock hero del sitio -->
+        <div class="rb-mock-hero">
+          <img src="/cotizaciones/ribren/maquinado.jpg" alt="HAAS VF-6SS — planta Ribren" class="rb-mock-hero-img" loading="lazy" />
+          <div class="rb-mock-hero-overlay"></div>
+          <div class="rb-mock-hero-content proposal-container">
+            <p class="rb-mock-eyebrow reveal-up">Ingeniería de Precisión · Monterrey, N.L.</p>
+            <h2 class="rb-mock-hero-title reveal-up" style="animation-delay:.06s">
+              Maquinados CNC<br />de alta precisión.
+            </h2>
+            <p class="rb-mock-hero-sub reveal-up" style="animation-delay:.1s">
+              Fabricación especial, diseño mecánico y automatización industrial. Cotiza en línea en menos de 2 minutos.
+            </p>
+            <div class="rb-mock-hero-btns reveal-up" style="animation-delay:.14s">
+              <button class="rb-mock-btn-primary" disabled>Solicitar cotización</button>
+              <button class="rb-mock-btn-ghost" disabled>Ver servicios</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mock services -->
+        <div class="rb-mock-services">
+          <div class="proposal-container">
+            <p class="rb-mock-section-label reveal-up">Nuestros servicios</p>
+            <div class="rb-services-grid">
+              {[
+                { icon: '⚙️', title: 'Maquinados CNC', desc: 'Fresado, torneado y centros de maquinado de 3 y 4 ejes con tolerancias de ±0.01mm.' },
+                { icon: '📐', title: 'Diseño Mecánico', desc: 'Modelado 3D, planos de fabricación y análisis de tolerancias para piezas industriales.' },
+                { icon: '🏭', title: 'Automatización', desc: 'Diseño e integración de sistemas automatizados para líneas de producción.' },
+                { icon: '🔧', title: 'Fabricación Especial', desc: 'Piezas únicas y herramentales especiales bajo especificación del cliente.' },
+                { icon: '⚡', title: 'Reparación Industrial', desc: 'Diagnóstico y reparación de componentes mecánicos con tiempos de entrega rápidos.' },
+                { icon: '🔩', title: 'Ensamble', desc: 'Ensamble de subconjuntos y componentes mecánicos con control de calidad.' },
+              ].map((s, i) => (
+                <div class="rb-service-card reveal-up" style={`animation-delay:${i * 0.06}s`}>
+                  <span class="rb-service-icon" aria-hidden="true">{s.icon}</span>
+                  <p class="rb-service-title">{s.title}</p>
+                  <p class="rb-service-desc">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Mock quote form — el punto clave -->
+        <div class="rb-mock-form-section">
+          <div class="proposal-container">
+            <div class="rb-mock-form-wrap reveal-up">
+              <div class="rb-mock-form-header">
+                <p class="rb-mock-form-eyebrow">Cotiza en línea</p>
+                <h3 class="rb-mock-form-title">¿Qué necesitas fabricar?</h3>
+                <p class="rb-mock-form-sub">Te respondemos en menos de 24 horas con precio y tiempo de entrega.</p>
+              </div>
+              <div class="rb-mock-form">
+                <div class="rb-mock-field-row">
+                  <div class="rb-mock-field">
+                    <label class="rb-mock-label">Tipo de servicio</label>
+                    <div class="rb-mock-select">Maquinado CNC ▾</div>
+                  </div>
+                  <div class="rb-mock-field">
+                    <label class="rb-mock-label">Material</label>
+                    <div class="rb-mock-select">Acero al carbono ▾</div>
+                  </div>
+                </div>
+                <div class="rb-mock-field-row">
+                  <div class="rb-mock-field">
+                    <label class="rb-mock-label">Cantidad de piezas</label>
+                    <div class="rb-mock-input">50 piezas</div>
+                  </div>
+                  <div class="rb-mock-field">
+                    <label class="rb-mock-label">Fecha requerida</label>
+                    <div class="rb-mock-input">15 / 08 / 2026</div>
+                  </div>
+                </div>
+                <div class="rb-mock-field">
+                  <label class="rb-mock-label">Descripción / especificaciones</label>
+                  <div class="rb-mock-textarea">Brida de acero 4140, fresado en 4 ejes, acabado a Ra 1.6, tolerancia ±0.02mm...</div>
+                </div>
+                <div class="rb-mock-upload">
+                  <span class="rb-mock-upload-icon" aria-hidden="true">📎</span>
+                  <span>Adjuntar planos (.PDF, .DWG, .STEP)</span>
+                </div>
+                <div class="rb-mock-field-row rb-mock-field-row-contact">
+                  <div class="rb-mock-field">
+                    <label class="rb-mock-label">Nombre</label>
+                    <div class="rb-mock-input">Ing. Roberto Ríos</div>
+                  </div>
+                  <div class="rb-mock-field">
+                    <label class="rb-mock-label">Empresa</label>
+                    <div class="rb-mock-input">Grupo Ribren</div>
+                  </div>
+                </div>
+                <button class="rb-mock-submit" disabled>
+                  Enviar solicitud de cotización →
+                </button>
+                <p class="rb-demo-note">* Demo visual — en tu sitio real este formulario envía al instante y notifica a tu equipo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /mock landing -->
+
+      <!-- ── REBRANDING OPCIONAL ────────────────────────────── -->
+      <section class="rb-section rb-section-dark">
+        <div class="proposal-container">
+          <div class="rb-rebrand reveal-up">
+            <div class="rb-rebrand-header">
+              <div>
+                <p class="rb-eyebrow">Opcional — puedes agregarlo</p>
+                <h2 class="rb-section-title">Rebranding de identidad</h2>
+                <p class="rb-rebrand-sub">¿Quieres que tu marca refleje el nivel de precisión que ya tienes en planta?</p>
+              </div>
+              <div class="rb-rebrand-price">
+                <span class="rb-rebrand-amount">$3,500</span>
+                <span class="rb-rebrand-currency">MXN · pago único</span>
+              </div>
+            </div>
+            <div class="rb-rebrand-img-wrap">
+              <img src="/cotizaciones/ribren/ribren-branding.png" alt="Sistema de identidad Grupo Ribren" class="rb-rebrand-img" loading="lazy" />
+            </div>
+            <ul class="rb-rebrand-list">
+              {[
+                'Rediseño del logotipo (3 propuestas, 2 rondas de ajustes)',
+                'Archivos en todos los formatos: .AI, .EPS, .PNG, .SVG — fondo blanco y transparente',
+                'Paleta de colores y tipografía definidas',
+                'Mini guía de uso: uniformes, vehículos, documentos',
+              ].map((item) => (
+                <li class="rb-rebrand-item">
+                  <span class="rb-check" aria-hidden="true">✦</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── QUÉ INCLUYE ─────────────────────────────────────── -->
+      <section class="rb-section">
+        <div class="proposal-container">
+          <h2 class="rb-section-title reveal-up">Qué construimos para ti</h2>
+          <div class="rb-includes-grid">
+            {[
+              { icon: '🖥', title: 'Sitio web industrial', desc: 'Diseño moderno, optimizado para móvil y rápido en Google.' },
+              { icon: '📋', title: 'Formulario de cotización', desc: 'Servicio, material, cantidad y subida de planos directo a tu correo.' },
+              { icon: '🔔', title: 'Avisos automáticos', desc: 'Cada nueva solicitud llega a tu correo o WhatsApp al instante.' },
+              { icon: '📊', title: 'Panel de seguimiento', desc: 'Ve todas tus solicitudes: Nuevo → Cotizado → En negociación → Cerrado.' },
+              { icon: '🔍', title: 'SEO técnico', desc: 'Aparecer en Google cuando buscan maquinados CNC en tu zona.' },
+              { icon: '📱', title: '100% móvil', desc: 'Tus clientes cotizan desde el cel sin problemas.' },
+            ].map((item, i) => (
+              <div class="rb-include-card reveal-up" style={`animation-delay:${i * 0.06}s`}>
+                <span class="rb-include-icon" aria-hidden="true">{item.icon}</span>
+                <div>
+                  <p class="rb-include-title">{item.title}</p>
+                  <p class="rb-include-desc">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ── INVERSIÓN ──────────────────────────────────────── -->
+      <section class="rb-section rb-section-price">
+        <div class="proposal-container">
+          <div class="rb-invest-wrap reveal-up">
+            <div class="rb-invest-cards">
+              <div class="rb-invest-card rb-invest-card-main">
+                <p class="rb-invest-label">Solo sitio web</p>
+                <p class="rb-invest-amount">$14,900 <span>MXN</span></p>
+                <p class="rb-invest-desc">pago único · lo que acordamos hoy</p>
+              </div>
+              <div class="rb-invest-card">
+                <p class="rb-invest-label">Sitio + Rebranding</p>
+                <p class="rb-invest-amount">$18,400 <span>MXN</span></p>
+                <p class="rb-invest-desc">pago único · si agregas la identidad</p>
+              </div>
+            </div>
+            <p class="rb-invest-note">Sin contratos de permanencia. <strong>Propuesta válida 30 días.</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SIGUIENTES PASOS ───────────────────────────────── -->
+      <section class="rb-section">
+        <div class="proposal-container">
+          <h2 class="rb-section-title reveal-up">Siguientes pasos</h2>
+          <ol class="proposal-steps">
+            {[
+              'Confirmas que quieres arrancar — un mensaje por WhatsApp es suficiente.',
+              'Acordamos fecha de inicio — normalmente la semana siguiente.',
+              'Nos compartes acceso a tu sitio actual para ver con qué partimos.',
+              'Entrega del sitio en 3 a 4 semanas. Sin sorpresas.',
+            ].map((text, i) => (
+              <li class="proposal-step reveal-up" style={`animation-delay:${i * 0.08}s`}>
+                <div class="proposal-step-num rb-step-num">{i + 1}</div>
+                <p class="proposal-step-text">{text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <!-- ── CTA FINAL ──────────────────────────────────────── -->
+      <section class="rb-section rb-section-cta">
+        <div class="proposal-container">
+          <div class="rb-cta-box reveal-up">
+            <div class="rb-cta-glow" aria-hidden="true"></div>
+            <img src="/cotizaciones/ribren/ribren-logo-web.png" alt="Grupo Ribren" class="rb-cta-logo" />
+            <h2 class="rb-cta-title">¿Arrancamos?</h2>
+            <p class="rb-cta-body">Un mensaje y lo tenemos listo para la próxima semana.</p>
+            <a href={whatsappUrl} target="_blank" rel="noopener" class="rb-cta-btn rb-cta-btn-lg">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+              Quiero mi nuevo sitio web
+            </a>
+            <p class="rb-cta-fine">O escríbenos a <a href="mailto:gibran.villarreal@cleverum.org" class="rb-cta-email">gibran.villarreal@cleverum.org</a></p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── FOOTER ─────────────────────────────────────────── -->
+    <footer class="proposal-footer">
+      <div class="proposal-container">
+        <div class="proposal-footer-brand">
+          <img src="/logos/cleverum-logo.png" alt="" class="proposal-footer-logo" aria-hidden="true" />
+          <span class="proposal-footer-name">Cleverum</span>
+        </div>
+        <p class="proposal-footer-copy">cleverum.org · gibran.villarreal@cleverum.org · +52 55 4143 3545</p>
+        <p class="proposal-footer-legal">Propuesta confidencial preparada exclusivamente para Grupo Ribren. Válida hasta {validUntil}.</p>
+      </div>
+    </footer>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              (e.target as HTMLElement).classList.add('is-visible');
+              observer.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
