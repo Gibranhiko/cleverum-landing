@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import '~/styles/blog.css';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const coverIcon: Record<string, string> = {
+  chatbot: '💬',
+  automatización: '⚙️',
+  comparativa: '⚖️',
+  precios: '💰',
+  monterrey: '📍',
+  ia: '🤖',
+};
+
+function getIcon(tags: string[]): string {
+  for (const tag of tags) {
+    if (coverIcon[tag]) return coverIcon[tag];
+  }
+  return '✦';
+}
+
+function coverTag(tags: string[]): string {
+  if (tags.includes('chatbot')) return 'chatbot';
+  if (tags.includes('comparativa')) return 'comparativa';
+  return 'default';
+}
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function readingTime(body: string): number {
+  return Math.ceil(body.trim().split(/\s+/).length / 200);
+}
+---
+
+<BaseLayout
+  title="Blog — Automatización con IA, desarrollo y chatbots para PyMEs en México"
+  description="Guías, comparativas y casos de uso de automatización con IA, chatbots de WhatsApp y desarrollo web para empresas en Monterrey y México."
+  canonical="/blog"
+>
+  <section class="blog-index">
+    <header class="blog-index-header">
+      <span class="blog-eyebrow">Blog · Cleverum</span>
+      <h1 class="blog-index-title">Automatización, IA y desarrollo<br />para empresas en México.</h1>
+      <p class="blog-index-sub">
+        Guías prácticas, comparativas de herramientas y casos de uso reales. Sin hype — solo lo que funciona.
+      </p>
+    </header>
+
+    <div class="blog-grid container-narrow">
+      {
+        posts.map((post) => (
+          <a class="blog-card" href={`/blog/${post.id.replace(/\.mdx?$/, '')}`}>
+            <div class="blog-card-cover" data-tag={coverTag(post.data.tags)}>
+              <span class="blog-card-cover-label" aria-hidden="true">
+                {getIcon(post.data.tags)}
+              </span>
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-tags">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <span class="blog-card-tag">{tag}</span>
+                ))}
+              </div>
+              <h2 class="blog-card-title">{post.data.title}</h2>
+              <p class="blog-card-desc">{post.data.description}</p>
+              <div class="blog-card-meta">
+                <span>{formatDate(post.data.pubDate)}</span>
+                <span>{readingTime(post.body ?? '')}&nbsp;min de lectura</span>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

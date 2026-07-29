@@ -1,0 +1,148 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import '~/styles/blog.css';
+import { site } from '~/content/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.mdx?$/, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const cleanSlug = post.id.replace(/\.mdx?$/, '');
+const { title, description, pubDate, updatedDate, tags, cover, coverAlt } = post.data;
+
+const formattedDate = pubDate.toLocaleDateString('es-MX', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const formattedUpdated = updatedDate?.toLocaleDateString('es-MX', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+function readingTime(body: string): number {
+  return Math.ceil(body.trim().split(/\s+/).length / 200);
+}
+
+const minutes = readingTime(post.body ?? '');
+const postUrl = `${site.meta.url}/blog/${cleanSlug}`;
+
+const blogPostJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+  url: postUrl,
+  inLanguage: 'es-MX',
+  author: {
+    '@type': 'Organization',
+    '@id': `${site.meta.url}#organization`,
+    name: site.brand.name,
+  },
+  publisher: {
+    '@id': `${site.meta.url}#organization`,
+  },
+  ...(cover && { image: `${site.meta.url}${cover}` }),
+};
+
+const coverIcon: Record<string, string> = {
+  chatbot: '💬',
+  automatización: '⚙️',
+  comparativa: '⚖️',
+  precios: '💰',
+  monterrey: '📍',
+  ia: '🤖',
+};
+
+function getIcon(postTags: string[]): string {
+  for (const tag of postTags) {
+    if (coverIcon[tag]) return coverIcon[tag];
+  }
+  return '✦';
+}
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={`/blog/${cleanSlug}`}
+  image={cover}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(blogPostJsonLd)} />
+  </Fragment>
+
+  <article class="blog-post">
+
+    <div class="blog-back">
+      <a href="/blog">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        Todos los artículos
+      </a>
+    </div>
+
+    <header class="blog-post-header">
+      {tags.length > 0 && (
+        <div class="blog-post-tags">
+          {tags.map((tag) => <span class="blog-post-tag">{tag}</span>)}
+        </div>
+      )}
+      <h1 class="blog-post-title">{title}</h1>
+      <div class="blog-post-meta">
+        <span>{formattedDate}</span>
+        {formattedUpdated && (
+          <>
+            <span class="blog-post-meta-sep">·</span>
+            <span>Actualizado: {formattedUpdated}</span>
+          </>
+        )}
+        <span class="blog-post-meta-sep">·</span>
+        <span>{minutes} min de lectura</span>
+      </div>
+    </header>
+
+    <div class="blog-cover">
+      <div class="blog-cover-img">
+        {cover ? (
+          <img src={cover} alt={coverAlt ?? title} loading="eager" />
+        ) : (
+          <span class="blog-cover-placeholder-icon" aria-hidden="true">
+            {getIcon(tags)}
+          </span>
+        )}
+      </div>
+    </div>
+
+    <div class="blog-prose-wrap">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+
+    <div class="blog-post-cta">
+      <div class="blog-post-cta-box">
+        <div class="blog-post-cta-text">
+          <p>¿Listo para automatizar tu negocio?</p>
+          <p>Diagnóstico gratis con IA en ~1 minuto. Te decimos qué procesos tienen más potencial.</p>
+        </div>
+        <a href="/#diagnostico" class="blog-post-cta-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          Hacer diagnóstico gratis
+        </a>
+      </div>
+    </div>
+
+  </article>
+</BaseLayout>
