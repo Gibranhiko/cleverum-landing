@@ -46,7 +46,7 @@ export const site = {
       'Pregunta a tu *IA* y obtén el reporte que antes tardaba días.',
       'Atiende a tus clientes *24/7* sin contratar otro agente.',
     ],
-    subline: 'Diagnóstico con IA en ~1 minuto. Gratis.',
+    subline: 'Diagnóstico gratis con IA en ~1 minuto. Para empresas en México y LATAM.',
     ctaLabel: 'Diagnostica mi negocio',
     ctaPrimary: 'Hablemos por WhatsApp',
   },
@@ -90,7 +90,7 @@ export const site = {
   },
 
   cases: {
-    heading: 'Lo que construimos.',
+    heading: 'Lo que hemos entregado.',
     items: [
       {
         id: 'whatsapp-panel',
@@ -129,8 +129,8 @@ export const site = {
   },
 
   services: {
-    heading: 'En qué te ayudamos.',
-    disclaimer: 'Cotización personalizada según el alcance de tu proyecto.',
+    heading: 'Automatización, desarrollo web y chatbots.',
+    disclaimer: 'Precios orientativos. Cotización exacta según el alcance — sin sorpresas.',
     items: [
       {
         id: 'web',
@@ -140,10 +140,11 @@ export const site = {
           'Diseño moderno que carga rápido y convierte visitantes en leads',
           'Conectado a tu CRM o ERP — los leads aterrizan donde tu equipo trabaja',
           'Preparado para Google Ads y Meta Ads — con tracking de conversiones medidas',
-          'SEO técnico incluido — Google te encuentra',
+          'SEO técnico incluido — Google te encuentra en Monterrey y México',
         ],
         duration: '2-4 semanas',
         inversion: 1,
+        priceFrom: 'Desde $14,900 MXN',
         idealFor: 'Negocios que quieren un funnel de conversión completo',
         accent: 'blue',
       },
@@ -152,28 +153,30 @@ export const site = {
         title: 'Automatización con IA',
         subtitle: 'Procesos que se ejecutan solos',
         bullets: [
-          'Onboarding de clientes nuevos: alta en sistemas + contratos + bienvenida sin que muevas un dedo',
-          'Tu inbox de correos triado y respondido en automático',
-          'Reportes diarios o semanales armados solos con los datos de tus sistemas',
+          'Onboarding de clientes: alta en sistemas + contratos + bienvenida automática',
+          'Tu inbox de correos triado y respondido sin que muevas un dedo',
+          'Reportes armados solos con los datos de tus sistemas, cada día o semana',
           'Sync entre tus apps: ventas, contabilidad, inventario, CRM',
         ],
         duration: '2-3 semanas',
         inversion: 2,
+        priceFrom: 'Desde $18,000 MXN',
         idealFor: 'Equipos que pierden horas en tareas repetitivas entre sistemas',
         accent: 'iris',
       },
       {
         id: 'chatbot',
         title: 'Chatbot de WhatsApp',
-        subtitle: 'Atiende a tus clientes 24/7 sin contratar más gente',
+        subtitle: 'Atiende a tus clientes 24/7 sin contratar más agentes',
         bullets: [
-          'Chatbot con IA conversacional que entiende tu negocio',
+          'Chatbot con IA conversacional que entiende tu negocio y tus productos',
           'Panel admin para que tu equipo intervenga cuando quiera',
-          'Integrado a tu CRM, ERP o e-commerce',
+          'Integrado a tu CRM, ERP o e-commerce — cada lead queda registrado',
           'Recupera carritos, agenda citas, califica leads automáticamente',
         ],
         duration: '3-5 semanas',
         inversion: 2,
+        priceFrom: 'Desde $45,000 MXN',
         idealFor: 'Negocios con volumen alto de mensajes en WhatsApp',
         accent: 'green',
       },
@@ -184,10 +187,10 @@ export const site = {
     heading: 'Somos Cleverum.',
     photoSrc: null as string | null,
     paragraphs: [
-      'Construimos sistemas de IA y automatización para PYMES en México y LATAM.',
+      'Automatización con IA, desarrollo web y chatbots de WhatsApp para PYMES. Con proyectos entregados en Monterrey, CDMX y LATAM.',
       'Sin agencias intermediarias, sin equipos lejanos, sin juntas eternas para entender lo que necesitas.',
       'Te diagnosticamos. Te construimos. Te entregamos.',
-      'Si tu equipo sigue copiando datos a mano entre sistemas, estás perdiendo tiempo y dinero todos los días.',
+      'Si tu equipo sigue copiando datos a mano entre sistemas, o contestando WhatsApp a mano, estás perdiendo tiempo y dinero todos los días.',
     ],
   },
 

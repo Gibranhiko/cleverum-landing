@@ -53,6 +53,10 @@ const accentVar: Record<string, string> = {
             </ul>
 
             <div class="service-meta">
+              <div class="service-price" aria-label={`Precio: ${s.priceFrom}`}>
+                <span class="service-price-amount">{s.priceFrom}</span>
+              </div>
+
               <div class="service-meta-row">
                 <div class="service-duration">
                   <svg
@@ -71,14 +75,6 @@ const accentVar: Record<string, string> = {
                     <path d="M12 6v6l4 2" />
                   </svg>
                   <span>{s.duration}</span>
-                </div>
-                <div class="service-inversion" aria-label={`Inversión: ${s.inversion} de 3`}>
-                  <span class="service-inversion-label">Inversión</span>
-                  <span class="service-inversion-dots" aria-hidden="true">
-                    {[1, 2, 3].map((n) => (
-                      <span class={`service-inversion-dot${n <= s.inversion ? 'is-on' : ''}`} />
-                    ))}
-                  </span>
                 </div>
               </div>
 
@@ -269,6 +265,19 @@ const accentVar: Record<string, string> = {
     line-height: 1.45;
     color: var(--color-text-2);
     margin: 0;
+  }
+
+  .service-price {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 0.25rem;
+  }
+
+  .service-price-amount {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--accent);
   }
 
   .services-disclaimer {

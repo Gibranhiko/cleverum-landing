@@ -1,0 +1,144 @@
+---
+const locations = [
+  { label: 'Monterrey, N.L.', icon: '📍' },
+  { label: 'Ciudad de México', icon: '📍' },
+  { label: 'LATAM', icon: '🌎' },
+];
+
+const industries = [
+  'Manufactura e industria',
+  'eCommerce',
+  'Servicios profesionales',
+  'Logística y distribución',
+  'Salud y clínicas',
+  'Construcción',
+];
+---
+
+<aside class="trust-strip" aria-label="Mercados atendidos">
+  <div class="trust-inner container-narrow">
+
+    <div class="trust-locations">
+      <span class="trust-label">Con proyectos en</span>
+      <ul class="trust-loc-list" role="list">
+        {locations.map((l) => (
+          <li class="trust-loc-item">
+            <span aria-hidden="true">{l.icon}</span>
+            <span>{l.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="trust-divider" aria-hidden="true"></div>
+
+    <div class="trust-industries">
+      <span class="trust-label">Industrias</span>
+      <ul class="trust-ind-list" role="list">
+        {industries.map((ind) => (
+          <li class="trust-ind-tag">{ind}</li>
+        ))}
+      </ul>
+    </div>
+
+  </div>
+</aside>
+
+<style>
+  .trust-strip {
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 4vw, 3rem);
+    background: color-mix(in srgb, var(--color-bg-elev) 40%, transparent);
+  }
+
+  .trust-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 720px) {
+    .trust-inner {
+      flex-direction: row;
+      align-items: center;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+  }
+
+  .trust-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-3);
+    display: block;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+  }
+
+  /* Locations */
+  .trust-locations {
+    flex-shrink: 0;
+  }
+
+  .trust-loc-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .trust-loc-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-2);
+  }
+
+  /* Vertical divider */
+  .trust-divider {
+    display: none;
+  }
+
+  @media (min-width: 720px) {
+    .trust-divider {
+      display: block;
+      width: 1px;
+      height: 2.5rem;
+      background: var(--color-border);
+      flex-shrink: 0;
+    }
+  }
+
+  /* Industries */
+  .trust-industries {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .trust-ind-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .trust-ind-tag {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 100px;
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: var(--color-text-2);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg-elev) 60%, transparent);
+    white-space: nowrap;
+  }
+</style>
