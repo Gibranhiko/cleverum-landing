@@ -2,9 +2,9 @@ export const seoDefaults = {
   siteName: 'Cleverum',
   url: 'https://cleverum.org',
   locale: 'es_MX',
-  title: 'Cleverum — Automatización, desarrollo e IA para tu negocio',
+  title: 'Cleverum — Automatización con IA para empresas en México',
   description:
-    'Soluciones inteligentes para negocios que evolucionan. Automatización con IA, desarrollo web y mobile, y chatbots de WhatsApp.',
+    'Automatización con IA, desarrollo web y chatbots de WhatsApp para PYMES. Con clientes en Monterrey, CDMX y LATAM. Diagnóstico gratis en ~1 minuto.',
   image: '/og.png',
   twitterHandle: '@cleverum',
   themeColor: '#08080B',

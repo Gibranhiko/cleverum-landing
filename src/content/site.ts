@@ -5,9 +5,9 @@
 
 export const site = {
   meta: {
-    title: 'Cleverum — Sistemas de IA y automatización para PYMES',
+    title: 'Cleverum — Automatización con IA para empresas en México',
     description:
-      'Construimos sistemas que ponen tu negocio en piloto automático. Diseñamos, desarrollamos y entregamos IA y automatización para PYMES en México y LATAM.',
+      'Construimos sistemas que ponen tu negocio en piloto automático. Automatización con IA, desarrollo web y chatbots de WhatsApp para PYMES en Monterrey, CDMX y LATAM.',
     url: 'https://cleverum.org',
     locale: 'es_MX',
     author: 'Cleverum',
@@ -16,7 +16,7 @@ export const site = {
   brand: {
     name: 'Cleverum',
     bajada: 'Sistemas inteligentes',
-    location: 'México · LATAM',
+    location: 'Monterrey, N.L. · CDMX · LATAM',
   },
 
   contact: {

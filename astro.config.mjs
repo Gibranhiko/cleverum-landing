@@ -13,7 +13,12 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: 'viewport',
   },
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) => !page.includes('/cotizaciones/'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
     build: {

@@ -54,26 +54,44 @@ export function buildJsonLd(): JsonLdGraph {
 
   const sameAs = [socials.linkedin, socials.twitter, socials.github].filter(isReal);
 
+  const areaServed = [
+    {
+      '@type': 'City',
+      name: 'Monterrey',
+      containedInPlace: { '@type': 'AdministrativeArea', name: 'Nuevo León', containedInPlace: { '@type': 'Country', name: 'México' } },
+    },
+    { '@type': 'City', name: 'San Pedro Garza García', containedInPlace: { '@type': 'AdministrativeArea', name: 'Nuevo León' } },
+    { '@type': 'City', name: 'Ciudad de México', containedInPlace: { '@type': 'Country', name: 'México' } },
+    { '@type': 'Country', name: 'México' },
+    { '@type': 'Place', name: 'Latinoamérica' },
+  ];
+
   const organization = {
-    '@type': 'Organization',
+    '@type': ['Organization', 'ProfessionalService'],
     '@id': ID.org,
     name: brand.name,
     url: URL,
     logo: `${URL}/icon-512.png`,
     image: `${URL}/og.png`,
     description: site.meta.description,
+    slogan: 'Automatización con IA, desarrollo web y chatbots de WhatsApp para PYMES en México',
+    knowsAbout: [
+      'Automatización con inteligencia artificial',
+      'Chatbots de WhatsApp para empresas',
+      'Desarrollo de software a la medida',
+      'Agentes de IA para PYMES',
+      'n8n automatización',
+      'WhatsApp Business API México',
+    ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
       telephone: contact.phoneTel,
       email: contact.email,
       availableLanguage: ['Spanish'],
-      areaServed: ['MX', 'LATAM'],
+      areaServed: ['MX'],
     },
-    areaServed: [
-      { '@type': 'Country', name: 'México' },
-      { '@type': 'Place', name: 'Latinoamérica' },
-    ],
+    areaServed,
     sameAs,
   };
 
@@ -95,10 +113,7 @@ export function buildJsonLd(): JsonLdGraph {
       serviceType: s.subtitle,
       description: s.bullets.join('. ') + '.',
       provider: { '@id': ID.org },
-      areaServed: [
-        { '@type': 'Country', name: 'México' },
-        { '@type': 'Place', name: 'Latinoamérica' },
-      ],
+      areaServed,
       audience: {
         '@type': 'Audience',
         audienceType: 'Pequeñas y medianas empresas',
