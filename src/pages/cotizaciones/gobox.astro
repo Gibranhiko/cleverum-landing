@@ -3,7 +3,7 @@ import '~/styles/global.css';
 import '~/components/cotizaciones/proposal.css';
 import { ClientRouter } from 'astro:transitions';
 
-const validUntil = '31 de agosto de 2025';
+const validUntil = '31 de agosto de 2026';
 
 const whatsappMsg = encodeURIComponent(
   '¡Hola Cleverum! Vi la propuesta de GoBox y me interesa avanzar.',
@@ -107,27 +107,23 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Registro y verificación de correo + teléfono</span>
+                  <span>Registro y verificación de correo</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Asignación de Suite USA personal</span>
+                  <span>Suite USA asignada (dirección única)</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Declara compra (pre-alerta) antes de que llegue</span>
+                  <span>Ve el estado de sus paquetes desde su portal</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Ve estado y ubicación de sus paquetes en tiempo real</span>
+                  <span>Paga su membresía en línea (Stripe)</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Paga membresía y servicios en línea</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Solicita retiro de paquete (pickup)</span>
+                  <span>Solicita pickup urgente desde su portal</span>
                 </li>
               </ul>
             </div>
@@ -141,33 +137,25 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
               <div class="gb-flow-header gb-flow-header--orange">
                 <span class="gb-flow-num">02</span>
                 <span class="gb-flow-title">BODEGA</span>
-                <span class="gb-flow-sub">Intake y almacenaje</span>
+                <span class="gb-flow-sub">Registro y operación</span>
               </div>
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Staff</span>
-                  <span>Recibe el paquete físico en bodega</span>
+                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                  <span>Recibe el paquete físicamente en bodega</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Staff</span>
-                  <span>Escanea el tracking en el panel de administración</span>
+                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                  <span>Da de alta el paquete en el panel (tracking + datos)</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Staff</span>
-                  <span>Registra condición del paquete en el sistema</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Staff</span>
-                  <span>Asigna rack / ubicación en anaquel</span>
+                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                  <span>Actualiza el estado del paquete a mano</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
                   <span>Notifica al cliente por correo: paquete recibido</span>
                 </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Genera cargo de almacenaje automáticamente</span>
-                </li>
               </ul>
             </div>
 
@@ -175,33 +163,29 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
 
-            <!-- Columna 3: COBROS -->
+            <!-- Columna 3: MEMBRESÍAS -->
             <div class="gb-flow-col">
               <div class="gb-flow-header gb-flow-header--navy">
                 <span class="gb-flow-num">03</span>
-                <span class="gb-flow-title">COBROS</span>
-                <span class="gb-flow-sub">Pagos y membresías</span>
+                <span class="gb-flow-title">MEMBRESÍAS</span>
+                <span class="gb-flow-sub">Cobro y activación</span>
               </div>
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Membresía cobrada automáticamente (Stripe)</span>
+                  <span>Cliente paga su membresía en línea (Stripe)</span>
+                </li>
+                <li class="gb-flow-step">
+                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                  <span>Staff confirma el pago en Stripe y activa la membresía en el panel</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Cliente paga servicios adicionales desde su portal</span>
+                  <span>Cliente ve su membresía activa y su Suite USA</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Pago confirmado → paquete habilitado para retiro</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Correo de confirmación automático al cliente</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Estado del paquete actualizado en tiempo real</span>
+                  <span>Correo de bienvenida automático con sus datos</span>
                 </li>
               </ul>
             </div>
@@ -210,42 +194,70 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
 
-            <!-- Columna 4: PICKUP -->
+            <!-- Columna 4: RETIRO EN BODEGA -->
             <div class="gb-flow-col">
               <div class="gb-flow-header gb-flow-header--orange">
                 <span class="gb-flow-num">04</span>
-                <span class="gb-flow-title">PICKUP</span>
-                <span class="gb-flow-sub">Retiro en bodega</span>
+                <span class="gb-flow-title">RETIRO</span>
+                <span class="gb-flow-sub">Pickup en bodega</span>
               </div>
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Cliente solicita retiro desde su portal</span>
+                  <span>Cliente ve "listo para retiro" en su portal</span>
+                </li>
+                <li class="gb-flow-step">
+                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                  <span>Acude a la bodega y verifica su identidad</span>
+                </li>
+                <li class="gb-flow-step">
+                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                  <span>Staff entrega el paquete físicamente</span>
+                </li>
+                <li class="gb-flow-step">
+                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                  <span>Staff marca como ENTREGADO en el panel</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Genera código único de retiro (válido 15 min)</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Staff</span>
-                  <span>Verifica identidad del cliente en ventanilla</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Staff</span>
-                  <span>Entrega física del paquete</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Staff</span>
-                  <span>Confirma la entrega en el sistema</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Marca paquete como ENTREGADO — cierra el ciclo</span>
+                  <span>Correo de confirmación — ciclo cerrado</span>
                 </li>
               </ul>
             </div>
 
           </div><!-- /gb-flow -->
+
+          <!-- Tarjeta: Pickup Urgente (feature destacado) -->
+          <div class="gb-urgente reveal-up" style="animation-delay:.20s">
+            <div class="gb-urgente-header">
+              <span class="gb-urgente-icon">⚡</span>
+              <div>
+                <span class="gb-urgente-label">Servicio incluido en el MVP</span>
+                <h3 class="gb-urgente-title">Pickup Urgente</h3>
+              </div>
+            </div>
+            <p class="gb-urgente-desc">
+              El cliente solicita desde su portal que el staff pase a comprar o recoger un artículo
+              en una tienda cercana. El pedido queda registrado en el sistema; el staff lo atiende
+              manualmente y actualiza el estado.
+            </p>
+            <div class="gb-urgente-steps">
+              <span class="gb-flow-step" style="gap:.5rem">
+                <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
+                <span>Cliente solicita y describe el artículo</span>
+              </span>
+              <span class="gb-urgente-sep" aria-hidden="true">→</span>
+              <span class="gb-flow-step" style="gap:.5rem">
+                <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                <span>Staff recoge el artículo en tienda</span>
+              </span>
+              <span class="gb-urgente-sep" aria-hidden="true">→</span>
+              <span class="gb-flow-step" style="gap:.5rem">
+                <span class="gb-step-tag gb-step-tag--manual">Manual</span>
+                <span>Registra el servicio y el cobro en el panel</span>
+              </span>
+            </div>
+          </div>
 
           <!-- Panel transversal: Administración -->
           <div class="gb-flow-admin reveal-up" style="animation-delay:.22s">
@@ -267,7 +279,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           <p class="gb-section-label reveal-up">Por qué a la medida</p>
           <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">GoBox vs. software genérico</h2>
           <p class="gb-body-text gb-container--narrow reveal-up" style="animation-delay:.1s; margin: 0 auto 2.5rem;">
-            Existe software empaquetado de package forwarding (ShipBob, Shipito, etc.), pero está diseñado para el mercado global en inglés, con modelos rígidos que no se adaptan a México. Puedes rentarlo, pero lo que obtienes es una caja que alguien más controla.
+            Existe software empaquetado de package forwarding (MyUS, Stackry, Shipito, etc.), pero está diseñado para el mercado global en inglés, con modelos rígidos que no se adaptan a México. Puedes rentarlo, pero lo que obtienes es una caja que alguien más controla.
           </p>
 
           <div class="gb-compare-grid reveal-up" style="animation-delay:.14s">
@@ -438,7 +450,22 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           <p class="gb-section-label reveal-up">Soporte</p>
           <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">Después de la entrega</h2>
           <p class="gb-body-text reveal-up" style="animation-delay:.1s;">
-            El soporte y los ajustes posteriores se atienden bajo solicitud, cotizados por hora o por tarea según lo que necesites. Sin contratos de soporte obligatorios ni mensualidades forzadas.
+            El soporte y los ajustes posteriores se atienden bajo solicitud, sin contratos obligatorios ni mensualidades forzadas.
+          </p>
+          <div class="gb-soporte-grid reveal-up" style="animation-delay:.14s">
+            <div class="gb-soporte-card">
+              <span class="gb-soporte-price">$800 MXN / hr</span>
+              <span class="gb-soporte-label">Por hora</span>
+              <span class="gb-soporte-desc">Ajustes, mejoras o consultas que toman tiempo variable.</span>
+            </div>
+            <div class="gb-soporte-card">
+              <span class="gb-soporte-price">Desde $500 MXN</span>
+              <span class="gb-soporte-label">Por ticket</span>
+              <span class="gb-soporte-desc">Tareas puntuales con alcance claro: corrección, cambio de texto, ajuste de flujo.</span>
+            </div>
+          </div>
+          <p class="gb-ops-fine reveal-up" style="animation-delay:.18s; margin-top:.75rem;">
+            Precios orientativos + IVA. El costo exacto se confirma antes de iniciar cada solicitud.
           </p>
         </div>
       </section>
@@ -456,7 +483,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
             <li><span class="gb-not-arrow">→</span><div><strong>Notificaciones por WhatsApp</strong><span>El correo cubre la comunicación inicial; WhatsApp se integra cuando el volumen lo justifique (Fase 3).</span></div></li>
             <li><span class="gb-not-arrow">→</span><div><strong>Facturación CFDI</strong><span>El sistema queda listo para conectarse con un proveedor de timbrado cuando lo necesites.</span></div></li>
             <li><span class="gb-not-arrow">→</span><div><strong>App móvil</strong><span>El portal web es responsive y funciona en cualquier teléfono. La app nativa se evalúa cuando el tráfico lo amerite.</span></div></li>
-            <li><span class="gb-not-arrow">→</span><div><strong>Integración con APIs de paqueterías</strong><span>FedEx, UPS, Amazon, etc. se conectan en fases posteriores. En MVP la guía se genera manualmente.</span></div></li>
+            <li><span class="gb-not-arrow">→</span><div><strong>Integración con APIs de paqueterías</strong><span>FedEx, UPS, Amazon, etc. se conectan en fases posteriores cuando haya envíos a México (Fase 2).</span></div></li>
             <li><span class="gb-not-arrow">→</span><div><strong>Catálogo de productos</strong><span>GoBox gestiona membresías y paquetes, no un inventario propio.</span></div></li>
           </ul>
           <div class="gb-callout reveal-up" style="animation-delay:.18s">
@@ -985,6 +1012,112 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     color: var(--gb-text-2);
     margin: 0;
     line-height: 1.55;
+  }
+
+  /* ── Pickup Urgente ──────────────────────────────────────────── */
+  .gb-urgente {
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: color-mix(in srgb, #7A3000 20%, var(--gb-bg-card));
+    border: 1px solid rgba(240,120,32,0.3);
+    border-radius: var(--gb-radius);
+  }
+
+  .gb-urgente-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .gb-urgente-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .gb-urgente-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gb-orange);
+    margin-bottom: 0.15rem;
+  }
+
+  .gb-urgente-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--gb-text-1);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .gb-urgente-desc {
+    font-size: 0.875rem;
+    color: var(--gb-text-2);
+    line-height: 1.6;
+    margin: 0 0 1rem;
+    max-width: 72ch;
+  }
+
+  .gb-urgente-steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .gb-urgente-sep {
+    color: rgba(240,120,32,0.5);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* ── Soporte cards ────────────────────────────────────────────── */
+  .gb-soporte-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 520px) {
+    .gb-soporte-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .gb-soporte-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.25rem 1.4rem;
+    background: var(--gb-bg-card);
+    border: 1px solid var(--gb-border);
+    border-radius: var(--gb-radius);
+  }
+
+  .gb-soporte-price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--gb-orange);
+    line-height: 1.1;
+  }
+
+  .gb-soporte-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gb-text-3);
+    margin-bottom: 0.4rem;
+  }
+
+  .gb-soporte-desc {
+    font-size: 0.82rem;
+    color: var(--gb-text-2);
+    line-height: 1.5;
   }
 
   /* ── Comparativa ─────────────────────────────────────────────── */
