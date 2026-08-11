@@ -3,6 +3,16 @@ import { site } from '~/content/site';
 
 const year = new Date().getFullYear();
 const { socials, footer, brand, contact, finalCta } = site;
+
+const locations = ['Monterrey, N.L.', 'Ciudad de México', 'LATAM'];
+const industries = [
+  'Manufactura e industria',
+  'eCommerce',
+  'Servicios profesionales',
+  'Logística y distribución',
+  'Salud y clínicas',
+  'Construcción',
+];
 ---
 
 <footer id="contacto" class="footer" role="contentinfo">
@@ -122,10 +132,28 @@ const { socials, footer, brand, contact, finalCta } = site;
       </li>
     </ul>
 
-    <p class="footer-location">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-      Monterrey, N.L. · Ciudad de México · LATAM
-    </p>
+    <div class="footer-reach">
+      <div class="footer-reach-block">
+        <span class="footer-reach-label">Con proyectos en</span>
+        <ul class="footer-reach-locations" role="list">
+          {
+            locations.map((loc) => (
+              <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                {loc}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer-reach-block">
+        <span class="footer-reach-label">Industrias que atendemos</span>
+        <ul class="footer-reach-tags" role="list">
+          {industries.map((ind) => <li class="footer-reach-tag">{ind}</li>)}
+        </ul>
+      </div>
+    </div>
 
     <hr class="footer-divider" />
 
@@ -318,19 +346,81 @@ const { socials, footer, brand, contact, finalCta } = site;
     }
   }
 
-  .footer-location {
+  /* --- Reach: ubicaciones + industrias --- */
+  .footer-reach {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    width: 100%;
+    max-width: 720px;
+    padding: clamp(1.5rem, 3vw, 2rem) 0 0.5rem;
+    text-align: left;
+  }
+
+  @media (min-width: 640px) {
+    .footer-reach {
+      grid-template-columns: auto 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+    }
+  }
+
+  .footer-reach-block {
     display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.82rem;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-reach-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--color-text-3);
-    letter-spacing: 0.03em;
+  }
+
+  .footer-reach-locations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
     margin: 0;
   }
 
-  .footer-location svg {
+  .footer-reach-locations li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-2);
+    white-space: nowrap;
+  }
+
+  .footer-reach-locations svg {
     flex-shrink: 0;
-    opacity: 0.6;
+    color: var(--color-brand-iris);
+    opacity: 0.8;
+  }
+
+  .footer-reach-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-reach-tag {
+    display: inline-block;
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-2);
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg-elev) 55%, transparent);
   }
 
   @media (prefers-reduced-motion: reduce) {
