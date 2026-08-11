@@ -1,0 +1,1239 @@
+---
+import '~/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+
+const whatsappMsg = encodeURIComponent(
+  '¡Hola Cleverum! Vi la propuesta de GoBox y me interesa avanzar.',
+);
+const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>GoBox — Propuesta de desarrollo · Cleverum</title>
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <ClientRouter />
+  </head>
+
+  <body class="gb-body">
+
+    <!-- ── TOPBAR ──────────────────────────────────────────────── -->
+    <header class="gb-topbar">
+      <div class="gb-topbar-inner">
+        <!-- LOGO Y CONTACTO CLEVERUM AQUÍ -->
+        <div class="gb-topbar-brand">
+          <span class="gb-topbar-name">Cleverum</span>
+        </div>
+        <div class="gb-topbar-meta">
+          <span class="gb-badge">Propuesta de desarrollo</span>
+          <span class="gb-validity">Confidencial · GoBox MVP</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- ── 1. HERO ──────────────────────────────────────────── -->
+      <section class="gb-hero">
+        <div class="gb-hero-content">
+          <p class="gb-eyebrow">Propuesta de Desarrollo · Cleverum</p>
+          <h1 class="gb-hero-title">GoBox</h1>
+          <p class="gb-hero-sub">
+            Tu casillero en Estados Unidos: membresías, dirección de recepción y servicio de pickup.
+          </p>
+          <div class="gb-price-pill">
+            <span class="gb-price-amount">$80,000 MXN</span>
+            <span class="gb-price-tax">+ IVA</span>
+          </div>
+          <a href={whatsappUrl} target="_blank" rel="noopener" class="gb-btn-primary">Hablemos</a>
+        </div>
+      </section>
+
+      <!-- ── 2. QUÉ ES GOBOX ───────────────────────────────────── -->
+      <section class="gb-section">
+        <div class="gb-container gb-container--narrow">
+          <p class="gb-section-label">Tu negocio en 10 segundos</p>
+          <h2 class="gb-section-title">¿Qué es GoBox?</h2>
+          <p class="gb-lead">
+            GoBox es un sistema web que permite captar clientes, cobrarles una membresía,
+            asignarles una dirección de recepción en Estados Unidos y llevar el control de sus
+            paquetes desde que llegan a la bodega hasta que el cliente los recoge (pickup). La
+            operación física la realiza tu personal de forma manual; el sistema es el registro y el
+            canal de comunicación con el cliente. Esta primera versión valida lo esencial del
+            negocio: que la gente se registre, pague su membresía y use el servicio.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── 3. QUÉ INCLUYE ───────────────────────────────────── -->
+      <section class="gb-section gb-section--alt">
+        <div class="gb-container">
+          <p class="gb-section-label">Alcance</p>
+          <h2 class="gb-section-title">Qué incluye tu MVP</h2>
+          <div class="gb-modules-grid">
+
+            <div class="gb-module-card">
+              <span class="gb-module-icon">👤</span>
+              <h3 class="gb-module-title">Cuentas de cliente y perfil</h3>
+              <p class="gb-module-desc">Registro, inicio de sesión y gestión de datos personales. Tu cliente tiene su cuenta segura desde el primer día.</p>
+            </div>
+
+            <div class="gb-module-card">
+              <span class="gb-module-icon">💳</span>
+              <h3 class="gb-module-title">Membresías con pago en línea</h3>
+              <p class="gb-module-desc">Cobro recurrente vía Stripe. El cliente paga su membresía mensual o anual sin que tú tengas que perseguirlo.</p>
+            </div>
+
+            <div class="gb-module-card">
+              <span class="gb-module-icon">📦</span>
+              <h3 class="gb-module-title">Dirección de recepción en USA</h3>
+              <p class="gb-module-desc">Cada cliente recibe una dirección única asignada en la bodega. Esa dirección es la que usa al comprar en tiendas americanas.</p>
+            </div>
+
+            <div class="gb-module-card">
+              <span class="gb-module-icon">🗂️</span>
+              <h3 class="gb-module-title">Portal del cliente</h3>
+              <p class="gb-module-desc">Panel donde el cliente ve todos sus paquetes y su estado en tiempo real: "recibido en bodega", "listo para pickup", etc.</p>
+            </div>
+
+            <div class="gb-module-card">
+              <span class="gb-module-icon">⚙️</span>
+              <h3 class="gb-module-title">Panel de administración</h3>
+              <p class="gb-module-desc">Tu equipo gestiona desde aquí: clientes, paquetes, estados y membresías activas. Sin necesidad de tocar código.</p>
+            </div>
+
+            <div class="gb-module-card">
+              <span class="gb-module-icon">🚗</span>
+              <h3 class="gb-module-title">Servicio de pickup urgente</h3>
+              <p class="gb-module-desc">El cliente puede solicitar que pasen a comprar o recoger algo en una tienda cercana. El pedido queda registrado en el sistema.</p>
+            </div>
+
+            <div class="gb-module-card">
+              <span class="gb-module-icon">✉️</span>
+              <h3 class="gb-module-title">Notificaciones por correo</h3>
+              <p class="gb-module-desc">Tu cliente recibe un correo cuando su membresía se activa y cuando su paquete está listo. Comunicación automática, sin trabajo manual.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 4. QUÉ NO INCLUYE ─────────────────────────────────── -->
+      <section class="gb-section">
+        <div class="gb-container gb-container--narrow">
+          <p class="gb-section-label">Transparencia</p>
+          <h2 class="gb-section-title">Qué no incluye esta versión</h2>
+          <p class="gb-body-text" style="margin-bottom:2rem;">
+            Tu MVP se enfoca en validar el negocio. Esto se agrega cuando tú lo pidas, una vez que el modelo esté funcionando y tengas usuarios reales:
+          </p>
+          <ul class="gb-not-list">
+            <li>
+              <span class="gb-not-icon">→</span>
+              <div>
+                <strong>Importación y envíos a México</strong>
+                <span>Logística de última milla: va en la Fase 2, cuando la operación esté validada.</span>
+              </div>
+            </li>
+            <li>
+              <span class="gb-not-icon">→</span>
+              <div>
+                <strong>Notificaciones por WhatsApp</strong>
+                <span>El correo cubre la comunicación inicial; WhatsApp Business API se integra cuando el volumen lo justifique.</span>
+              </div>
+            </li>
+            <li>
+              <span class="gb-not-icon">→</span>
+              <div>
+                <strong>Fotos de paquetes dentro del sistema</strong>
+                <span>El registro de estado es manual en esta fase; las fotos se agregan con el módulo de logística.</span>
+              </div>
+            </li>
+            <li>
+              <span class="gb-not-icon">→</span>
+              <div>
+                <strong>Facturación CFDI</strong>
+                <span>Queda lista para conectarse con un proveedor de timbrado cuando la necesites (Fase 3).</span>
+              </div>
+            </li>
+            <li>
+              <span class="gb-not-icon">→</span>
+              <div>
+                <strong>App móvil</strong>
+                <span>El portal web es responsive y funciona en cualquier teléfono. La app nativa se evalúa cuando el tráfico lo amerite.</span>
+              </div>
+            </li>
+            <li>
+              <span class="gb-not-icon">→</span>
+              <div>
+                <strong>Integración con tiendas o paqueterías</strong>
+                <span>APIs de FedEx, UPS, Amazon, etc. se conectan en fases posteriores.</span>
+              </div>
+            </li>
+            <li>
+              <span class="gb-not-icon">→</span>
+              <div>
+                <strong>Catálogo de productos</strong>
+                <span>No es un e-commerce; GoBox gestiona membresías y paquetes, no un inventario propio.</span>
+              </div>
+            </li>
+          </ul>
+          <div class="gb-callout">
+            No es que falte — es que se construye por etapas para que no pagues de más al arrancar.
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 5. COMPARATIVA ──────────────────────────────────────── -->
+      <section class="gb-section gb-section--alt">
+        <div class="gb-container">
+          <p class="gb-section-label">Por qué a la medida</p>
+          <h2 class="gb-section-title">GoBox a la medida vs. software genérico</h2>
+          <p class="gb-body-text gb-container--narrow" style="margin:0 auto 2.5rem;">
+            Existe software empaquetado de package forwarding (ShipBob, MyUS, Shipito, entre otros),
+            pero está diseñado para el mercado global genérico: en inglés, con modelos de cobro
+            rígidos y sin adaptación al mercado mexicano. Puedes rentarlo o comprarle licencia, pero
+            lo que obtienes es una caja que alguien más controla.
+          </p>
+
+          <div class="gb-compare-grid">
+            <div class="gb-compare-col gb-compare-col--generic">
+              <div class="gb-compare-header">
+                <span class="gb-compare-tag gb-compare-tag--neutral">Software empaquetado</span>
+                <p class="gb-compare-subhead">licencia / renta mensual</p>
+              </div>
+              <ul class="gb-compare-list">
+                <li class="gb-compare-item gb-compare-item--bad">Licencia desde ~$1,700 USD (~$30,000 MXN) pago único, o renta mensual adicional</li>
+                <li class="gb-compare-item gb-compare-item--bad">En inglés, pensado para el mercado global</li>
+                <li class="gb-compare-item gb-compare-item--bad">No factura CFDI de forma nativa</li>
+                <li class="gb-compare-item gb-compare-item--bad">Sin notificaciones por WhatsApp</li>
+                <li class="gb-compare-item gb-compare-item--bad">Modelo de cobro rígido, difícil de adaptar a membresías + servicios locales</li>
+                <li class="gb-compare-item gb-compare-item--bad">Personalizarlo cuesta aparte y queda frágil ante actualizaciones del proveedor</li>
+                <li class="gb-compare-item gb-compare-item--bad">Dependes de una empresa externa; si sube precios o cierra, quedas atado</li>
+              </ul>
+            </div>
+
+            <div class="gb-compare-col gb-compare-col--custom">
+              <div class="gb-compare-header">
+                <span class="gb-compare-tag gb-compare-tag--accent">GoBox a la medida</span>
+                <p class="gb-compare-subhead">tuyo, sin ataduras</p>
+              </div>
+              <ul class="gb-compare-list">
+                <li class="gb-compare-item gb-compare-item--good">100% tuyo, sin renta mensual de licencia</li>
+                <li class="gb-compare-item gb-compare-item--good">En español y pensado para tu operación en México</li>
+                <li class="gb-compare-item gb-compare-item--good">Preparado para crecer con CFDI, WhatsApp y envíos cuando lo necesites</li>
+                <li class="gb-compare-item gb-compare-item--good">Se adapta exactamente a tu modelo de membresías y servicios</li>
+                <li class="gb-compare-item gb-compare-item--good">Sin ataduras a un proveedor externo</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="gb-compare-honest">
+            "Si solo necesitas algo genérico y en inglés, el software empaquetado puede ser más barato.
+            GoBox tiene sentido cuando quieres un sistema hecho para tu negocio, en tu idioma y que sea tuyo."
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 6. SIGUIENTES FASES ─────────────────────────────────── -->
+      <section class="gb-section">
+        <div class="gb-container gb-container--narrow">
+          <p class="gb-section-label">Hoja de ruta</p>
+          <h2 class="gb-section-title">Las siguientes fases</h2>
+          <div class="gb-phases">
+            <div class="gb-phase">
+              <span class="gb-phase-num">Fase 2</span>
+              <div>
+                <h3 class="gb-phase-title">Logística a México</h3>
+                <p class="gb-phase-desc">Envíos, consolidación de paquetes y seguimiento de última milla.</p>
+              </div>
+            </div>
+            <div class="gb-phase">
+              <span class="gb-phase-num">Fase 3</span>
+              <div>
+                <h3 class="gb-phase-title">Servicios adicionales</h3>
+                <p class="gb-phase-desc">Compra asistida, facturación CFDI y notificaciones por WhatsApp.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 7. INVERSIÓN ────────────────────────────────────────── -->
+      <section class="gb-section gb-section--alt">
+        <div class="gb-container gb-container--narrow">
+          <p class="gb-section-label">Inversión</p>
+          <h2 class="gb-section-title">¿Cuánto cuesta?</h2>
+
+          <div class="gb-investment-hero">
+            <span class="gb-investment-amount">$80,000 <small>MXN + IVA</small></span>
+          </div>
+
+          <div class="gb-payment-grid">
+            <div class="gb-payment-step">
+              <span class="gb-payment-pct">40%</span>
+              <span class="gb-payment-label">Al iniciar</span>
+              <span class="gb-payment-sub">$32,000 MXN + IVA</span>
+            </div>
+            <div class="gb-payment-divider" aria-hidden="true">→</div>
+            <div class="gb-payment-step">
+              <span class="gb-payment-pct">30%</span>
+              <span class="gb-payment-label">MVP funcional</span>
+              <span class="gb-payment-sub">$24,000 MXN + IVA</span>
+            </div>
+            <div class="gb-payment-divider" aria-hidden="true">→</div>
+            <div class="gb-payment-step">
+              <span class="gb-payment-pct">30%</span>
+              <span class="gb-payment-label">Paso a producción</span>
+              <span class="gb-payment-sub">$24,000 MXN + IVA</span>
+            </div>
+          </div>
+
+          <div class="gb-timeline-pill">
+            ⏱ Tiempo estimado: <strong>5–7 semanas</strong>
+            <span class="gb-timeline-note">Incluye una semana inicial de definición de alcance antes de programar.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 8. COSTOS DE OPERACIÓN ──────────────────────────────── -->
+      <section class="gb-section">
+        <div class="gb-container gb-container--narrow">
+          <p class="gb-section-label">Operación</p>
+          <h2 class="gb-section-title">Operar GoBox al inicio cuesta muy poco</h2>
+          <p class="gb-body-text" style="margin-bottom:2rem;">
+            La mayoría de los servicios que usa GoBox tienen un tramo gratuito generoso que cubre
+            las primeras etapas del negocio. Solo empiezas a pagar cuando creces, y aun así el costo
+            se mantiene bajo.
+          </p>
+
+          <div class="gb-ops-table-wrap">
+            <table class="gb-ops-table">
+              <thead>
+                <tr>
+                  <th>Servicio</th>
+                  <th>Para qué</th>
+                  <th>Costo al arrancar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Hosting de la aplicación</strong></td>
+                  <td>Donde vive el sistema</td>
+                  <td class="gb-ops-free">Desde $0 <span>tramo gratuito inicial</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Base de datos</strong></td>
+                  <td>Guarda clientes, paquetes, membresías</td>
+                  <td class="gb-ops-free">Gratis <span>incluido al inicio</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Seguridad, SSL y velocidad</strong></td>
+                  <td>Certificado seguro y carga rápida (Cloudflare)</td>
+                  <td class="gb-ops-free">Gratis</td>
+                </tr>
+                <tr>
+                  <td><strong>Correos</strong></td>
+                  <td>Notificaciones al cliente</td>
+                  <td class="gb-ops-free">Gratis <span>hasta 3,000/mes</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Cobros en línea</strong></td>
+                  <td>Procesa las membresías (Stripe)</td>
+                  <td>Sin costo fijo <span class="gb-ops-note">solo comisión por pago recibido*</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Dominio (.com)</strong></td>
+                  <td>La dirección web</td>
+                  <td>~$15 USD / año</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="gb-ops-highlight">
+            Estimado total al arrancar: <strong>menos de $35 USD al mes</strong>, y buena parte dentro del tramo gratuito. Los servicios crecen contigo y solo pagas más cuando tu base de clientes también crece.
+          </div>
+          <p class="gb-ops-fine">
+            *La comisión de Stripe es un porcentaje por transacción, no un costo fijo mensual. Todos estos servicios son cuentas que quedan a nombre del cliente.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── 9. DESPUÉS DE LA ENTREGA ───────────────────────────── -->
+      <section class="gb-section gb-section--alt">
+        <div class="gb-container gb-container--narrow">
+          <p class="gb-section-label">Soporte</p>
+          <h2 class="gb-section-title">Después de la entrega</h2>
+          <p class="gb-body-text">
+            El soporte y los ajustes posteriores se atienden bajo solicitud, cotizados por hora o por tarea según lo que necesites. Sin contratos de soporte obligatorios ni mensualidades forzadas.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── 10. PASOS SIGUIENTES + CTA ─────────────────────────── -->
+      <section class="gb-section gb-cta-section">
+        <div class="gb-container gb-container--narrow">
+          <p class="gb-section-label">¿Arrancamos?</p>
+          <h2 class="gb-section-title">Pasos siguientes</h2>
+
+          <ol class="gb-steps">
+            <li class="gb-step">
+              <span class="gb-step-num">01</span>
+              <div>
+                <h3 class="gb-step-title">Aprobar la propuesta</h3>
+                <p class="gb-step-desc">Confirmas el alcance y realizamos el primer pago para arrancar.</p>
+              </div>
+            </li>
+            <li class="gb-step">
+              <span class="gb-step-num">02</span>
+              <div>
+                <h3 class="gb-step-title">Semana de definición</h3>
+                <p class="gb-step-desc">Antes de programar, una semana donde afinamos cada detalle del alcance para que no haya sorpresas durante el desarrollo.</p>
+              </div>
+            </li>
+            <li class="gb-step">
+              <span class="gb-step-num">03</span>
+              <div>
+                <h3 class="gb-step-title">Desarrollo y entregas por etapas</h3>
+                <p class="gb-step-desc">Ves el avance semana a semana. Cada módulo se entrega, se prueba y se ajusta antes de seguir al siguiente.</p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="gb-cta-block">
+            <p class="gb-cta-tagline">¿Todo claro? Hablemos y lo arrancamos esta semana.</p>
+            <a href={whatsappUrl} target="_blank" rel="noopener" class="gb-btn-primary gb-btn-large">Hablemos</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── FOOTER ──────────────────────────────────────────────── -->
+    <footer class="gb-footer">
+      <div class="gb-footer-inner">
+        <!-- LOGO Y CONTACTO CLEVERUM AQUÍ -->
+        <div class="gb-footer-brand">
+          <span class="gb-footer-name">Cleverum</span>
+          <span class="gb-footer-tagline">Automatización con IA · Desarrollo web · Chatbots</span>
+        </div>
+        <p class="gb-footer-copy">
+          Propuesta confidencial para GoBox. No distribuir.
+        </p>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style>
+  /* ── Reset & tokens ─────────────────────────────────────────── */
+  .gb-body {
+    margin: 0;
+    padding: 0;
+    background: #09090d;
+    color: #e2e2e8;
+    font-family: 'Inter', 'Geist', system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --gb-accent: #22d3ee;
+    --gb-accent-dim: rgba(34, 211, 238, 0.12);
+    --gb-accent-border: rgba(34, 211, 238, 0.3);
+    --gb-bg: #09090d;
+    --gb-bg-alt: #0f0f14;
+    --gb-bg-card: #13131a;
+    --gb-border: rgba(255, 255, 255, 0.07);
+    --gb-text-1: #f0f0f5;
+    --gb-text-2: #a0a0b0;
+    --gb-text-3: #606075;
+    --gb-green: #4ade80;
+    --gb-red: #f87171;
+    --gb-radius: 14px;
+  }
+
+  /* ── Topbar ─────────────────────────────────────────────────── */
+  .gb-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9, 9, 13, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gb-border);
+  }
+
+  .gb-topbar-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem clamp(1.25rem, 4vw, 2.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .gb-topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .gb-topbar-name {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--gb-text-1);
+  }
+
+  .gb-topbar-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .gb-badge {
+    display: inline-block;
+    padding: 0.2rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gb-accent);
+    background: var(--gb-accent-dim);
+    border: 1px solid var(--gb-accent-border);
+  }
+
+  .gb-validity {
+    font-size: 0.78rem;
+    color: var(--gb-text-3);
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────── */
+  .gb-hero {
+    padding: clamp(5rem, 12vw, 9rem) clamp(1.25rem, 4vw, 2.5rem) clamp(4rem, 10vw, 8rem);
+    text-align: center;
+    position: relative;
+  }
+
+  .gb-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(34, 211, 238, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .gb-hero-content {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .gb-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gb-accent);
+    margin: 0 0 1rem;
+  }
+
+  .gb-hero-title {
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--gb-text-1);
+    margin: 0 0 1.25rem;
+  }
+
+  .gb-hero-sub {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--gb-text-2);
+    line-height: 1.6;
+    margin: 0 0 2rem;
+    max-width: 50ch;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+  }
+
+  .gb-price-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    background: var(--gb-accent-dim);
+    border: 1px solid var(--gb-accent-border);
+    border-radius: 100px;
+    padding: 0.6rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .gb-price-amount {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--gb-accent);
+  }
+
+  .gb-price-tax {
+    font-size: 0.9rem;
+    color: var(--gb-text-2);
+    font-weight: 500;
+  }
+
+  /* ── Buttons ────────────────────────────────────────────────── */
+  .gb-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #09090d;
+    background: var(--gb-accent);
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 24px -6px rgba(34, 211, 238, 0.5);
+  }
+
+  .gb-btn-primary:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
+  }
+
+  .gb-btn-large {
+    padding: 1.1rem 2.75rem;
+    font-size: 1.1rem;
+  }
+
+  /* ── Layout ─────────────────────────────────────────────────── */
+  .gb-section {
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 4vw, 2.5rem);
+  }
+
+  .gb-section--alt {
+    background: var(--gb-bg-alt);
+    border-top: 1px solid var(--gb-border);
+    border-bottom: 1px solid var(--gb-border);
+  }
+
+  .gb-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .gb-container--narrow {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* ── Section header ─────────────────────────────────────────── */
+  .gb-section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gb-accent);
+    margin: 0 0 0.6rem;
+  }
+
+  .gb-section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--gb-text-1);
+    margin: 0 0 clamp(2rem, 4vw, 3rem);
+  }
+
+  .gb-lead {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--gb-text-2);
+  }
+
+  .gb-body-text {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--gb-text-2);
+  }
+
+  /* ── Modules grid ───────────────────────────────────────────── */
+  .gb-modules-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 600px) {
+    .gb-modules-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 860px) {
+    .gb-modules-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .gb-module-card {
+    background: var(--gb-bg-card);
+    border: 1px solid var(--gb-border);
+    border-radius: var(--gb-radius);
+    padding: 1.5rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: border-color 0.25s;
+  }
+
+  .gb-module-card:hover {
+    border-color: var(--gb-accent-border);
+  }
+
+  .gb-module-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .gb-module-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gb-text-1);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .gb-module-desc {
+    font-size: 0.875rem;
+    color: var(--gb-text-2);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── No-list ─────────────────────────────────────────────────── */
+  .gb-not-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .gb-not-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--gb-bg-card);
+    border: 1px solid var(--gb-border);
+    border-radius: 10px;
+  }
+
+  .gb-not-icon {
+    color: var(--gb-accent);
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.1em;
+  }
+
+  .gb-not-list strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gb-text-1);
+    margin-bottom: 0.2rem;
+  }
+
+  .gb-not-list span {
+    font-size: 0.85rem;
+    color: var(--gb-text-2);
+  }
+
+  .gb-callout {
+    margin-top: 2rem;
+    padding: 1.1rem 1.5rem;
+    border-left: 3px solid var(--gb-accent);
+    background: var(--gb-accent-dim);
+    border-radius: 0 10px 10px 0;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--gb-text-1);
+    line-height: 1.6;
+  }
+
+  /* ── Compare ─────────────────────────────────────────────────── */
+  .gb-compare-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 700px) {
+    .gb-compare-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .gb-compare-col {
+    border-radius: var(--gb-radius);
+    border: 1px solid var(--gb-border);
+    overflow: hidden;
+  }
+
+  .gb-compare-col--custom {
+    border-color: var(--gb-accent-border);
+    box-shadow: 0 0 0 1px var(--gb-accent-border), 0 8px 32px -8px rgba(34, 211, 238, 0.15);
+  }
+
+  .gb-compare-header {
+    padding: 1.1rem 1.4rem;
+    background: var(--gb-bg-card);
+    border-bottom: 1px solid var(--gb-border);
+  }
+
+  .gb-compare-col--custom .gb-compare-header {
+    background: rgba(34, 211, 238, 0.06);
+    border-bottom-color: var(--gb-accent-border);
+  }
+
+  .gb-compare-tag {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .gb-compare-tag--neutral {
+    color: var(--gb-text-3);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--gb-border);
+  }
+
+  .gb-compare-tag--accent {
+    color: var(--gb-accent);
+    background: var(--gb-accent-dim);
+    border: 1px solid var(--gb-accent-border);
+  }
+
+  .gb-compare-subhead {
+    font-size: 0.8rem;
+    color: var(--gb-text-3);
+    margin: 0;
+  }
+
+  .gb-compare-list {
+    list-style: none;
+    padding: 1rem 1.4rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .gb-compare-item {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    padding-left: 1.25rem;
+    position: relative;
+    color: var(--gb-text-2);
+  }
+
+  .gb-compare-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .gb-compare-item--bad::before {
+    background: var(--gb-red);
+    opacity: 0.7;
+  }
+
+  .gb-compare-item--good {
+    color: var(--gb-text-1);
+  }
+
+  .gb-compare-item--good::before {
+    background: var(--gb-green);
+  }
+
+  .gb-compare-honest {
+    padding: 1.1rem 1.5rem;
+    border-left: 3px solid var(--gb-border);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--gb-text-2);
+    line-height: 1.65;
+  }
+
+  /* ── Phases ──────────────────────────────────────────────────── */
+  .gb-phases {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .gb-phase {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--gb-bg-card);
+    border: 1px solid var(--gb-border);
+    border-radius: var(--gb-radius);
+  }
+
+  .gb-phase-num {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gb-accent);
+    background: var(--gb-accent-dim);
+    border: 1px solid var(--gb-accent-border);
+    border-radius: 100px;
+    padding: 0.25rem 0.75rem;
+    margin-top: 0.15rem;
+    white-space: nowrap;
+  }
+
+  .gb-phase-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gb-text-1);
+    margin: 0 0 0.25rem;
+  }
+
+  .gb-phase-desc {
+    font-size: 0.875rem;
+    color: var(--gb-text-2);
+    margin: 0;
+  }
+
+  /* ── Investment ──────────────────────────────────────────────── */
+  .gb-investment-hero {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .gb-investment-amount {
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--gb-accent);
+    line-height: 1;
+  }
+
+  .gb-investment-amount small {
+    font-size: 0.45em;
+    font-weight: 500;
+    color: var(--gb-text-2);
+    vertical-align: super;
+  }
+
+  .gb-payment-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .gb-payment-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 1.25rem 1.75rem;
+    background: var(--gb-bg-card);
+    border: 1px solid var(--gb-border);
+    border-radius: var(--gb-radius);
+    text-align: center;
+    min-width: 140px;
+  }
+
+  .gb-payment-pct {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--gb-text-1);
+    line-height: 1;
+  }
+
+  .gb-payment-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gb-text-2);
+  }
+
+  .gb-payment-sub {
+    font-size: 0.78rem;
+    color: var(--gb-text-3);
+  }
+
+  .gb-payment-divider {
+    font-size: 1.25rem;
+    color: var(--gb-text-3);
+  }
+
+  @media (max-width: 520px) {
+    .gb-payment-divider { display: none; }
+    .gb-payment-grid { flex-direction: column; align-items: stretch; }
+    .gb-payment-step { min-width: unset; }
+  }
+
+  .gb-timeline-pill {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    background: var(--gb-bg-card);
+    border: 1px solid var(--gb-border);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: var(--gb-text-2);
+    text-align: center;
+  }
+
+  .gb-timeline-pill strong {
+    color: var(--gb-text-1);
+  }
+
+  .gb-timeline-note {
+    display: block;
+    width: 100%;
+    font-size: 0.8rem;
+    color: var(--gb-text-3);
+  }
+
+  /* ── Ops table ───────────────────────────────────────────────── */
+  .gb-ops-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--gb-radius);
+    border: 1px solid var(--gb-border);
+    margin-bottom: 1.5rem;
+  }
+
+  .gb-ops-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .gb-ops-table thead tr {
+    background: var(--gb-bg-card);
+  }
+
+  .gb-ops-table th {
+    padding: 0.85rem 1.1rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--gb-text-1);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--gb-border);
+    white-space: nowrap;
+  }
+
+  .gb-ops-table td {
+    padding: 0.8rem 1.1rem;
+    border-bottom: 1px solid var(--gb-border);
+    color: var(--gb-text-2);
+    vertical-align: top;
+  }
+
+  .gb-ops-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .gb-ops-table strong {
+    color: var(--gb-text-1);
+    font-weight: 600;
+  }
+
+  .gb-ops-free {
+    color: var(--gb-green) !important;
+    font-weight: 600;
+  }
+
+  .gb-ops-free span,
+  .gb-ops-note {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--gb-text-3);
+  }
+
+  .gb-ops-highlight {
+    padding: 1.1rem 1.5rem;
+    background: rgba(74, 222, 128, 0.07);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: var(--gb-text-1);
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+  }
+
+  .gb-ops-highlight strong {
+    color: var(--gb-green);
+  }
+
+  .gb-ops-fine {
+    font-size: 0.78rem;
+    color: var(--gb-text-3);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Steps ───────────────────────────────────────────────────── */
+  .gb-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    counter-reset: none;
+  }
+
+  .gb-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--gb-bg-card);
+    border: 1px solid var(--gb-border);
+    border-radius: var(--gb-radius);
+  }
+
+  .gb-step-num {
+    flex-shrink: 0;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--gb-accent-dim);
+    border: 1px solid var(--gb-accent-border);
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--gb-accent);
+    letter-spacing: 0;
+    flex-shrink: 0;
+  }
+
+  .gb-step-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gb-text-1);
+    margin: 0 0 0.25rem;
+  }
+
+  .gb-step-desc {
+    font-size: 0.875rem;
+    color: var(--gb-text-2);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ── CTA block ───────────────────────────────────────────────── */
+  .gb-cta-section {
+    background: var(--gb-bg);
+  }
+
+  .gb-cta-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    text-align: center;
+  }
+
+  .gb-cta-tagline {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--gb-text-1);
+    margin: 0;
+    max-width: 42ch;
+    line-height: 1.4;
+  }
+
+  /* ── Footer ──────────────────────────────────────────────────── */
+  .gb-footer {
+    border-top: 1px solid var(--gb-border);
+    padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem);
+    background: var(--gb-bg-alt);
+  }
+
+  .gb-footer-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .gb-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .gb-footer-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gb-text-1);
+  }
+
+  .gb-footer-tagline {
+    font-size: 0.78rem;
+    color: var(--gb-text-3);
+  }
+
+  .gb-footer-copy {
+    font-size: 0.78rem;
+    color: var(--gb-text-3);
+    margin: 0;
+  }
+
+  /* ── Reduced motion ──────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .gb-btn-primary { transition: none; }
+    .gb-btn-primary:hover { transform: none; }
+    .gb-module-card { transition: none; }
+  }
+</style>
