@@ -150,7 +150,9 @@ const WORD_STAGGER_MS = 55;
   .hero-rotator {
     position: relative;
     width: 100%;
-    min-height: clamp(4.5rem, 8vw, 7rem);
+    /* Reserva alto para la frase más larga (hasta 3 líneas) y así no
+       choca con la subline de abajo. */
+    min-height: clamp(6rem, 11vw, 9rem);
     perspective: 1400px;
     perspective-origin: 50% 30%;
   }
@@ -316,6 +318,34 @@ const WORD_STAGGER_MS = 55;
     }
     50% {
       transform: translate(-50%, 5px);
+    }
+  }
+
+  /* Desktop: texto a la izquierda, partículas (globo) a la derecha. */
+  @media (min-width: 1024px) {
+    .hero {
+      align-items: flex-start;
+      padding-inline: clamp(2rem, 7vw, 6.5rem);
+    }
+    .hero-inner {
+      align-items: flex-start;
+      text-align: left;
+      max-width: 44rem;
+    }
+    /* En desktop la frase grande (3rem) puede ocupar 3 líneas dentro del
+       ancho reducido: reservamos alto suficiente. */
+    .hero-rotator {
+      min-height: 11rem;
+    }
+    .hero-phrase {
+      margin-inline: 0;
+      max-width: 100%;
+    }
+    .hero-subline {
+      max-width: 42ch;
+    }
+    .hero-cta-row {
+      align-items: flex-start;
     }
   }
 

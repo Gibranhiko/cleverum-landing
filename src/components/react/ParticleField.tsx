@@ -75,7 +75,7 @@ function Particles(): React.ReactElement {
         uColorB: { value: new THREE.Color('#7C5CFF') },
         uColorC: { value: new THREE.Color('#22C55E') },
         uColorHot: { value: new THREE.Color('#7C5CFF') },
-        uOpacity: { value: 0.55 },
+        uOpacity: { value: 0.72 },
       },
       transparent: true,
       depthWrite: false,
@@ -166,6 +166,7 @@ export default function ParticleField(): React.ReactElement {
   return (
     <div
       aria-hidden="true"
+      className="particle-field-root"
       style={{
         position: 'fixed',
         inset: 0,

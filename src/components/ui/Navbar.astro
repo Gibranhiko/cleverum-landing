@@ -6,7 +6,7 @@ const navLinks = [
   { label: 'Diagnóstico', href: '/#diagnostico' },
   { label: 'Casos', href: '/#cases' },
   { label: 'Servicios', href: '/#services' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Blog', href: '/#blog' },
   { label: 'Contacto', href: '/#contacto' },
 ];
 ---
@@ -34,7 +34,32 @@ const navLinks = [
 
     <div class="nav-cta">
       <WhatsAppButton label="Conecta por WhatsApp" variant="secondary" size="sm" iconOnly />
+
+      <button
+        type="button"
+        class="nav-burger"
+        data-nav-burger
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="nav-mobile-menu"
+      >
+        <span class="nav-burger-line"></span>
+        <span class="nav-burger-line"></span>
+        <span class="nav-burger-line"></span>
+      </button>
     </div>
+  </div>
+
+  <div class="nav-mobile" id="nav-mobile-menu" data-nav-mobile>
+    <nav class="nav-mobile-links" aria-label="Navegación móvil">
+      {
+        navLinks.map((l) => (
+          <a class="nav-mobile-link" href={l.href} data-nav-mobile-link>
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
   </div>
 </header>
 
@@ -59,6 +84,26 @@ const navLinks = [
       },
       { passive: true },
     );
+
+    // Menú móvil
+    const burger = nav.querySelector('[data-nav-burger]');
+    const menu = nav.querySelector('[data-nav-mobile]');
+    if (burger && menu) {
+      const setOpen = (open) => {
+        nav.classList.toggle('is-menu-open', open);
+        burger.setAttribute('aria-expanded', String(open));
+        burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+      };
+      burger.addEventListener('click', () => {
+        setOpen(!nav.classList.contains('is-menu-open'));
+      });
+      menu.querySelectorAll('[data-nav-mobile-link]').forEach((link) => {
+        link.addEventListener('click', () => setOpen(false));
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.classList.contains('is-menu-open')) setOpen(false);
+      });
+    }
   })();
 </script>
 
@@ -190,11 +235,132 @@ const navLinks = [
 
   .nav-cta {
     display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* --- Hamburguesa (solo mobile) --- */
+  .nav-burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 0 11px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-bg-elev) 55%, transparent);
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .nav-burger:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  @media (min-width: 860px) {
+    .nav-burger {
+      display: none;
+    }
+  }
+
+  .nav-burger-line {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--color-text-1);
+    border-radius: 2px;
+    transition:
+      transform 0.3s var(--ease-out-expo),
+      opacity 0.2s ease;
+  }
+
+  .nav.is-menu-open .nav-burger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav.is-menu-open .nav-burger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .nav.is-menu-open .nav-burger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* --- Panel móvil --- */
+  .nav-mobile {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      max-height 0.4s var(--ease-out-expo),
+      opacity 0.3s ease,
+      visibility 0s linear 0.4s;
+  }
+
+  .nav.is-menu-open .nav-mobile {
+    max-height: 24rem;
+    opacity: 1;
+    visibility: visible;
+    transition:
+      max-height 0.4s var(--ease-out-expo),
+      opacity 0.3s ease,
+      visibility 0s;
+  }
+
+  @media (min-width: 860px) {
+    .nav-mobile {
+      display: none;
+    }
+  }
+
+  .nav-mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding: 0.75rem 0 1.25rem;
+  }
+
+  .nav-mobile-link {
+    display: block;
+    padding: 0.85rem 0.75rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-text-2);
+    border-radius: 10px;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .nav-mobile-link:hover,
+  .nav-mobile-link:focus-visible {
+    color: var(--color-text-1);
+    background: color-mix(in srgb, var(--color-brand-iris) 10%, transparent);
+  }
+
+  /* El panel abierto necesita el fondo glass aunque no haya scroll */
+  .nav.is-menu-open {
+    background: color-mix(in srgb, var(--color-bg-base) 88%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-bottom-color: var(--color-border);
   }
 
   @media (max-width: 480px) {
     .nav-brand-text {
       display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-burger-line,
+    .nav-mobile {
+      transition: none;
     }
   }
 </style>

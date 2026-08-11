@@ -293,9 +293,16 @@
 /* Prose (article body) */
 
 .blog-prose-wrap {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  width: min(840px, 100% - 2rem);
+  margin-inline: auto;
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+  /* Panel semi-opaco con blur: aísla el texto de las partículas del fondo
+     para que la lectura no se pierda donde el campo es denso. */
+  background: color-mix(in srgb, var(--color-bg-base) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
 }
 
 .prose {

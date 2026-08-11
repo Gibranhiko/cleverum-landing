@@ -61,6 +61,11 @@ export const vertexShader = /* glsl */ `
     vAuditTint = uAuditState * uAuditMix;
     // =====================================================
 
+    // Respiración continua — la burbuja pulsa levemente desde el inicio,
+    // aunque no haya scroll. Se calma durante el audit para no distorsionar.
+    float breatheAmp = 0.03 * (1.0 - clamp(uAuditMix, 0.0, 1.0));
+    pos *= 1.0 + breatheAmp * sin(uTime * 0.5);
+
     // Wobble orgánico — fase distinta por partícula
     float phase = hash(position) * 6.2831;
     float wobble = 0.08 * (0.5 + 0.5 * p);
