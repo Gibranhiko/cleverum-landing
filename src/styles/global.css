@@ -68,6 +68,8 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    /* El navbar fijo mide ~5rem: evita que tape los títulos al saltar por anchor. */
+    scroll-padding-top: 5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -167,6 +169,15 @@
     width: 100%;
     max-width: 1200px;
     margin-inline: auto;
+  }
+
+  /* Campo de partículas: en desktop se recorre a la derecha para dejar
+     el texto respirando a la izquierda (hero left-aligned). Mobile/tablet
+     quedan centrados. */
+  @media (min-width: 1024px) {
+    .particle-field-root {
+      transform: translateX(24%);
+    }
   }
 
   .grain {

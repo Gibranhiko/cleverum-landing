@@ -1,0 +1,107 @@
+---
+import { getCollection } from 'astro:content';
+import '~/styles/blog.css';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const coverIcon: Record<string, string> = {
+  chatbot: '💬',
+  automatización: '⚙️',
+  comparativa: '⚖️',
+  precios: '💰',
+  monterrey: '📍',
+  ia: '🤖',
+};
+
+function getIcon(tags: string[]): string {
+  for (const tag of tags) {
+    if (coverIcon[tag]) return coverIcon[tag];
+  }
+  return '✦';
+}
+
+function coverTag(tags: string[]): string {
+  if (tags.includes('chatbot')) return 'chatbot';
+  if (tags.includes('comparativa')) return 'comparativa';
+  return 'default';
+}
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('es-MX', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function readingTime(body: string): number {
+  return Math.ceil(body.trim().split(/\s+/).length / 200);
+}
+
+function cleanSlug(id: string): string {
+  return id.replace(/\.mdx?$/, '');
+}
+---
+
+<section id="blog" class="blog-section section-pad" aria-labelledby="blog-heading">
+  <div class="container-narrow">
+    <header class="blog-section-header">
+      <h2 id="blog-heading" class="blog-section-heading font-display">Ideas y guías.</h2>
+      <p class="blog-section-sub">Automatización, IA y chatbots — sin relleno.</p>
+    </header>
+
+    <div class="blog-grid">
+      {
+        posts.map((post) => (
+          <a class="blog-card" href={`/blog/${cleanSlug(post.id)}`}>
+            <div class="blog-card-cover" data-tag={coverTag(post.data.tags)}>
+              <span class="blog-card-cover-label" aria-hidden="true">
+                {getIcon(post.data.tags)}
+              </span>
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-card-tags">
+                {post.data.tags.slice(0, 2).map((tag) => (
+                  <span class="blog-card-tag">{tag}</span>
+                ))}
+              </div>
+              <h3 class="blog-card-title">{post.data.title}</h3>
+              <p class="blog-card-desc">{post.data.description}</p>
+              <div class="blog-card-meta">
+                <span>{formatDate(post.data.pubDate)}</span>
+                <span>{readingTime(post.body ?? '')}&nbsp;min</span>
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog-section {
+    position: relative;
+  }
+
+  .blog-section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .blog-section-heading {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  .blog-section-sub {
+    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    color: var(--color-text-2);
+    margin: 0;
+  }
+</style>

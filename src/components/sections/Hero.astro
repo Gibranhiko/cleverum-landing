@@ -319,6 +319,29 @@ const WORD_STAGGER_MS = 55;
     }
   }
 
+  /* Desktop: texto a la izquierda, partículas (globo) a la derecha. */
+  @media (min-width: 1024px) {
+    .hero {
+      align-items: flex-start;
+      padding-inline: clamp(2rem, 7vw, 6.5rem);
+    }
+    .hero-inner {
+      align-items: flex-start;
+      text-align: left;
+      max-width: 42rem;
+    }
+    .hero-phrase {
+      margin-inline: 0;
+      max-width: 100%;
+    }
+    .hero-subline {
+      max-width: 42ch;
+    }
+    .hero-cta-row {
+      align-items: flex-start;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero-word {
       animation: none;
