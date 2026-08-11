@@ -3,6 +3,8 @@ import '~/styles/global.css';
 import '~/components/cotizaciones/proposal.css';
 import { ClientRouter } from 'astro:transitions';
 
+const validUntil = '31 de agosto de 2025';
+
 const whatsappMsg = encodeURIComponent(
   '¡Hola Cleverum! Vi la propuesta de GoBox y me interesa avanzar.',
 );
@@ -32,7 +34,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
         </div>
         <div class="proposal-topbar-meta">
           <span class="proposal-badge gb-badge">Propuesta GoBox</span>
-          <span class="proposal-validity">Confidencial</span>
+          <span class="proposal-validity">Válida hasta {validUntil}</span>
         </div>
       </div>
     </header>
@@ -57,37 +59,19 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
             <span class="gb-price-amount">$80,000 MXN</span>
             <span class="gb-price-tax">+ IVA</span>
           </div>
-          <a href={whatsappUrl} target="_blank" rel="noopener" class="gb-btn-primary reveal-up" style="animation-delay:.24s">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
-            </svg>
-            Hablemos
-          </a>
-          <div class="gb-hero-scroll" aria-hidden="true">
-            <span class="proposal-scroll-line"></span>
-            <span class="gb-scroll-text">DESLIZA PARA VER LA PROPUESTA</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── 2. QUÉ ES GOBOX ───────────────────────────────────── -->
-      <section class="gb-section">
-        <div class="gb-container gb-container--narrow">
-          <p class="gb-section-label reveal-up">Tu negocio en 10 segundos</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">¿Qué es GoBox?</h2>
-          <p class="gb-lead reveal-up" style="animation-delay:.1s">
-            GoBox es un sistema web que permite captar clientes, cobrarles una membresía, asignarles
-            una dirección de recepción en Estados Unidos y llevar el control de sus paquetes desde
-            que llegan a la bodega hasta que el cliente los recoge. La operación física la realiza
-            tu personal con apoyo del sistema; el software es el registro y el canal de comunicación
-            con el cliente. Esta primera versión valida lo esencial del negocio: que la gente se
-            registre, pague y use el servicio.
+          <p class="gb-valid-until reveal-up" style="animation-delay:.22s">
+            Propuesta válida hasta el {validUntil}
           </p>
+          <a href="#diagrama" class="gb-hero-arrow reveal-up" aria-label="Ver la propuesta" style="animation-delay:.26s">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+          </a>
         </div>
       </section>
 
-      <!-- ── 3. DIAGRAMA MVP ───────────────────────────────────── -->
-      <section class="gb-section gb-section--alt">
+      <!-- ── DIAGRAMA MVP ───────────────────────────────────────── -->
+      <section id="diagrama" class="gb-section gb-section--alt">
         <div class="gb-container gb-container--wide">
           <p class="gb-section-label reveal-up">Así funciona el MVP</p>
           <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">
@@ -193,7 +177,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
 
             <!-- Columna 3: COBROS -->
             <div class="gb-flow-col">
-              <div class="gb-flow-header gb-flow-header--green">
+              <div class="gb-flow-header gb-flow-header--navy">
                 <span class="gb-flow-num">03</span>
                 <span class="gb-flow-title">COBROS</span>
                 <span class="gb-flow-sub">Pagos y membresías</span>
@@ -228,7 +212,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
 
             <!-- Columna 4: PICKUP -->
             <div class="gb-flow-col">
-              <div class="gb-flow-header gb-flow-header--teal">
+              <div class="gb-flow-header gb-flow-header--orange">
                 <span class="gb-flow-num">04</span>
                 <span class="gb-flow-title">PICKUP</span>
                 <span class="gb-flow-sub">Retiro en bodega</span>
@@ -669,26 +653,40 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     font-weight: 500;
   }
 
-  .gb-hero-scroll {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    opacity: 0.35;
-    animation: gb-bob 2s ease-in-out infinite;
-    margin-top: 0.5rem;
-  }
-
   @keyframes gb-bob {
     0%, 100% { transform: translateY(0); }
     50%       { transform: translateY(6px); }
   }
 
-  .gb-scroll-text {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  .gb-valid-until {
+    font-size: 0.8rem;
     color: var(--gb-text-3);
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  /* Arrow CTA del hero */
+  .gb-hero-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gb-orange-bd);
+    color: var(--gb-orange);
+    background: var(--gb-orange-dim);
+    text-decoration: none;
+    animation: gb-bob 2s ease-in-out infinite;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    margin-top: 0.25rem;
+  }
+
+  .gb-hero-arrow:hover {
+    background: rgba(240,120,32,0.22);
+    border-color: var(--gb-orange);
+    transform: translateY(3px);
+    animation: none;
   }
 
   /* ── Buttons ────────────────────────────────────────────────── */
@@ -850,7 +848,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     display: none;
     align-items: center;
     justify-content: center;
-    color: rgba(255,255,255,0.18);
+    color: rgba(240,120,32,0.5);
     padding: 0;
     margin-top: 3.5rem;
   }
@@ -880,10 +878,10 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     gap: 0.15rem;
   }
 
-  .gb-flow-header--navy   { background: var(--gb-navy); }
-  .gb-flow-header--orange { background: #5a2800; }
-  .gb-flow-header--green  { background: #14532d; }
-  .gb-flow-header--teal   { background: #134e4a; }
+  .gb-flow-header--navy   { background: #0D2540; }
+  .gb-flow-header--orange { background: #7A3000; border-bottom: 2px solid rgba(240,120,32,0.4); }
+  .gb-flow-header--green  { background: #0D2540; }
+  .gb-flow-header--teal   { background: #7A3000; border-bottom: 2px solid rgba(240,120,32,0.4); }
 
   .gb-flow-num {
     font-size: 0.65rem;
@@ -1404,8 +1402,8 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
 
   /* ── Reduced motion ──────────────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
-    .gb-btn-primary, .gb-flow-col { transition: none; }
-    .gb-btn-primary:hover         { transform: none; }
-    .gb-hero-scroll               { animation: none; }
+    .gb-btn-primary, .gb-flow-col, .gb-hero-arrow { transition: none; }
+    .gb-btn-primary:hover, .gb-hero-arrow         { transform: none; }
+    .gb-hero-arrow                                { animation: none; }
   }
 </style>
