@@ -2,6 +2,7 @@
 import '~/styles/global.css';
 import '~/components/cotizaciones/proposal.css';
 import { ClientRouter } from 'astro:transitions';
+import translations from '~/components/cotizaciones/gobox.i18n.json';
 
 const validUntil = '31 de agosto de 2026';
 
@@ -33,8 +34,13 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           <span class="proposal-topbar-name">Cleverum</span>
         </div>
         <div class="proposal-topbar-meta">
-          <span class="proposal-badge gb-badge">Propuesta GoBox</span>
-          <span class="proposal-validity">Válida hasta {validUntil}</span>
+          <span class="proposal-badge gb-badge" data-i18n="topbar.badge">Propuesta GoBox</span>
+          <span class="proposal-validity" data-i18n="topbar.validity">Válida hasta el {validUntil}</span>
+          <button class="gb-lang-toggle" id="lang-toggle" aria-label="Cambiar idioma / Switch language">
+            <span class="gb-lang-flag">🇲🇽</span>
+            <span class="gb-lang-code">ES</span>
+            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
         </div>
       </div>
     </header>
@@ -43,7 +49,6 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
 
       <!-- ── 1. HERO ──────────────────────────────────────────── -->
       <section class="gb-hero">
-        <!-- Decoradores geométricos SVG — solo desktop -->
         <svg class="gb-deco gb-deco--left" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 500">
           <polygon points="0,0 90,0 130,250 90,500 0,500" fill="#0D2540" opacity="0.10"/>
           <polygon points="0,0 55,0  95,250  55,500 0,500" fill="#0D2540" opacity="0.06"/>
@@ -55,21 +60,21 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           <polygon points="52,175 0,228 52,280" fill="#0D2540" opacity="0.12"/>
         </svg>
         <div class="gb-hero-content">
-          <p class="gb-eyebrow reveal-up">Propuesta de Desarrollo · Cleverum para GoBox</p>
+          <p class="gb-eyebrow reveal-up" data-i18n="hero.eyebrow">Propuesta de Desarrollo · Cleverum para GoBox</p>
           <img
             src="/cotizaciones/gobox/go-box-logo.png"
             alt="GoBox"
             class="gb-hero-logo reveal-up"
             style="animation-delay:.06s"
           />
-          <p class="gb-hero-sub reveal-up" style="animation-delay:.12s">
+          <p class="gb-hero-sub reveal-up" style="animation-delay:.12s" data-i18n="hero.sub">
             Tu casillero en Estados Unidos: membresías, dirección de recepción y servicio de pickup.
           </p>
           <div class="gb-price-pill reveal-up" style="animation-delay:.18s">
             <span class="gb-price-amount">$80,000 MXN</span>
-            <span class="gb-price-tax">+ IVA</span>
+            <span class="gb-price-tax" data-i18n="hero.price.tax">+ IVA</span>
           </div>
-          <p class="gb-valid-until reveal-up" style="animation-delay:.22s">
+          <p class="gb-valid-until reveal-up" style="animation-delay:.22s" data-i18n="hero.validity">
             Propuesta válida hasta el {validUntil}
           </p>
           <a href="#diagrama" class="gb-hero-arrow reveal-up" aria-label="Ver la propuesta" style="animation-delay:.26s">
@@ -83,11 +88,11 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       <!-- ── DIAGRAMA MVP ───────────────────────────────────────── -->
       <section id="diagrama" class="gb-section gb-section--alt">
         <div class="gb-container gb-container--wide">
-          <p class="gb-section-label reveal-up">Así funciona el MVP</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">
+          <p class="gb-section-label reveal-up" data-i18n="diagram.label">Así funciona el MVP</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="diagram.title">
             Procesos digitales y manuales
           </h2>
-          <p class="gb-body-text reveal-up" style="animation-delay:.1s; margin-bottom:2rem; max-width:68ch;">
+          <p class="gb-body-text reveal-up" style="animation-delay:.1s; margin-bottom:2rem; max-width:68ch;" data-i18n="diagram.body">
             El sistema hace lo que puede automatizarse. Tu equipo hace lo que requiere presencia física.
             Así arrancas con la menor fricción y el mayor control.
           </p>
@@ -96,11 +101,11 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           <div class="gb-legend reveal-up" style="animation-delay:.14s">
             <span class="gb-legend-item">
               <span class="gb-legend-dot gb-legend-dot--digital"></span>
-              <span><strong>Sistema</strong> — GoBox lo hace automáticamente</span>
+              <span data-i18n="diagram.legend.system"><strong>Sistema</strong> — GoBox lo hace automáticamente</span>
             </span>
             <span class="gb-legend-item">
               <span class="gb-legend-dot gb-legend-dot--manual"></span>
-              <span><strong>Manual</strong> — Tu equipo lo hace a mano</span>
+              <span data-i18n="diagram.legend.manual"><strong>Manual</strong> — Tu equipo lo hace a mano</span>
             </span>
           </div>
 
@@ -110,30 +115,30 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
             <!-- Columna 1: CLIENTE -->
             <div class="gb-flow-col">
               <div class="gb-flow-header gb-flow-header--navy">
-                <span class="gb-flow-num">01</span>
-                <span class="gb-flow-title">CLIENTE</span>
-                <span class="gb-flow-sub">Portal del socio</span>
+                <span class="gb-flow-num" data-i18n="col1.num">01</span>
+                <span class="gb-flow-title" data-i18n="col1.title">CLIENTE</span>
+                <span class="gb-flow-sub" data-i18n="col1.sub">Portal del socio</span>
               </div>
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Registro y verificación de correo</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col1.step1">Registro y verificación de correo</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Suite USA asignada (dirección única)</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col1.step2">Suite USA asignada (dirección única)</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Ve el estado de sus paquetes desde su portal</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col1.step3">Ve el estado de sus paquetes desde su portal</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Paga su membresía en línea (Stripe)</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col1.step4">Paga su membresía en línea (Stripe)</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Solicita pickup urgente desde su portal</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col1.step5">Solicita pickup urgente desde su portal</span>
                 </li>
               </ul>
             </div>
@@ -145,26 +150,26 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
             <!-- Columna 2: BODEGA -->
             <div class="gb-flow-col">
               <div class="gb-flow-header gb-flow-header--orange">
-                <span class="gb-flow-num">02</span>
-                <span class="gb-flow-title">BODEGA</span>
-                <span class="gb-flow-sub">Registro y operación</span>
+                <span class="gb-flow-num" data-i18n="col2.num">02</span>
+                <span class="gb-flow-title" data-i18n="col2.title">BODEGA</span>
+                <span class="gb-flow-sub" data-i18n="col2.sub">Registro y operación</span>
               </div>
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                  <span>Recibe el paquete físicamente en bodega</span>
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col2.step1">Recibe el paquete físicamente en bodega</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                  <span>Da de alta el paquete en el panel (tracking + datos)</span>
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col2.step2">Da de alta el paquete en el panel (tracking + datos)</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                  <span>Actualiza el estado del paquete a mano</span>
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col2.step3">Actualiza el estado del paquete a mano</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Notifica al cliente por correo: paquete recibido</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col2.step4">Notifica al cliente por correo: paquete recibido</span>
                 </li>
               </ul>
             </div>
@@ -176,26 +181,26 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
             <!-- Columna 3: MEMBRESÍAS -->
             <div class="gb-flow-col">
               <div class="gb-flow-header gb-flow-header--navy">
-                <span class="gb-flow-num">03</span>
-                <span class="gb-flow-title">MEMBRESÍAS</span>
-                <span class="gb-flow-sub">Cobro y activación</span>
+                <span class="gb-flow-num" data-i18n="col3.num">03</span>
+                <span class="gb-flow-title" data-i18n="col3.title">MEMBRESÍAS</span>
+                <span class="gb-flow-sub" data-i18n="col3.sub">Cobro y activación</span>
               </div>
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Cliente paga su membresía en línea (Stripe)</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col3.step1">Cliente paga su membresía en línea (Stripe)</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                  <span>Staff confirma el pago en Stripe y activa la membresía en el panel</span>
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col3.step2">Staff confirma el pago en Stripe y activa la membresía en el panel</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Cliente ve su membresía activa y su Suite USA</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col3.step3">Cliente ve su membresía activa y su Suite USA</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Correo de bienvenida automático con sus datos</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col3.step4">Correo de bienvenida automático con sus datos</span>
                 </li>
               </ul>
             </div>
@@ -204,80 +209,98 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
 
-            <!-- Columna 4: RETIRO EN BODEGA -->
+            <!-- Columna 4: RETIRO -->
             <div class="gb-flow-col">
               <div class="gb-flow-header gb-flow-header--orange">
-                <span class="gb-flow-num">04</span>
-                <span class="gb-flow-title">RETIRO</span>
-                <span class="gb-flow-sub">Pickup en bodega</span>
+                <span class="gb-flow-num" data-i18n="col4.num">04</span>
+                <span class="gb-flow-title" data-i18n="col4.title">RETIRO</span>
+                <span class="gb-flow-sub" data-i18n="col4.sub">Pickup en bodega</span>
               </div>
               <ul class="gb-flow-steps">
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Cliente ve "listo para retiro" en su portal</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col4.step1">Cliente ve "listo para retiro" en su portal</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                  <span>Acude a la bodega y verifica su identidad</span>
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col4.step2">Acude a la bodega y verifica su identidad</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                  <span>Staff entrega el paquete físicamente</span>
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col4.step3">Staff entrega el paquete físicamente</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                  <span>Staff marca como ENTREGADO en el panel</span>
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col4.step4">Staff marca como ENTREGADO en el panel</span>
                 </li>
                 <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                  <span>Correo de confirmación — ciclo cerrado</span>
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col4.step5">Correo de confirmación — ciclo cerrado</span>
                 </li>
               </ul>
             </div>
 
           </div><!-- /gb-flow -->
 
-          <!-- Tarjeta: Pickup Urgente (feature destacado) -->
+          <!-- Pickup Urgente -->
           <div class="gb-urgente reveal-up" style="animation-delay:.20s">
             <div class="gb-urgente-header">
               <span class="gb-urgente-icon">⚡</span>
               <div>
-                <span class="gb-urgente-label">Servicio incluido en el MVP</span>
-                <h3 class="gb-urgente-title">Pickup Urgente</h3>
+                <span class="gb-urgente-label" data-i18n="urgente.tag">Servicio incluido en el MVP</span>
+                <h3 class="gb-urgente-title" data-i18n="urgente.title">Pickup Urgente</h3>
               </div>
             </div>
-            <p class="gb-urgente-desc">
+            <p class="gb-urgente-desc" data-i18n="urgente.desc">
               El cliente solicita desde su portal que el staff pase a comprar o recoger un artículo
               en una tienda cercana. El pedido queda registrado en el sistema; el staff lo atiende
               manualmente y actualiza el estado.
             </p>
             <div class="gb-urgente-steps">
               <span class="gb-flow-step" style="gap:.5rem">
-                <span class="gb-step-tag gb-step-tag--digital">Sistema</span>
-                <span>Cliente solicita y describe el artículo</span>
+                <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                <span data-i18n="urgente.step1">Cliente solicita y describe el artículo</span>
               </span>
               <span class="gb-urgente-sep" aria-hidden="true">→</span>
               <span class="gb-flow-step" style="gap:.5rem">
-                <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                <span>Staff recoge el artículo en tienda</span>
+                <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                <span data-i18n="urgente.step2">Staff recoge el artículo en tienda</span>
               </span>
               <span class="gb-urgente-sep" aria-hidden="true">→</span>
               <span class="gb-flow-step" style="gap:.5rem">
-                <span class="gb-step-tag gb-step-tag--manual">Manual</span>
-                <span>Registra y atiende el servicio en el panel</span>
+                <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                <span data-i18n="urgente.step3">Registra y atiende el servicio en el panel</span>
               </span>
             </div>
           </div>
 
-          <!-- Panel transversal: Administración -->
+          <!-- Panel Admin -->
           <div class="gb-flow-admin reveal-up" style="animation-delay:.22s">
             <div class="gb-flow-admin-label">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-              Panel de Administración — transversal a todo el proceso
+              <span data-i18n="admin.label">Panel de Administración — transversal a todo el proceso</span>
             </div>
-            <p class="gb-flow-admin-desc">
+            <p class="gb-flow-admin-desc" data-i18n="admin.desc">
               Tu equipo gestiona desde un solo panel: clientes activos, paquetes en bodega, membresías y solicitudes de pickup. Sin saltar entre herramientas.
             </p>
+          </div>
+
+          <!-- Tech highlights: Mobile-first + PWA -->
+          <div class="gb-tech-grid reveal-up" style="animation-delay:.24s">
+            <div class="gb-tech-card">
+              <span class="gb-tech-icon">📱</span>
+              <div>
+                <h4 class="gb-tech-title" data-i18n="tech.mobile.title">Mobile-first</h4>
+                <p class="gb-tech-desc" data-i18n="tech.mobile.desc">El portal se ve y funciona perfecto en cualquier celular desde el primer día. Diseño responsive garantizado.</p>
+              </div>
+            </div>
+            <div class="gb-tech-card">
+              <span class="gb-tech-icon">⚡</span>
+              <div>
+                <h4 class="gb-tech-title" data-i18n="tech.pwa.title">PWA-ready</h4>
+                <p class="gb-tech-desc" data-i18n="tech.pwa.desc">Preparado para instalarse como app en iOS y Android. La transición a app nativa parte de una base sólida cuando el negocio lo requiera.</p>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -286,45 +309,44 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       <!-- ── 4. COMPARATIVA ──────────────────────────────────────── -->
       <section class="gb-section">
         <div class="gb-container">
-          <p class="gb-section-label reveal-up">Por qué a la medida</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">GoBox vs. software genérico</h2>
-          <p class="gb-body-text gb-container--narrow reveal-up" style="animation-delay:.1s; margin: 0 auto 2.5rem;">
+          <p class="gb-section-label reveal-up" data-i18n="compare.label">Por qué a la medida</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="compare.title">GoBox vs. software genérico</h2>
+          <p class="gb-body-text gb-container--narrow reveal-up" style="animation-delay:.1s; margin: 0 auto 2.5rem;" data-i18n="compare.body">
             Existe software empaquetado de package forwarding (MyUS, Stackry, Shipito, etc.), pero está diseñado para el mercado global en inglés, con modelos rígidos que no se adaptan a México. Puedes rentarlo, pero lo que obtienes es una caja que alguien más controla.
           </p>
 
           <div class="gb-compare-grid reveal-up" style="animation-delay:.14s">
             <div class="gb-compare-col gb-compare-col--generic">
               <div class="gb-compare-header">
-                <span class="gb-compare-tag gb-compare-tag--neutral">Software empaquetado</span>
-                <p class="gb-compare-subhead">licencia / renta mensual</p>
+                <span class="gb-compare-tag gb-compare-tag--neutral" data-i18n="compare.col1.tag">Software empaquetado</span>
+                <p class="gb-compare-subhead" data-i18n="compare.col1.sub">licencia / renta mensual</p>
               </div>
               <ul class="gb-compare-list">
-                <li class="gb-compare-item gb-compare-item--bad">Licencia desde ~$1,700 USD (~$30,000 MXN) o renta mensual encima</li>
-                <li class="gb-compare-item gb-compare-item--bad">En inglés, pensado para el mercado global</li>
-                <li class="gb-compare-item gb-compare-item--bad">No factura CFDI de forma nativa</li>
-                <li class="gb-compare-item gb-compare-item--bad">Sin notificaciones por WhatsApp de forma nativa</li>
-                <li class="gb-compare-item gb-compare-item--bad">Modelo de cobro rígido, difícil de adaptar a tu operación</li>
-                <li class="gb-compare-item gb-compare-item--bad">Personalizarlo cuesta aparte y queda frágil ante actualizaciones</li>
-                <li class="gb-compare-item gb-compare-item--bad">Dependes de una empresa externa que puede subir precios o cerrar</li>
+                <li class="gb-compare-item gb-compare-item--bad" data-i18n="compare.col1.item1">Licencia desde ~$1,700 USD (~$30,000 MXN) o renta mensual encima</li>
+                <li class="gb-compare-item gb-compare-item--bad" data-i18n="compare.col1.item2">En inglés, pensado para el mercado global</li>
+                <li class="gb-compare-item gb-compare-item--bad" data-i18n="compare.col1.item3">No factura CFDI de forma nativa</li>
+                <li class="gb-compare-item gb-compare-item--bad" data-i18n="compare.col1.item4">Sin notificaciones por WhatsApp de forma nativa</li>
+                <li class="gb-compare-item gb-compare-item--bad" data-i18n="compare.col1.item5">Modelo de cobro rígido, difícil de adaptar a tu operación</li>
+                <li class="gb-compare-item gb-compare-item--bad" data-i18n="compare.col1.item6">Personalizarlo cuesta aparte y queda frágil ante actualizaciones</li>
+                <li class="gb-compare-item gb-compare-item--bad" data-i18n="compare.col1.item7">Dependes de una empresa externa que puede subir precios o cerrar</li>
               </ul>
             </div>
-
             <div class="gb-compare-col gb-compare-col--custom">
               <div class="gb-compare-header">
-                <span class="gb-compare-tag gb-compare-tag--accent">GoBox a la medida</span>
-                <p class="gb-compare-subhead">tuyo, sin ataduras</p>
+                <span class="gb-compare-tag gb-compare-tag--accent" data-i18n="compare.col2.tag">GoBox a la medida</span>
+                <p class="gb-compare-subhead" data-i18n="compare.col2.sub">tuyo, sin ataduras</p>
               </div>
               <ul class="gb-compare-list">
-                <li class="gb-compare-item gb-compare-item--good">100% tuyo, sin renta mensual de licencia</li>
-                <li class="gb-compare-item gb-compare-item--good">En español y pensado para tu operación en México</li>
-                <li class="gb-compare-item gb-compare-item--good">Preparado para crecer con CFDI, WhatsApp y envíos cuando lo necesites</li>
-                <li class="gb-compare-item gb-compare-item--good">Adaptado exactamente a tu modelo de membresías y servicios</li>
-                <li class="gb-compare-item gb-compare-item--good">Sin ataduras a ningún proveedor externo</li>
+                <li class="gb-compare-item gb-compare-item--good" data-i18n="compare.col2.item1">100% tuyo, sin renta mensual de licencia</li>
+                <li class="gb-compare-item gb-compare-item--good" data-i18n="compare.col2.item2">En español y pensado para tu operación en México</li>
+                <li class="gb-compare-item gb-compare-item--good" data-i18n="compare.col2.item3">Preparado para crecer con CFDI, WhatsApp y envíos cuando lo necesites</li>
+                <li class="gb-compare-item gb-compare-item--good" data-i18n="compare.col2.item4">Adaptado exactamente a tu modelo de membresías y servicios</li>
+                <li class="gb-compare-item gb-compare-item--good" data-i18n="compare.col2.item5">Sin ataduras a ningún proveedor externo</li>
               </ul>
             </div>
           </div>
 
-          <div class="gb-compare-honest reveal-up" style="animation-delay:.18s">
+          <div class="gb-compare-honest reveal-up" style="animation-delay:.18s" data-i18n="compare.honest">
             "Si solo necesitas algo genérico y en inglés, el software empaquetado puede ser más barato.
             GoBox tiene sentido cuando quieres un sistema hecho para tu negocio, en tu idioma y que sea tuyo."
           </div>
@@ -334,21 +356,21 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       <!-- ── 5. SIGUIENTES FASES ─────────────────────────────────── -->
       <section class="gb-section gb-section--alt">
         <div class="gb-container gb-container--narrow">
-          <p class="gb-section-label reveal-up">Hoja de ruta</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">Las siguientes fases</h2>
+          <p class="gb-section-label reveal-up" data-i18n="phases.label">Hoja de ruta</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="phases.title">Las siguientes fases</h2>
           <div class="gb-phases reveal-up" style="animation-delay:.1s">
             <div class="gb-phase">
-              <span class="gb-phase-num">Fase 2</span>
+              <span class="gb-phase-num" data-i18n="phase2.num">Fase 2</span>
               <div>
-                <h3 class="gb-phase-title">Logística a México</h3>
-                <p class="gb-phase-desc">Envíos, consolidación de paquetes y seguimiento de última milla.</p>
+                <h3 class="gb-phase-title" data-i18n="phase2.title">Logística a México</h3>
+                <p class="gb-phase-desc" data-i18n="phase2.desc">Envíos, consolidación de paquetes y seguimiento de última milla.</p>
               </div>
             </div>
             <div class="gb-phase">
-              <span class="gb-phase-num">Fase 3</span>
+              <span class="gb-phase-num" data-i18n="phase3.num">Fase 3</span>
               <div>
-                <h3 class="gb-phase-title">Servicios adicionales</h3>
-                <p class="gb-phase-desc">Compra asistida, facturación CFDI y notificaciones por WhatsApp.</p>
+                <h3 class="gb-phase-title" data-i18n="phase3.title">Servicios adicionales</h3>
+                <p class="gb-phase-desc" data-i18n="phase3.desc">Compra asistida, facturación CFDI y notificaciones por WhatsApp.</p>
               </div>
             </div>
           </div>
@@ -358,36 +380,36 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       <!-- ── 6. INVERSIÓN ────────────────────────────────────────── -->
       <section class="gb-section">
         <div class="gb-container gb-container--narrow">
-          <p class="gb-section-label reveal-up">Inversión</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">¿Cuánto cuesta?</h2>
+          <p class="gb-section-label reveal-up" data-i18n="investment.label">Inversión</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="investment.title">¿Cuánto cuesta?</h2>
 
           <div class="gb-investment-hero reveal-up" style="animation-delay:.1s">
-            <span class="gb-investment-amount">$80,000 <small>MXN + IVA</small></span>
+            <span class="gb-investment-amount">$80,000 <small data-i18n="investment.suffix">MXN + IVA</small></span>
           </div>
 
           <div class="gb-payment-grid reveal-up" style="animation-delay:.14s">
             <div class="gb-payment-step">
               <span class="gb-payment-pct">40%</span>
-              <span class="gb-payment-label">Al iniciar</span>
-              <span class="gb-payment-sub">$32,000 MXN + IVA</span>
+              <span class="gb-payment-label" data-i18n="pay1.label">Al iniciar</span>
+              <span class="gb-payment-sub" data-i18n="pay1.sub">$32,000 MXN + IVA</span>
             </div>
             <div class="gb-payment-divider" aria-hidden="true">→</div>
             <div class="gb-payment-step">
               <span class="gb-payment-pct">30%</span>
-              <span class="gb-payment-label">MVP funcional</span>
-              <span class="gb-payment-sub">$24,000 MXN + IVA</span>
+              <span class="gb-payment-label" data-i18n="pay2.label">MVP funcional</span>
+              <span class="gb-payment-sub" data-i18n="pay2.sub">$24,000 MXN + IVA</span>
             </div>
             <div class="gb-payment-divider" aria-hidden="true">→</div>
             <div class="gb-payment-step">
               <span class="gb-payment-pct">30%</span>
-              <span class="gb-payment-label">Paso a producción</span>
-              <span class="gb-payment-sub">$24,000 MXN + IVA</span>
+              <span class="gb-payment-label" data-i18n="pay3.label">Paso a producción</span>
+              <span class="gb-payment-sub" data-i18n="pay3.sub">$24,000 MXN + IVA</span>
             </div>
           </div>
 
           <div class="gb-timeline-pill reveal-up" style="animation-delay:.18s">
-            ⏱ Tiempo estimado: <strong>5–7 semanas</strong>
-            <span class="gb-timeline-note">Incluye una semana inicial de definición de alcance antes de programar.</span>
+            <span data-i18n="timeline.text">⏱ Tiempo estimado:</span>&nbsp;<strong data-i18n="timeline.weeks">5–7 semanas</strong>
+            <span class="gb-timeline-note" data-i18n="timeline.note">Incluye una semana inicial de definición de alcance antes de programar.</span>
           </div>
         </div>
       </section>
@@ -395,9 +417,9 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       <!-- ── 7. COSTOS DE OPERACIÓN ──────────────────────────────── -->
       <section class="gb-section gb-section--alt">
         <div class="gb-container gb-container--narrow">
-          <p class="gb-section-label reveal-up">Operación</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">Operar GoBox al inicio cuesta muy poco</h2>
-          <p class="gb-body-text reveal-up" style="animation-delay:.1s; margin-bottom:2rem;">
+          <p class="gb-section-label reveal-up" data-i18n="ops.label">Operación</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="ops.title">Operar GoBox al inicio cuesta muy poco</h2>
+          <p class="gb-body-text reveal-up" style="animation-delay:.1s; margin-bottom:2rem;" data-i18n="ops.body">
             La mayoría de los servicios que usa GoBox tienen un tramo gratuito generoso. Solo empiezas a pagar cuando creces, y aun así el costo se mantiene bajo.
           </p>
 
@@ -405,76 +427,76 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
             <table class="gb-ops-table">
               <thead>
                 <tr>
-                  <th>Servicio</th>
-                  <th>Para qué</th>
-                  <th>Costo al arrancar</th>
+                  <th data-i18n="ops.th1">Servicio</th>
+                  <th data-i18n="ops.th2">Para qué</th>
+                  <th data-i18n="ops.th3">Costo al arrancar</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Hosting de la aplicación</strong></td>
-                  <td>Donde vive el sistema</td>
-                  <td class="gb-ops-free">Desde $0 <span>tramo gratuito inicial</span></td>
+                  <td><strong data-i18n="ops.row1.name">Hosting de la aplicación</strong></td>
+                  <td data-i18n="ops.row1.desc">Donde vive el sistema</td>
+                  <td class="gb-ops-free" data-i18n="ops.row1.cost">Desde $0 <span>tramo gratuito inicial</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Base de datos</strong></td>
-                  <td>Clientes, paquetes, membresías</td>
-                  <td class="gb-ops-free">Gratis <span>incluido al inicio</span></td>
+                  <td><strong data-i18n="ops.row2.name">Base de datos</strong></td>
+                  <td data-i18n="ops.row2.desc">Clientes, paquetes, membresías</td>
+                  <td class="gb-ops-free" data-i18n="ops.row2.cost">Gratis <span>incluido al inicio</span></td>
                 </tr>
                 <tr>
-                  <td><strong>SSL y velocidad</strong></td>
-                  <td>Seguridad y carga rápida (Cloudflare)</td>
-                  <td class="gb-ops-free">Gratis</td>
+                  <td><strong data-i18n="ops.row3.name">SSL y velocidad</strong></td>
+                  <td data-i18n="ops.row3.desc">Seguridad y carga rápida (Cloudflare)</td>
+                  <td class="gb-ops-free" data-i18n="ops.row3.cost">Gratis</td>
                 </tr>
                 <tr>
-                  <td><strong>Correos</strong></td>
-                  <td>Notificaciones al cliente</td>
-                  <td class="gb-ops-free">Gratis <span>hasta 3,000/mes</span></td>
+                  <td><strong data-i18n="ops.row4.name">Correos</strong></td>
+                  <td data-i18n="ops.row4.desc">Notificaciones al cliente</td>
+                  <td class="gb-ops-free" data-i18n="ops.row4.cost">Gratis <span>hasta 3,000/mes</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Cobros en línea</strong></td>
-                  <td>Procesa membresías (Stripe)</td>
-                  <td>Sin costo fijo <span class="gb-ops-note">solo comisión por pago recibido*</span></td>
+                  <td><strong data-i18n="ops.row5.name">Cobros en línea</strong></td>
+                  <td data-i18n="ops.row5.desc">Procesa membresías (Stripe)</td>
+                  <td data-i18n="ops.row5.cost">Sin costo fijo <span class="gb-ops-note">solo comisión por pago recibido*</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Dominio (.com)</strong></td>
-                  <td>La dirección web</td>
-                  <td>~$15 USD / año</td>
+                  <td><strong data-i18n="ops.row6.name">Dominio (.com)</strong></td>
+                  <td data-i18n="ops.row6.desc">La dirección web</td>
+                  <td data-i18n="ops.row6.cost">~$15 USD / año</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="gb-ops-highlight reveal-up" style="animation-delay:.18s">
+          <div class="gb-ops-highlight reveal-up" style="animation-delay:.18s" data-i18n="ops.highlight">
             Estimado total al arrancar: <strong>menos de $35 USD al mes</strong>, buena parte dentro del tramo gratuito. Los servicios crecen contigo y solo pagas más cuando tu base de clientes también crece.
           </div>
-          <p class="gb-ops-fine">
+          <p class="gb-ops-fine" data-i18n="ops.fine">
             *La comisión de Stripe es un porcentaje por transacción, no un costo fijo mensual. Todos estos servicios quedan como cuentas a nombre del cliente.
           </p>
         </div>
       </section>
 
-      <!-- ── 8. DESPUÉS DE LA ENTREGA ───────────────────────────── -->
+      <!-- ── 8. SOPORTE ──────────────────────────────────────────── -->
       <section class="gb-section">
         <div class="gb-container gb-container--narrow">
-          <p class="gb-section-label reveal-up">Soporte</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">Después de la entrega</h2>
-          <p class="gb-body-text reveal-up" style="animation-delay:.1s;">
+          <p class="gb-section-label reveal-up" data-i18n="support.label">Soporte</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="support.title">Después de la entrega</h2>
+          <p class="gb-body-text reveal-up" style="animation-delay:.1s;" data-i18n="support.body">
             El soporte y los ajustes posteriores se atienden bajo solicitud, sin contratos obligatorios ni mensualidades forzadas.
           </p>
           <div class="gb-soporte-grid reveal-up" style="animation-delay:.14s">
             <div class="gb-soporte-card">
-              <span class="gb-soporte-price">$800 MXN / hr</span>
-              <span class="gb-soporte-label">Por hora</span>
-              <span class="gb-soporte-desc">Ajustes, mejoras o consultas que toman tiempo variable.</span>
+              <span class="gb-soporte-price" data-i18n="support.card1.price">$800 MXN / hr</span>
+              <span class="gb-soporte-label" data-i18n="support.card1.label">Por hora</span>
+              <span class="gb-soporte-desc" data-i18n="support.card1.desc">Ajustes, mejoras o consultas que toman tiempo variable.</span>
             </div>
             <div class="gb-soporte-card">
-              <span class="gb-soporte-price">Desde $500 MXN</span>
-              <span class="gb-soporte-label">Por ticket</span>
-              <span class="gb-soporte-desc">Tareas puntuales con alcance claro: corrección, cambio de texto, ajuste de flujo.</span>
+              <span class="gb-soporte-price" data-i18n="support.card2.price">Desde $500 MXN</span>
+              <span class="gb-soporte-label" data-i18n="support.card2.label">Por ticket</span>
+              <span class="gb-soporte-desc" data-i18n="support.card2.desc">Tareas puntuales con alcance claro: corrección, cambio de texto, ajuste de flujo.</span>
             </div>
           </div>
-          <p class="gb-ops-fine reveal-up" style="animation-delay:.18s; margin-top:.75rem;">
+          <p class="gb-ops-fine reveal-up" style="animation-delay:.18s; margin-top:.75rem;" data-i18n="support.fine">
             Precios orientativos + IVA. El costo exacto se confirma antes de iniciar cada solicitud.
           </p>
         </div>
@@ -483,20 +505,20 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       <!-- ── 9. QUÉ NO INCLUYE ──────────────────────────────────── -->
       <section class="gb-section gb-section--alt">
         <div class="gb-container gb-container--narrow">
-          <p class="gb-section-label reveal-up">Alcance</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">Qué no incluye esta versión</h2>
-          <p class="gb-body-text reveal-up" style="animation-delay:.1s; margin-bottom:1.75rem;">
+          <p class="gb-section-label reveal-up" data-i18n="noinclude.label">Alcance</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="noinclude.title">Qué no incluye esta versión</h2>
+          <p class="gb-body-text reveal-up" style="animation-delay:.1s; margin-bottom:1.75rem;" data-i18n="noinclude.body">
             El MVP se enfoca en validar el negocio. Todo lo de abajo se agrega en fases posteriores, cuando el modelo esté funcionando y lo pidas:
           </p>
           <ul class="gb-not-list reveal-up" style="animation-delay:.14s">
-            <li><span class="gb-not-arrow">→</span><div><strong>Importación y envíos a México</strong><span>Logística de última milla — va en la Fase 2.</span></div></li>
-            <li><span class="gb-not-arrow">→</span><div><strong>Notificaciones por WhatsApp</strong><span>El correo cubre la comunicación inicial; WhatsApp se integra cuando el volumen lo justifique (Fase 3).</span></div></li>
-            <li><span class="gb-not-arrow">→</span><div><strong>Facturación CFDI</strong><span>El sistema queda listo para conectarse con un proveedor de timbrado cuando lo necesites.</span></div></li>
-            <li><span class="gb-not-arrow">→</span><div><strong>App móvil</strong><span>El portal web es responsive y funciona en cualquier teléfono. La app nativa se evalúa cuando el tráfico lo amerite.</span></div></li>
-            <li><span class="gb-not-arrow">→</span><div><strong>Integración con APIs de paqueterías</strong><span>FedEx, UPS, Amazon, etc. se conectan en fases posteriores cuando haya envíos a México (Fase 2).</span></div></li>
-            <li><span class="gb-not-arrow">→</span><div><strong>Catálogo de productos</strong><span>GoBox gestiona membresías y paquetes, no un inventario propio.</span></div></li>
+            <li><span class="gb-not-arrow">→</span><div><strong data-i18n="noinclude.item1.title">Importación y envíos a México</strong><span data-i18n="noinclude.item1.desc">Logística de última milla — va en la Fase 2.</span></div></li>
+            <li><span class="gb-not-arrow">→</span><div><strong data-i18n="noinclude.item2.title">Notificaciones por WhatsApp</strong><span data-i18n="noinclude.item2.desc">El correo cubre la comunicación inicial; WhatsApp se integra cuando el volumen lo justifique (Fase 3).</span></div></li>
+            <li><span class="gb-not-arrow">→</span><div><strong data-i18n="noinclude.item3.title">Facturación CFDI</strong><span data-i18n="noinclude.item3.desc">El sistema queda listo para conectarse con un proveedor de timbrado cuando lo necesites.</span></div></li>
+            <li><span class="gb-not-arrow">→</span><div><strong data-i18n="noinclude.item4.title">App móvil</strong><span data-i18n="noinclude.item4.desc">El portal web es responsive y funciona en cualquier teléfono. La app nativa se evalúa cuando el tráfico lo amerite.</span></div></li>
+            <li><span class="gb-not-arrow">→</span><div><strong data-i18n="noinclude.item5.title">Integración con APIs de paqueterías</strong><span data-i18n="noinclude.item5.desc">FedEx, UPS, Amazon, etc. se conectan en fases posteriores cuando haya envíos a México (Fase 2).</span></div></li>
+            <li><span class="gb-not-arrow">→</span><div><strong data-i18n="noinclude.item6.title">Catálogo de productos</strong><span data-i18n="noinclude.item6.desc">GoBox gestiona membresías y paquetes, no un inventario propio.</span></div></li>
           </ul>
-          <div class="gb-callout reveal-up" style="animation-delay:.18s">
+          <div class="gb-callout reveal-up" style="animation-delay:.18s" data-i18n="noinclude.callout">
             No es que falte — es que se construye por etapas para que no pagues de más al arrancar.
           </div>
         </div>
@@ -505,40 +527,40 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       <!-- ── 10. PASOS + CTA ─────────────────────────────────────── -->
       <section class="gb-section gb-cta-section">
         <div class="gb-container gb-container--narrow">
-          <p class="gb-section-label reveal-up">¿Arrancamos?</p>
-          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s">Pasos siguientes</h2>
+          <p class="gb-section-label reveal-up" data-i18n="cta.label">¿Arrancamos?</p>
+          <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="cta.title">Pasos siguientes</h2>
 
           <ol class="gb-steps reveal-up" style="animation-delay:.1s">
             <li class="gb-step">
               <span class="gb-step-num">01</span>
               <div>
-                <h3 class="gb-step-title">Aprobar la propuesta</h3>
-                <p class="gb-step-desc">Confirmas el alcance y realizamos el primer pago para arrancar.</p>
+                <h3 class="gb-step-title" data-i18n="step1.title">Aprobar la propuesta</h3>
+                <p class="gb-step-desc" data-i18n="step1.desc">Confirmas el alcance y realizamos el primer pago para arrancar.</p>
               </div>
             </li>
             <li class="gb-step">
               <span class="gb-step-num">02</span>
               <div>
-                <h3 class="gb-step-title">Semana de definición</h3>
-                <p class="gb-step-desc">Antes de programar, afinamos cada detalle del alcance para que no haya sorpresas durante el desarrollo.</p>
+                <h3 class="gb-step-title" data-i18n="step2.title">Semana de definición</h3>
+                <p class="gb-step-desc" data-i18n="step2.desc">Antes de programar, afinamos cada detalle del alcance para que no haya sorpresas durante el desarrollo.</p>
               </div>
             </li>
             <li class="gb-step">
               <span class="gb-step-num">03</span>
               <div>
-                <h3 class="gb-step-title">Desarrollo y entregas por etapas</h3>
-                <p class="gb-step-desc">Ves el avance semana a semana. Cada módulo se entrega, prueba y ajusta antes de seguir al siguiente.</p>
+                <h3 class="gb-step-title" data-i18n="step3.title">Desarrollo y entregas por etapas</h3>
+                <p class="gb-step-desc" data-i18n="step3.desc">Ves el avance semana a semana. Cada módulo se entrega, prueba y ajusta antes de seguir al siguiente.</p>
               </div>
             </li>
           </ol>
 
           <div class="gb-cta-block reveal-up" style="animation-delay:.14s">
-            <p class="gb-cta-tagline">¿Todo claro? Hablemos y lo arrancamos esta semana.</p>
+            <p class="gb-cta-tagline" data-i18n="cta.tagline">¿Todo claro? Hablemos y lo arrancamos esta semana.</p>
             <a href={whatsappUrl} target="_blank" rel="noopener" class="gb-btn-primary gb-btn-large">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
               </svg>
-              Hablemos
+              <span data-i18n="cta.btn">Hablemos</span>
             </a>
           </div>
         </div>
@@ -553,13 +575,14 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           <img src="/logos/cleverum-logo.png" alt="Cleverum" class="gb-footer-logo" />
           <div>
             <span class="gb-footer-name">Cleverum</span>
-            <span class="gb-footer-tagline">Automatización con IA · Desarrollo web · Chatbots</span>
+            <span class="gb-footer-tagline" data-i18n="footer.tagline">Automatización con IA · Desarrollo web · Chatbots</span>
           </div>
         </div>
-        <p class="gb-footer-copy">Propuesta confidencial para GoBox. No distribuir.</p>
+        <p class="gb-footer-copy" data-i18n="footer.copy">Propuesta confidencial para GoBox. No distribuir.</p>
       </div>
     </footer>
 
+    <!-- Scroll reveal (TypeScript, processed by Vite) -->
     <script>
       const observer = new IntersectionObserver(
         (entries) => {
@@ -575,6 +598,42 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
     </script>
 
+    <!-- i18n toggle (inline via define:vars — plain JS) -->
+    <script define:vars={{ translations }}>
+      var toggle = document.getElementById('lang-toggle');
+      var storedLang = localStorage.getItem('gb-lang') || 'es';
+      var activeLang = storedLang;
+
+      function applyLang(lang) {
+        activeLang = lang;
+        localStorage.setItem('gb-lang', lang);
+        var flagEl = toggle.querySelector('.gb-lang-flag');
+        var codeEl = toggle.querySelector('.gb-lang-code');
+        if (lang === 'en') {
+          flagEl.textContent = '🇺🇸';
+          codeEl.textContent = 'EN';
+        } else {
+          flagEl.textContent = '🇲🇽';
+          codeEl.textContent = 'ES';
+        }
+        var dict = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+          var key = el.getAttribute('data-i18n');
+          if (dict[key] !== undefined) {
+            el.innerHTML = dict[key];
+          }
+        });
+      }
+
+      toggle.addEventListener('click', function() {
+        applyLang(activeLang === 'es' ? 'en' : 'es');
+      });
+
+      if (activeLang === 'en') {
+        applyLang('en');
+      }
+    </script>
+
   </body>
 </html>
 
@@ -583,7 +642,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
   :root {
     --gb-navy:       #0D2540;
     --gb-orange:     #F07820;
-    --gb-orange-txt: #B05010;   /* naranja oscuro para texto pequeño — AA en blanco */
+    --gb-orange-txt: #B05010;
     --gb-orange-dim: rgba(240,120,32,0.09);
     --gb-orange-bd:  rgba(240,120,32,0.28);
     --gb-bg:         #FFFFFF;
@@ -591,10 +650,10 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     --gb-bg-card:    #FFFFFF;
     --gb-border:     #E2E8F0;
     --gb-border-md:  #CBD5E1;
-    --gb-text-1:     #0D2540;   /* navy puro — 18:1 sobre blanco */
-    --gb-text-2:     #374151;   /* cuerpo — 10:1 sobre blanco */
-    --gb-text-3:     #6B7280;   /* muted — 4.6:1 sobre blanco, AA ✓ */
-    --gb-green:      #166534;   /* verde legible sobre blanco — 6.8:1 ✓ */
+    --gb-text-1:     #0D2540;
+    --gb-text-2:     #374151;
+    --gb-text-3:     #6B7280;
+    --gb-green:      #166534;
     --gb-red:        #dc2626;
     --gb-radius:     12px;
   }
@@ -610,13 +669,17 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
 
   *, *::before, *::after { box-sizing: border-box; }
 
-  /* ── Topbar: tema claro ─────────────────────────────────────── */
+  /* ── Topbar overrides ───────────────────────────────────────── */
   .proposal-topbar {
     background: #FFFFFF !important;
     border-bottom: 1px solid var(--gb-border) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .proposal-topbar-inner {
+    max-width: 1200px !important;
   }
 
   .proposal-topbar-name { color: var(--gb-navy) !important; }
@@ -628,6 +691,32 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     border-color: var(--gb-orange-bd) !important;
   }
 
+  /* ── Lang toggle button ─────────────────────────────────────── */
+  .gb-lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.22rem 0.55rem 0.22rem 0.45rem;
+    background: var(--gb-orange-dim);
+    border: 1px solid var(--gb-orange-bd);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--gb-orange-txt);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .gb-lang-toggle:hover {
+    background: rgba(240,120,32,0.16);
+    border-color: rgba(240,120,32,0.42);
+  }
+
+  .gb-lang-flag { font-size: 1rem; line-height: 1; }
+  .gb-lang-code { letter-spacing: 0.04em; }
+
   /* ── Hero ───────────────────────────────────────────────────── */
   .gb-hero {
     position: relative;
@@ -637,13 +726,10 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     background: linear-gradient(180deg, #EEF3FA 0%, #FFFFFF 100%);
   }
 
-  /* Decoradores SVG */
   .gb-deco {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    width: auto;
+    top: 0; bottom: 0;
+    height: 100%; width: auto;
     pointer-events: none;
     z-index: 0;
   }
@@ -673,11 +759,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     margin: 0;
   }
 
-  .gb-hero-logo {
-    height: clamp(60px, 14vw, 110px);
-    width: auto;
-    object-fit: contain;
-  }
+  .gb-hero-logo { height: clamp(60px, 14vw, 110px); width: auto; object-fit: contain; }
 
   .gb-hero-sub {
     font-size: clamp(1rem, 2vw, 1.15rem);
@@ -697,36 +779,21 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     padding: 0.6rem 1.5rem;
   }
 
-  .gb-price-amount {
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--gb-navy);
-  }
-
-  .gb-price-tax {
-    font-size: 0.9rem;
-    color: var(--gb-text-3);
-    font-weight: 500;
-  }
+  .gb-price-amount { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; color: var(--gb-navy); }
+  .gb-price-tax    { font-size: 0.9rem; color: var(--gb-text-3); font-weight: 500; }
 
   @keyframes gb-bob {
     0%, 100% { transform: translateY(0); }
     50%       { transform: translateY(6px); }
   }
 
-  .gb-valid-until {
-    font-size: 0.8rem;
-    color: var(--gb-text-3);
-    margin: 0;
-  }
+  .gb-valid-until { font-size: 0.8rem; color: var(--gb-text-3); margin: 0; }
 
   .gb-hero-arrow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
+    width: 52px; height: 52px;
     border-radius: 50%;
     border: 1.5px solid var(--gb-orange-bd);
     color: var(--gb-orange);
@@ -760,12 +827,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     box-shadow: 0 4px 20px -4px rgba(240,120,32,0.5);
   }
 
-  .gb-btn-primary:hover {
-    opacity: 0.92;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px -4px rgba(240,120,32,0.55);
-  }
-
+  .gb-btn-primary:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 8px 28px -4px rgba(240,120,32,0.55); }
   .gb-btn-large { padding: 1.1rem 2.75rem; font-size: 1.05rem; }
 
   /* ── Layout ─────────────────────────────────────────────────── */
@@ -784,23 +846,15 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
   .gb-container--wide  { max-width: 1200px; margin: 0 auto; }
   .gb-container--narrow{ max-width: 720px;  margin: 0 auto; }
 
-  /* ── Section labels ──────────────────────────────────────────── */
   .gb-section-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gb-orange-txt);
-    margin: 0 0 0.6rem;
-    display: block;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gb-orange-txt);
+    margin: 0 0 0.6rem; display: block;
   }
 
   .gb-section-title {
-    font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: var(--gb-text-1);
+    font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1.1; color: var(--gb-text-1);
     margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
   }
 
@@ -809,34 +863,16 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
 
   /* ── Diagrama ────────────────────────────────────────────────── */
   .gb-legend {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-    padding: 0.75rem 1.1rem;
-    background: #FFFFFF;
-    border: 1px solid var(--gb-border);
-    border-radius: 8px;
-    width: fit-content;
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    margin-bottom: 2rem; padding: 0.75rem 1.1rem;
+    background: #FFFFFF; border: 1px solid var(--gb-border);
+    border-radius: 8px; width: fit-content;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }
 
-  .gb-legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-size: 0.82rem;
-    color: var(--gb-text-2);
-  }
-
+  .gb-legend-item { display: inline-flex; align-items: center; gap: 0.55rem; font-size: 0.82rem; color: var(--gb-text-2); }
   .gb-legend-item strong { color: var(--gb-text-1); }
-
-  .gb-legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
+  .gb-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .gb-legend-dot--digital { background: var(--gb-green); }
   .gb-legend-dot--manual  { background: #b45309; }
 
@@ -850,47 +886,28 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
   @media (min-width: 900px) {
     .gb-flow {
       grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-      gap: 0;
-      column-gap: 0.6rem;
-      align-items: stretch;
+      gap: 0; column-gap: 0.6rem; align-items: stretch;
     }
-
-    .gb-flow .gb-legend      { grid-column: 1 / -1; }
-    .gb-flow .gb-flow-admin  { grid-column: 1 / -1; }
+    .gb-flow .gb-legend     { grid-column: 1 / -1; }
+    .gb-flow .gb-flow-admin { grid-column: 1 / -1; }
   }
 
   .gb-flow-arrow {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    color: var(--gb-orange);
-    opacity: 0.55;
-    padding: 0;
-    margin-top: 3.5rem;
+    display: none; align-items: center; justify-content: center;
+    color: var(--gb-orange); opacity: 0.55; padding: 0; margin-top: 3.5rem;
   }
-
   @media (min-width: 900px) { .gb-flow-arrow { display: flex; } }
 
   .gb-flow-col {
-    background: #FFFFFF;
-    border: 1px solid var(--gb-border);
-    border-radius: var(--gb-radius);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    background: #FFFFFF; border: 1px solid var(--gb-border);
+    border-radius: var(--gb-radius); overflow: hidden;
+    display: flex; flex-direction: column;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     transition: box-shadow 0.25s;
   }
-
   .gb-flow-col:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
 
-  .gb-flow-header {
-    padding: 0.9rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
+  .gb-flow-header { padding: 0.9rem 1rem; display: flex; flex-direction: column; gap: 0.15rem; }
   .gb-flow-header--navy   { background: #0D2540; }
   .gb-flow-header--orange { background: #E56B10; }
   .gb-flow-header--green  { background: #0D2540; }
@@ -900,517 +917,155 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
   .gb-flow-title { font-size: 0.82rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; line-height: 1.2; }
   .gb-flow-sub   { font-size: 0.7rem; color: rgba(255,255,255,0.65); }
 
-  .gb-flow-steps {
-    list-style: none;
-    padding: 0.9rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    flex: 1;
-    background: #FFFFFF;
-  }
+  .gb-flow-steps { list-style: none; padding: 0.9rem; margin: 0; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; background: #FFFFFF; }
 
-  .gb-flow-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    line-height: 1.45;
-    color: var(--gb-text-2);
-  }
+  .gb-flow-step { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.8rem; line-height: 1.45; color: var(--gb-text-2); }
 
-  .gb-step-tag {
-    flex-shrink: 0;
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    border-radius: 4px;
-    padding: 0.12rem 0.4rem;
-    margin-top: 0.1em;
-    white-space: nowrap;
-  }
+  .gb-step-tag { flex-shrink: 0; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border-radius: 4px; padding: 0.12rem 0.4rem; margin-top: 0.1em; white-space: nowrap; }
+  .gb-step-tag--digital { color: var(--gb-green); background: rgba(22,163,74,0.10); border: 1px solid rgba(22,163,74,0.22); }
+  .gb-step-tag--manual  { color: #b45309; background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.35); }
 
-  .gb-step-tag--digital {
-    color: var(--gb-green);
-    background: rgba(22,163,74,0.10);
-    border: 1px solid rgba(22,163,74,0.22);
-  }
-
-  .gb-step-tag--manual {
-    color: #b45309;
-    background: rgba(251,191,36,0.15);
-    border: 1px solid rgba(251,191,36,0.35);
-  }
-
-  /* Panel Admin — navy oscuro contrasta bien sobre fondo claro */
   .gb-flow-admin {
-    margin-top: 0.5rem;
-    padding: 1rem 1.5rem;
-    background: var(--gb-navy);
-    border-radius: 12px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
+    margin-top: 0.5rem; padding: 1rem 1.5rem;
+    background: var(--gb-navy); border-radius: 12px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1rem;
   }
 
   .gb-flow-admin-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    flex-shrink: 1;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #F07820;
-    background: rgba(240,120,32,0.18);
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    flex-shrink: 1; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #F07820; background: rgba(240,120,32,0.18);
     border: 1px solid rgba(240,120,32,0.35);
-    border-radius: 100px;
-    padding: 0.25rem 0.75rem;
+    border-radius: 100px; padding: 0.25rem 0.75rem;
   }
 
-  .gb-flow-admin-desc {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.75);
-    margin: 0;
-    line-height: 1.55;
-  }
+  .gb-flow-admin-desc { font-size: 0.85rem; color: rgba(255,255,255,0.75); margin: 0; line-height: 1.55; }
 
-  /* ── Urgente ────────────────────────────────────────────────── */
-  .gb-urgente {
-    margin-top: 1.25rem;
-    padding: 1.25rem 1.5rem;
-    background: rgba(240,120,32,0.06);
-    border: 1.5px solid rgba(240,120,32,0.22);
-    border-radius: var(--gb-radius);
-  }
-
-  .gb-urgente-header  { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
-  .gb-urgente-icon    { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
-
-  .gb-urgente-label {
-    display: block;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gb-orange-txt);
-    margin-bottom: 0.15rem;
-  }
-
-  .gb-urgente-title {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: var(--gb-navy);
-    margin: 0;
-    letter-spacing: -0.01em;
-  }
-
-  .gb-urgente-desc {
-    font-size: 0.875rem;
-    color: var(--gb-text-2);
-    line-height: 1.6;
-    margin: 0 0 1rem;
-    max-width: 72ch;
-  }
-
-  .gb-urgente-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
-  .gb-urgente-sep   { color: var(--gb-orange); font-size: 1rem; font-weight: 700; }
-
-  /* ── Soporte ────────────────────────────────────────────────── */
-  .gb-soporte-grid {
+  /* ── Tech highlights ─────────────────────────────────────────── */
+  .gb-tech-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin-top: 1.25rem;
+    margin-top: 1rem;
   }
 
-  @media (min-width: 520px) { .gb-soporte-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 520px) { .gb-tech-grid { grid-template-columns: repeat(2, 1fr); } }
 
-  .gb-soporte-card {
+  .gb-tech-card {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 1.25rem 1.4rem;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
     background: var(--gb-bg-card);
     border: 1px solid var(--gb-border);
     border-radius: var(--gb-radius);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   }
 
+  .gb-tech-icon  { font-size: 1.5rem; line-height: 1; flex-shrink: 0; margin-top: 0.1rem; }
+  .gb-tech-title { font-size: 0.95rem; font-weight: 700; color: var(--gb-text-1); margin: 0 0 0.25rem; }
+  .gb-tech-desc  { font-size: 0.82rem; color: var(--gb-text-2); margin: 0; line-height: 1.55; }
+
+  /* ── Urgente ────────────────────────────────────────────────── */
+  .gb-urgente { margin-top: 1.25rem; padding: 1.25rem 1.5rem; background: rgba(240,120,32,0.06); border: 1.5px solid rgba(240,120,32,0.22); border-radius: var(--gb-radius); }
+  .gb-urgente-header  { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+  .gb-urgente-icon    { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+  .gb-urgente-label   { display: block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gb-orange-txt); margin-bottom: 0.15rem; }
+  .gb-urgente-title   { font-size: 1.05rem; font-weight: 800; color: var(--gb-navy); margin: 0; letter-spacing: -0.01em; }
+  .gb-urgente-desc    { font-size: 0.875rem; color: var(--gb-text-2); line-height: 1.6; margin: 0 0 1rem; max-width: 72ch; }
+  .gb-urgente-steps   { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+  .gb-urgente-sep     { color: var(--gb-orange); font-size: 1rem; font-weight: 700; }
+
+  /* ── Soporte ────────────────────────────────────────────────── */
+  .gb-soporte-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.25rem; }
+  @media (min-width: 520px) { .gb-soporte-grid { grid-template-columns: repeat(2, 1fr); } }
+  .gb-soporte-card { display: flex; flex-direction: column; gap: 0.25rem; padding: 1.25rem 1.4rem; background: var(--gb-bg-card); border: 1px solid var(--gb-border); border-radius: var(--gb-radius); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
   .gb-soporte-price { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em; color: var(--gb-navy); line-height: 1.1; }
   .gb-soporte-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gb-text-3); margin-bottom: 0.4rem; }
   .gb-soporte-desc  { font-size: 0.82rem; color: var(--gb-text-2); line-height: 1.5; }
 
   /* ── Comparativa ────────────────────────────────────────────── */
-  .gb-compare-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
-  }
-
+  .gb-compare-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 2rem; }
   @media (min-width: 700px) { .gb-compare-grid { grid-template-columns: repeat(2, 1fr); } }
-
-  .gb-compare-col {
-    border-radius: var(--gb-radius);
-    border: 1px solid var(--gb-border);
-    overflow: hidden;
-    background: #FFFFFF;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-
-  .gb-compare-col--custom {
-    border-color: rgba(240,120,32,0.35);
-    box-shadow: 0 0 0 1px rgba(240,120,32,0.12), 0 8px 24px -8px rgba(240,120,32,0.12);
-  }
-
-  .gb-compare-header {
-    padding: 1rem 1.4rem;
-    background: var(--gb-bg-alt);
-    border-bottom: 1px solid var(--gb-border);
-  }
-
-  .gb-compare-col--custom .gb-compare-header {
-    background: rgba(240,120,32,0.06);
-    border-bottom-color: rgba(240,120,32,0.18);
-  }
-
-  .gb-compare-tag {
-    display: inline-block;
-    padding: 0.2rem 0.7rem;
-    border-radius: 100px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 0.3rem;
-  }
-
+  .gb-compare-col { border-radius: var(--gb-radius); border: 1px solid var(--gb-border); overflow: hidden; background: #FFFFFF; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .gb-compare-col--custom { border-color: rgba(240,120,32,0.35); box-shadow: 0 0 0 1px rgba(240,120,32,0.12), 0 8px 24px -8px rgba(240,120,32,0.12); }
+  .gb-compare-header { padding: 1rem 1.4rem; background: var(--gb-bg-alt); border-bottom: 1px solid var(--gb-border); }
+  .gb-compare-col--custom .gb-compare-header { background: rgba(240,120,32,0.06); border-bottom-color: rgba(240,120,32,0.18); }
+  .gb-compare-tag { display: inline-block; padding: 0.2rem 0.7rem; border-radius: 100px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; }
   .gb-compare-tag--neutral { color: var(--gb-text-3); background: rgba(0,0,0,0.05); border: 1px solid var(--gb-border); }
   .gb-compare-tag--accent  { color: var(--gb-orange-txt); background: var(--gb-orange-dim); border: 1px solid var(--gb-orange-bd); }
-  .gb-compare-subhead      { font-size: 0.8rem; color: var(--gb-text-3); margin: 0; }
-
-  .gb-compare-list {
-    list-style: none;
-    padding: 1rem 1.4rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-
-  .gb-compare-item {
-    font-size: 0.875rem;
-    line-height: 1.5;
-    padding-left: 1.25rem;
-    position: relative;
-    color: var(--gb-text-2);
-  }
-
-  .gb-compare-item::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0.55em;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-  }
-
+  .gb-compare-subhead { font-size: 0.8rem; color: var(--gb-text-3); margin: 0; }
+  .gb-compare-list { list-style: none; padding: 1rem 1.4rem; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+  .gb-compare-item { font-size: 0.875rem; line-height: 1.5; padding-left: 1.25rem; position: relative; color: var(--gb-text-2); }
+  .gb-compare-item::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 7px; height: 7px; border-radius: 50%; }
   .gb-compare-item--bad::before  { background: #dc2626; opacity: 0.7; }
   .gb-compare-item--good         { color: var(--gb-text-1); }
   .gb-compare-item--good::before { background: var(--gb-green); }
-
-  .gb-compare-honest {
-    padding: 1.1rem 1.5rem;
-    border-left: 3px solid var(--gb-border-md);
-    font-size: 0.9rem;
-    font-style: italic;
-    color: var(--gb-text-2);
-    line-height: 1.65;
-    background: var(--gb-bg-alt);
-    border-radius: 0 8px 8px 0;
-  }
+  .gb-compare-honest { padding: 1.1rem 1.5rem; border-left: 3px solid var(--gb-border-md); font-size: 0.9rem; font-style: italic; color: var(--gb-text-2); line-height: 1.65; background: var(--gb-bg-alt); border-radius: 0 8px 8px 0; }
 
   /* ── Fases ───────────────────────────────────────────────────── */
   .gb-phases { display: flex; flex-direction: column; gap: 1rem; }
-
-  .gb-phase {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.25rem;
-    padding: 1.25rem 1.5rem;
-    background: var(--gb-bg-card);
-    border: 1px solid var(--gb-border);
-    border-radius: var(--gb-radius);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-
-  .gb-phase-num {
-    flex-shrink: 0;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gb-orange-txt);
-    background: var(--gb-orange-dim);
-    border: 1px solid var(--gb-orange-bd);
-    border-radius: 100px;
-    padding: 0.25rem 0.75rem;
-    margin-top: 0.15rem;
-    white-space: nowrap;
-  }
-
+  .gb-phase { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1.25rem 1.5rem; background: var(--gb-bg-card); border: 1px solid var(--gb-border); border-radius: var(--gb-radius); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .gb-phase-num { flex-shrink: 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gb-orange-txt); background: var(--gb-orange-dim); border: 1px solid var(--gb-orange-bd); border-radius: 100px; padding: 0.25rem 0.75rem; margin-top: 0.15rem; white-space: nowrap; }
   .gb-phase-title { font-size: 1rem; font-weight: 700; color: var(--gb-text-1); margin: 0 0 0.25rem; }
   .gb-phase-desc  { font-size: 0.875rem; color: var(--gb-text-2); margin: 0; }
 
   /* ── Inversión ───────────────────────────────────────────────── */
   .gb-investment-hero { text-align: center; margin-bottom: 2.5rem; }
-
-  .gb-investment-amount {
-    font-size: clamp(2.5rem, 7vw, 4rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--gb-navy);
-    line-height: 1;
-  }
-
-  .gb-investment-amount small {
-    font-size: 0.45em;
-    font-weight: 500;
-    color: var(--gb-text-3);
-    vertical-align: super;
-  }
-
-  .gb-payment-grid {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-  }
-
-  .gb-payment-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 1.25rem 1.75rem;
-    background: var(--gb-bg-card);
-    border: 1px solid var(--gb-border);
-    border-radius: var(--gb-radius);
-    text-align: center;
-    min-width: 140px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-
-  .gb-payment-pct   { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; color: var(--gb-navy); line-height: 1; }
-  .gb-payment-label { font-size: 0.8rem; font-weight: 600; color: var(--gb-text-2); }
-  .gb-payment-sub   { font-size: 0.78rem; color: var(--gb-text-3); }
+  .gb-investment-amount { font-size: clamp(2.5rem, 7vw, 4rem); font-weight: 800; letter-spacing: -0.04em; color: var(--gb-navy); line-height: 1; }
+  .gb-investment-amount small { font-size: 0.45em; font-weight: 500; color: var(--gb-text-3); vertical-align: super; }
+  .gb-payment-grid { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }
+  .gb-payment-step { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 1.25rem 1.75rem; background: var(--gb-bg-card); border: 1px solid var(--gb-border); border-radius: var(--gb-radius); text-align: center; min-width: 140px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .gb-payment-pct     { font-size: 2rem; font-weight: 800; letter-spacing: -0.04em; color: var(--gb-navy); line-height: 1; }
+  .gb-payment-label   { font-size: 0.8rem; font-weight: 600; color: var(--gb-text-2); }
+  .gb-payment-sub     { font-size: 0.78rem; color: var(--gb-text-3); }
   .gb-payment-divider { font-size: 1.25rem; color: var(--gb-text-3); }
-
   @media (max-width: 520px) {
     .gb-payment-divider { display: none; }
     .gb-payment-grid    { flex-direction: column; align-items: stretch; }
     .gb-payment-step    { min-width: unset; }
   }
-
-  .gb-timeline-pill {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-    justify-content: center;
-    padding: 1rem 1.5rem;
-    background: var(--gb-bg-card);
-    border: 1px solid var(--gb-border);
-    border-radius: 10px;
-    font-size: 0.9rem;
-    color: var(--gb-text-2);
-    text-align: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-
+  .gb-timeline-pill { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; justify-content: center; padding: 1rem 1.5rem; background: var(--gb-bg-card); border: 1px solid var(--gb-border); border-radius: 10px; font-size: 0.9rem; color: var(--gb-text-2); text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
   .gb-timeline-pill strong { color: var(--gb-text-1); }
+  .gb-timeline-note { display: block; width: 100%; font-size: 0.8rem; color: var(--gb-text-3); }
 
-  .gb-timeline-note {
-    display: block;
-    width: 100%;
-    font-size: 0.8rem;
-    color: var(--gb-text-3);
-  }
-
-  /* ── Tabla de operación ──────────────────────────────────────── */
-  .gb-ops-table-wrap {
-    overflow-x: auto;
-    border-radius: var(--gb-radius);
-    border: 1px solid var(--gb-border);
-    margin-bottom: 1.5rem;
-    background: #FFFFFF;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-
+  /* ── Tabla operación ─────────────────────────────────────────── */
+  .gb-ops-table-wrap { overflow-x: auto; border-radius: var(--gb-radius); border: 1px solid var(--gb-border); margin-bottom: 1.5rem; background: #FFFFFF; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
   .gb-ops-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
   .gb-ops-table thead tr { background: var(--gb-bg-alt); }
-
-  .gb-ops-table th {
-    padding: 0.85rem 1.1rem;
-    text-align: left;
-    font-weight: 700;
-    color: var(--gb-text-1);
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--gb-border);
-    white-space: nowrap;
-  }
-
-  .gb-ops-table td {
-    padding: 0.8rem 1.1rem;
-    border-bottom: 1px solid var(--gb-border);
-    color: var(--gb-text-2);
-    vertical-align: top;
-  }
-
+  .gb-ops-table th { padding: 0.85rem 1.1rem; text-align: left; font-weight: 700; color: var(--gb-text-1); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 1px solid var(--gb-border); white-space: nowrap; }
+  .gb-ops-table td { padding: 0.8rem 1.1rem; border-bottom: 1px solid var(--gb-border); color: var(--gb-text-2); vertical-align: top; }
   .gb-ops-table tr:last-child td { border-bottom: none; }
   .gb-ops-table strong { color: var(--gb-text-1); font-weight: 600; }
-
   .gb-ops-free { color: var(--gb-green) !important; font-weight: 600; }
-  .gb-ops-free span, .gb-ops-note {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 400;
-    color: var(--gb-text-3);
-  }
-
-  .gb-ops-highlight {
-    padding: 1.1rem 1.5rem;
-    background: rgba(22,163,74,0.06);
-    border: 1px solid rgba(22,163,74,0.18);
-    border-radius: 10px;
-    font-size: 0.95rem;
-    color: var(--gb-text-2);
-    line-height: 1.65;
-    margin-bottom: 0.75rem;
-  }
-
+  .gb-ops-free span, .gb-ops-note { display: block; font-size: 0.78rem; font-weight: 400; color: var(--gb-text-3); }
+  .gb-ops-highlight { padding: 1.1rem 1.5rem; background: rgba(22,163,74,0.06); border: 1px solid rgba(22,163,74,0.18); border-radius: 10px; font-size: 0.95rem; color: var(--gb-text-2); line-height: 1.65; margin-bottom: 0.75rem; }
   .gb-ops-highlight strong { color: var(--gb-green); }
   .gb-ops-fine { font-size: 0.78rem; color: var(--gb-text-3); line-height: 1.6; margin: 0; }
 
   /* ── No incluye ──────────────────────────────────────────────── */
-  .gb-not-list {
-    list-style: none;
-    padding: 0; margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .gb-not-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    background: var(--gb-bg-card);
-    border: 1px solid var(--gb-border);
-    border-radius: 10px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  }
-
-  .gb-not-arrow { color: var(--gb-orange); font-weight: 700; font-size: 1rem; flex-shrink: 0; margin-top: 0.1em; }
+  .gb-not-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .gb-not-list li { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.25rem; background: var(--gb-bg-card); border: 1px solid var(--gb-border); border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .gb-not-arrow  { color: var(--gb-orange); font-weight: 700; font-size: 1rem; flex-shrink: 0; margin-top: 0.1em; }
   .gb-not-list strong { display: block; font-size: 0.95rem; font-weight: 700; color: var(--gb-text-1); margin-bottom: 0.2rem; }
   .gb-not-list span   { font-size: 0.85rem; color: var(--gb-text-2); }
-
-  .gb-callout {
-    margin-top: 1.75rem;
-    padding: 1.1rem 1.5rem;
-    border-left: 3px solid var(--gb-orange);
-    background: rgba(240,120,32,0.06);
-    border-radius: 0 10px 10px 0;
-    font-size: 0.95rem;
-    font-style: italic;
-    color: var(--gb-text-2);
-    line-height: 1.6;
-  }
+  .gb-callout { margin-top: 1.75rem; padding: 1.1rem 1.5rem; border-left: 3px solid var(--gb-orange); background: rgba(240,120,32,0.06); border-radius: 0 10px 10px 0; font-size: 0.95rem; font-style: italic; color: var(--gb-text-2); line-height: 1.6; }
 
   /* ── Steps / CTA ─────────────────────────────────────────────── */
   .gb-cta-section { background: var(--gb-bg-alt) !important; }
-
-  .gb-steps {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-  }
-
-  .gb-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.25rem;
-    padding: 1.25rem 1.5rem;
-    background: var(--gb-bg-card);
-    border: 1px solid var(--gb-border);
-    border-radius: var(--gb-radius);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-
-  .gb-step-num {
-    flex-shrink: 0;
-    width: 2.2rem; height: 2.2rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: var(--gb-orange);
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: #ffffff;
-  }
-
+  .gb-steps { list-style: none; padding: 0; margin: 0 0 3rem; display: flex; flex-direction: column; gap: 0.85rem; }
+  .gb-step { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1.25rem 1.5rem; background: var(--gb-bg-card); border: 1px solid var(--gb-border); border-radius: var(--gb-radius); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .gb-step-num { flex-shrink: 0; width: 2.2rem; height: 2.2rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--gb-orange); font-size: 0.78rem; font-weight: 800; color: #ffffff; }
   .gb-step-title { font-size: 1rem; font-weight: 700; color: var(--gb-text-1); margin: 0 0 0.25rem; }
   .gb-step-desc  { font-size: 0.875rem; color: var(--gb-text-2); margin: 0; line-height: 1.55; }
+  .gb-cta-block { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; text-align: center; }
+  .gb-cta-tagline { font-size: 1.1rem; font-weight: 600; color: var(--gb-text-1); margin: 0; max-width: 42ch; line-height: 1.4; }
 
-  .gb-cta-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-    text-align: center;
-  }
-
-  .gb-cta-tagline {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--gb-text-1);
-    margin: 0;
-    max-width: 42ch;
-    line-height: 1.4;
-  }
-
-  /* ── Footer — navy oscuro igual que el footer de GoBox ─────── */
-  .gb-footer {
-    padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem);
-    background: var(--gb-navy);
-    border-top: none;
-  }
-
-  .gb-footer-inner {
-    max-width: 1040px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
+  /* ── Footer ─────────────────────────────────────────────────── */
+  .gb-footer { padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem); background: var(--gb-navy); border-top: none; }
+  .gb-footer-inner { max-width: 1040px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
   .gb-footer-brand { display: flex; align-items: center; gap: 0.75rem; }
-
   .gb-footer-logo    { height: 24px; width: auto; filter: brightness(0) invert(1); }
   .gb-footer-name    { display: block; font-size: 0.95rem; font-weight: 700; color: #FFFFFF; }
   .gb-footer-tagline { display: block; font-size: 0.75rem; color: rgba(255,255,255,0.50); }
