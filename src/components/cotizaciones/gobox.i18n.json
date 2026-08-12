@@ -66,6 +66,8 @@
     "tech.mobile.desc": "El portal se ve y funciona perfecto en cualquier celular desde el primer día. Diseño responsive garantizado.",
     "tech.pwa.title": "PWA-ready",
     "tech.pwa.desc": "Preparado para instalarse como app en iOS y Android. La transición a app nativa parte de una base sólida cuando el negocio lo requiera.",
+    "tech.bilingual.title": "Bilingüe ES / EN",
+    "tech.bilingual.desc": "El portal incluye traducción completa al inglés y español. Tus clientes cambian de idioma con un clic, sin recargar la página.",
 
     "compare.label": "Por qué a la medida",
     "compare.title": "GoBox vs. software genérico",
@@ -246,6 +248,8 @@
     "tech.mobile.desc": "The portal looks and works perfectly on any phone from day one. Guaranteed responsive design.",
     "tech.pwa.title": "PWA-ready",
     "tech.pwa.desc": "Ready to install as an app on iOS and Android. The transition to a native app starts from a solid foundation when the business requires it.",
+    "tech.bilingual.title": "Bilingual ES / EN",
+    "tech.bilingual.desc": "The portal includes full translation in Spanish and English. Clients switch language with one click, no page reload.",
 
     "compare.label": "Why custom-built",
     "compare.title": "GoBox vs. off-the-shelf software",

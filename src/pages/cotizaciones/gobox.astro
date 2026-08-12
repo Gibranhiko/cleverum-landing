@@ -321,6 +321,13 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
                 <p class="gb-tech-desc" data-i18n="tech.pwa.desc">Preparado para instalarse como app en iOS y Android. La transición a app nativa parte de una base sólida cuando el negocio lo requiera.</p>
               </div>
             </div>
+            <div class="gb-tech-card">
+              <svg class="gb-tech-icon-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <div>
+                <h4 class="gb-tech-title" data-i18n="tech.bilingual.title">Bilingüe ES / EN</h4>
+                <p class="gb-tech-desc" data-i18n="tech.bilingual.desc">El portal incluye traducción completa al inglés y español. Tus clientes cambian de idioma con un clic, sin recargar la página.</p>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -1020,6 +1027,7 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
   }
 
   @media (min-width: 520px) { .gb-tech-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .gb-tech-grid { grid-template-columns: repeat(3, 1fr); } }
 
   .gb-tech-card {
     display: flex;
@@ -1032,7 +1040,8 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   }
 
-  .gb-tech-icon  { font-size: 1.5rem; line-height: 1; flex-shrink: 0; margin-top: 0.1rem; }
+  .gb-tech-icon      { font-size: 1.5rem; line-height: 1; flex-shrink: 0; margin-top: 0.1rem; }
+  .gb-tech-icon-svg  { flex-shrink: 0; margin-top: 0.1rem; color: var(--gb-navy); opacity: 0.7; }
   .gb-tech-title { font-size: 0.95rem; font-weight: 700; color: var(--gb-text-1); margin: 0 0 0.25rem; }
   .gb-tech-desc  { font-size: 0.82rem; color: var(--gb-text-2); margin: 0; line-height: 1.55; }
 
