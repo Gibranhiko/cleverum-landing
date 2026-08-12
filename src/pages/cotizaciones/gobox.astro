@@ -36,11 +36,27 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
         <div class="proposal-topbar-meta">
           <span class="proposal-badge gb-badge" data-i18n="topbar.badge">Propuesta GoBox</span>
           <span class="proposal-validity" data-i18n="topbar.validity">Válida hasta el {validUntil}</span>
-          <button class="gb-lang-toggle" id="lang-toggle" aria-label="Cambiar idioma / Switch language">
-            <span class="gb-lang-flag">🇲🇽</span>
-            <span class="gb-lang-code">ES</span>
-            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
+          <div class="gb-lang-seg" role="group" aria-label="Idioma / Language">
+            <button class="gb-lang-opt is-active" data-lang="es" aria-pressed="true">
+              <svg class="gb-flag" viewBox="0 0 20 14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                <rect width="7" height="14" fill="#006847"/>
+                <rect x="7" width="6" height="14" fill="#FFFFFF"/>
+                <rect x="13" width="7" height="14" fill="#CE1126"/>
+              </svg>
+              ES
+            </button>
+            <button class="gb-lang-opt" data-lang="en" aria-pressed="false">
+              <svg class="gb-flag" viewBox="0 0 20 14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                <rect width="20" height="14" fill="#B22234"/>
+                <rect y="1" width="20" height="2" fill="#FFFFFF"/>
+                <rect y="5" width="20" height="2" fill="#FFFFFF"/>
+                <rect y="9" width="20" height="2" fill="#FFFFFF"/>
+                <rect y="13" width="20" height="1" fill="#FFFFFF"/>
+                <rect width="8" height="7" fill="#3C3B6E"/>
+              </svg>
+              EN
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -598,40 +614,31 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
       document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
     </script>
 
-    <!-- i18n toggle (inline via define:vars — plain JS) -->
+    <!-- i18n segmented selector (inline via define:vars — plain JS) -->
     <script define:vars={{ translations }}>
-      var toggle = document.getElementById('lang-toggle');
-      var storedLang = localStorage.getItem('gb-lang') || 'es';
-      var activeLang = storedLang;
+      var opts = document.querySelectorAll('.gb-lang-opt');
+      var activeLang = localStorage.getItem('gb-lang') || 'es';
 
       function applyLang(lang) {
         activeLang = lang;
         localStorage.setItem('gb-lang', lang);
-        var flagEl = toggle.querySelector('.gb-lang-flag');
-        var codeEl = toggle.querySelector('.gb-lang-code');
-        if (lang === 'en') {
-          flagEl.textContent = '🇺🇸';
-          codeEl.textContent = 'EN';
-        } else {
-          flagEl.textContent = '🇲🇽';
-          codeEl.textContent = 'ES';
-        }
+        opts.forEach(function(btn) {
+          var isActive = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('is-active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
         var dict = translations[lang];
         document.querySelectorAll('[data-i18n]').forEach(function(el) {
           var key = el.getAttribute('data-i18n');
-          if (dict[key] !== undefined) {
-            el.innerHTML = dict[key];
-          }
+          if (dict[key] !== undefined) el.innerHTML = dict[key];
         });
       }
 
-      toggle.addEventListener('click', function() {
-        applyLang(activeLang === 'es' ? 'en' : 'es');
+      opts.forEach(function(btn) {
+        btn.addEventListener('click', function() { applyLang(btn.getAttribute('data-lang')); });
       });
 
-      if (activeLang === 'en') {
-        applyLang('en');
-      }
+      if (activeLang === 'en') applyLang('en');
     </script>
 
   </body>
@@ -691,31 +698,54 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     border-color: var(--gb-orange-bd) !important;
   }
 
-  /* ── Lang toggle button ─────────────────────────────────────── */
-  .gb-lang-toggle {
+  /* ── Lang segmented selector ────────────────────────────────── */
+  .gb-lang-seg {
+    display: inline-flex;
+    align-items: center;
+    background: #E8EDF3;
+    border-radius: 100px;
+    padding: 2px;
+    gap: 0;
+  }
+
+  .gb-lang-opt {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.22rem 0.55rem 0.22rem 0.45rem;
-    background: var(--gb-orange-dim);
-    border: 1px solid var(--gb-orange-bd);
+    padding: 0.22rem 0.6rem;
+    border: none;
     border-radius: 100px;
+    background: transparent;
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--gb-orange-txt);
+    letter-spacing: 0.04em;
+    color: var(--gb-text-3);
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
     user-select: none;
     line-height: 1;
+    white-space: nowrap;
   }
 
-  .gb-lang-toggle:hover {
-    background: rgba(240,120,32,0.16);
-    border-color: rgba(240,120,32,0.42);
+  .gb-lang-opt:hover:not(.is-active) {
+    color: var(--gb-text-2);
+    background: rgba(255,255,255,0.6);
   }
 
-  .gb-lang-flag { font-size: 1rem; line-height: 1; }
-  .gb-lang-code { letter-spacing: 0.04em; }
+  .gb-lang-opt.is-active {
+    background: var(--gb-orange);
+    color: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(240,120,32,0.35);
+  }
+
+  .gb-flag {
+    width: 16px;
+    height: 11px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: block;
+    overflow: hidden;
+  }
 
   /* ── Hero ───────────────────────────────────────────────────── */
   .gb-hero {
