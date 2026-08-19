@@ -88,7 +88,6 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           </p>
           <div class="gb-price-pill reveal-up" style="animation-delay:.18s">
             <span class="gb-price-amount">$80,000 MXN</span>
-            <span class="gb-price-tax" data-i18n="hero.price.tax">+ IVA</span>
           </div>
           <p class="gb-valid-until reveal-up" style="animation-delay:.22s" data-i18n="hero.validity">
             Propuesta válida hasta el {validUntil}
@@ -211,16 +210,20 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
                   <span data-i18n="col3.step1">Cliente paga su membresía en línea (Stripe)</span>
                 </li>
                 <li class="gb-flow-step">
+                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
+                  <span data-i18n="col3.step2">Stripe cobra la renovación automáticamente cada periodo</span>
+                </li>
+                <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
-                  <span data-i18n="col3.step2">Staff confirma el pago en Stripe y activa la membresía en el panel</span>
+                  <span data-i18n="col3.step3">El staff activa al socio nuevo en el panel al confirmar su primer pago</span>
+                </li>
+                <li class="gb-flow-step">
+                  <span class="gb-step-tag gb-step-tag--manual" data-i18n="badge.manual">Manual</span>
+                  <span data-i18n="col3.step4">El staff da de baja al socio si deja de pagar</span>
                 </li>
                 <li class="gb-flow-step">
                   <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
-                  <span data-i18n="col3.step3">Cliente ve su membresía activa y su Suite USA</span>
-                </li>
-                <li class="gb-flow-step">
-                  <span class="gb-step-tag gb-step-tag--digital" data-i18n="badge.system">Sistema</span>
-                  <span data-i18n="col3.step4">Correo de bienvenida automático con sus datos</span>
+                  <span data-i18n="col3.step5">El socio ve su membresía activa y su Suite USA</span>
                 </li>
               </ul>
             </div>
@@ -305,6 +308,11 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
             </p>
           </div>
 
+          <!-- Nota Stripe -->
+          <p class="gb-stripe-note reveal-up" style="animation-delay:.23s" data-i18n="stripe.note">
+            Sobre los cobros: Stripe cobra la mensualidad automáticamente a cada socio, sin que tu equipo tenga que perseguir pagos. Lo único manual es activar a cada socio nuevo y dar de baja a quien deje de pagar — con un clic desde el panel. Cuando el volumen crezca, se puede automatizar esta sincronización en una fase posterior.
+          </p>
+
           <!-- Tech highlights: Mobile-first + PWA -->
           <div class="gb-tech-grid reveal-up" style="animation-delay:.24s">
             <div class="gb-tech-card">
@@ -318,14 +326,14 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
               <span class="gb-tech-icon">⚡</span>
               <div>
                 <h4 class="gb-tech-title" data-i18n="tech.pwa.title">PWA-ready</h4>
-                <p class="gb-tech-desc" data-i18n="tech.pwa.desc">Preparado para instalarse como app en iOS y Android. La transición a app nativa parte de una base sólida cuando el negocio lo requiera.</p>
+                <p class="gb-tech-desc" data-i18n="tech.pwa.desc">El portal del cliente se construye con la base técnica lista (Capacitor) para convertirse en app instalable más adelante. En este MVP no se crea ni publica la app en las tiendas; eso es una fase posterior, y aplicaría solo al portal del socio (el panel de administración se seguiría usando desde el navegador).</p>
               </div>
             </div>
             <div class="gb-tech-card">
               <svg class="gb-tech-icon-svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               <div>
                 <h4 class="gb-tech-title" data-i18n="tech.bilingual.title">Bilingüe ES / EN</h4>
-                <p class="gb-tech-desc" data-i18n="tech.bilingual.desc">El portal incluye traducción completa al inglés y español. Tus clientes cambian de idioma con un clic, sin recargar la página.</p>
+                <p class="gb-tech-desc" data-i18n="tech.bilingual.desc">El portal del cliente está disponible en español e inglés; el socio cambia de idioma con un clic. (El panel de administración y los correos operan en español.)</p>
               </div>
             </div>
           </div>
@@ -411,28 +419,37 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
           <h2 class="gb-section-title reveal-up" style="animation-delay:.06s" data-i18n="investment.title">¿Cuánto cuesta?</h2>
 
           <div class="gb-investment-hero reveal-up" style="animation-delay:.1s">
-            <span class="gb-investment-amount">$80,000 <small data-i18n="investment.suffix">MXN + IVA</small></span>
+            <span class="gb-investment-amount">$80,000 <small data-i18n="investment.suffix">MXN</small></span>
           </div>
 
           <div class="gb-payment-grid reveal-up" style="animation-delay:.14s">
             <div class="gb-payment-step">
-              <span class="gb-payment-pct">40%</span>
+              <span class="gb-payment-pct">50%</span>
               <span class="gb-payment-label" data-i18n="pay1.label">Al iniciar</span>
-              <span class="gb-payment-sub" data-i18n="pay1.sub">$32,000 MXN + IVA</span>
+              <span class="gb-payment-sub" data-i18n="pay1.sub">$40,000 MXN</span>
             </div>
             <div class="gb-payment-divider" aria-hidden="true">→</div>
             <div class="gb-payment-step">
-              <span class="gb-payment-pct">30%</span>
-              <span class="gb-payment-label" data-i18n="pay2.label">MVP funcional</span>
-              <span class="gb-payment-sub" data-i18n="pay2.sub">$24,000 MXN + IVA</span>
+              <span class="gb-payment-pct">2</span>
+              <span class="gb-payment-label" data-i18n="pay2.label">Pago 2</span>
+              <span class="gb-payment-sub" data-i18n="pay2.sub">$15,000 MXN</span>
             </div>
             <div class="gb-payment-divider" aria-hidden="true">→</div>
             <div class="gb-payment-step">
-              <span class="gb-payment-pct">30%</span>
-              <span class="gb-payment-label" data-i18n="pay3.label">Paso a producción</span>
-              <span class="gb-payment-sub" data-i18n="pay3.sub">$24,000 MXN + IVA</span>
+              <span class="gb-payment-pct">3</span>
+              <span class="gb-payment-label" data-i18n="pay3.label">Pago 3</span>
+              <span class="gb-payment-sub" data-i18n="pay3.sub">$15,000 MXN</span>
+            </div>
+            <div class="gb-payment-divider" aria-hidden="true">→</div>
+            <div class="gb-payment-step">
+              <span class="gb-payment-pct">4</span>
+              <span class="gb-payment-label" data-i18n="pay4.label">Paso a producción</span>
+              <span class="gb-payment-sub" data-i18n="pay4.sub">$10,000 MXN</span>
             </div>
           </div>
+          <p class="gb-pay-note reveal-up" style="animation-delay:.16s" data-i18n="pay.note">
+            Pago inicial del 50% para arrancar, y el resto en tres pagos escalonados conforme avanza y se entrega el sistema. El último pago se cubre al pasar a producción.
+          </p>
 
           <div class="gb-timeline-pill reveal-up" style="animation-delay:.18s">
             <span data-i18n="timeline.text">⏱ Tiempo estimado:</span>&nbsp;<strong data-i18n="timeline.weeks">5–7 semanas</strong>
@@ -1018,6 +1035,17 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
 
   .gb-flow-admin-desc { font-size: 0.85rem; color: rgba(255,255,255,0.75); margin: 0; line-height: 1.55; }
 
+  .gb-stripe-note {
+    margin-top: 0.75rem;
+    padding: 0.9rem 1.25rem;
+    background: rgba(240,120,32,0.05);
+    border-left: 3px solid var(--gb-orange-bd);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.82rem;
+    color: var(--gb-text-2);
+    line-height: 1.65;
+  }
+
   /* ── Tech highlights ─────────────────────────────────────────── */
   .gb-tech-grid {
     display: grid;
@@ -1104,6 +1132,18 @@ const whatsappUrl = `https://wa.me/5215541433545?text=${whatsappMsg}`;
     .gb-payment-grid    { flex-direction: column; align-items: stretch; }
     .gb-payment-step    { min-width: unset; }
   }
+  .gb-pay-note {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding: 0.85rem 1.25rem;
+    background: var(--gb-bg-alt);
+    border: 1px solid var(--gb-border);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--gb-text-2);
+    line-height: 1.65;
+  }
+
   .gb-timeline-pill { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; justify-content: center; padding: 1rem 1.5rem; background: var(--gb-bg-card); border: 1px solid var(--gb-border); border-radius: 10px; font-size: 0.9rem; color: var(--gb-text-2); text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
   .gb-timeline-pill strong { color: var(--gb-text-1); }
   .gb-timeline-note { display: block; width: 100%; font-size: 0.8rem; color: var(--gb-text-3); }
